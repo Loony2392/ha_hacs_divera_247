@@ -27,7 +27,7 @@ jobs:
       - uses: actions/stale@v8
         with:
           # Repository token to authenticate the workflow (automatically provided by GitHub).
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GH_TOKEN }}
           
           # Message added as a comment when an issue is marked as stale.
           stale-issue-message: 'This issue has been automatically marked as stale due to inactivity. Please add a comment if it is still relevant to prevent it from being closed.'
