@@ -4,11 +4,11 @@ import logging
 
 LOGGER = logging.getLogger(__package__)
 
-DOMAIN: str = "divera"
+DOMAIN: str = "divera247"
 
-INTEGRATION_FULL_NAME: str = "Divera 24/7"
-INTEGRATION_SHORT_NAME: str = "Divera"
-DIVERA_GMBH: str = "Divera GmbH"
+INTEGRATION_FULL_NAME: str = "DIVERA 24/7"
+INTEGRATION_SHORT_NAME: str = "DIVERA"
+DIVERA_GMBH: str = "DIVERA GmbH"
 
 ATTR_NAME: str = "state"
 ATTR_LATEST_UPDATE: str = "latest_update_utc"
