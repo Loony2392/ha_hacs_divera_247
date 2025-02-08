@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from custom_components.divera import DiveraCoordinator
+from custom_components.divera247 import DiveraCoordinator
 
 
 @dataclass
