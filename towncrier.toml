@@ -1,0 +1,12 @@
+[tool.towncrier]
+# Der Name deines Pakets oder Projekts (wird im Changelog angegeben)
+package = "divera247"
+
+# Der Name der Datei, in die der Changelog geschrieben wird
+filename = "CHANGELOG.rst"
+
+# Das Template, das verwendet wird (z. B. classic, or other)
+template = "classic"
+
+# Das Verzeichnis, in dem die News-Fragmente liegen (diese müssen von dir erstellt und gepflegt werden)
+directory = "newsfragments"
