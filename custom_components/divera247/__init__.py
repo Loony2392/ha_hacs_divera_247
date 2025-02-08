@@ -5,7 +5,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.components.select import SelectEntity
 
 from .const import (
     CONF_FLOW_MINOR_VERSION,
@@ -18,6 +17,7 @@ from .const import (
     LOGGER,
 )
 from .coordinator import DiveraCoordinator
+from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
 
@@ -27,35 +27,6 @@ PLATFORMS = [
     Platform.CALENDAR,
     Platform.BINARY_SENSOR,
 ]
-
-# Diese Klasse stellt die Organisations-Auswahl als Select-Entität dar
-class OrganizationSelectEntity(SelectEntity):
-    """Repräsentiert die Organisations-Auswahl als Select-Entität."""
-
-    def __init__(self, name, options, initial):
-        self._name = name
-        self._options = options
-        self._current_value = initial
-
-    @property
-    def name(self):
-        """Gibt den Namen der Entität zurück."""
-        return self._name
-
-    @property
-    def current_option(self):
-        """Gibt die aktuell gewählte Option zurück."""
-        return self._current_value
-
-    @property
-    def options(self):
-        """Gibt die möglichen Optionen zurück."""
-        return self._options
-
-    async def async_select_option(self, option: str) -> None:
-        """Ändert die aktuell gewählte Option."""
-        self._current_value = option
-        self.async_write_ha_state()
 
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
 
@@ -71,20 +42,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     websession = async_get_clientsession(hass)
     tasks = []
     coordinators = {}
-
-    # Erstelle die Select-Entität für die Auswahl der Organisation
-    organization_select = OrganizationSelectEntity(
-        name="Organisation wählen",
-        options=["THW", "Feuerwehr", "DRK", "DLRG"],
-        initial="THW",
-    )
-    # Füge die Entität zu den Hass-Daten hinzu
-    hass.data[DOMAIN]["organization_select"] = organization_select
-
-    # Registriere die Select-Entität in Home Assistant
-    hass.async_create_task(
-        hass.helpers.entity_platform.async_add_entities([organization_select])
-    )
 
     # Erstelle eine DiveraClient-Instanz und speichere sie für den Service
     divera_client = DiveraClient(websession, accesskey, base_url=base_url)
@@ -106,14 +63,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     # Registriere den Service zum Auslösen eines Probealarms
     async def trigger_probe_alarm_service(call):
         """Service to trigger a test probe alarm."""
+        LOGGER.info("trigger_probe_alarm_service is being called")
         divera_client = hass.data[DOMAIN].get("divera_client")
         if divera_client is None:
             LOGGER.error("No DiveraClient instance available for triggering probe alarm.")
             return
         await divera_client.trigger_probe_alarm()
 
+    LOGGER.info("Registering service divera247.trigger_probe_alarm")
     hass.services.async_register(DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service)
 
+    # Forward the config entry setups for all platforms (select, sensor, calendar, binary_sensor)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
