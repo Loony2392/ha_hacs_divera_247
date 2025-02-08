@@ -1,0 +1,46 @@
+# This workflow automatically identifies and marks issues and pull requests (PRs) as stale
+# when there has been no activity for a specified amount of time. After that, it closes
+# the stale issues and PRs if they remain inactive. You can customize this behavior by
+# modifying the parameters in this file.
+# For more details, refer to: https://github.com/actions/stale
+
+name: Mark stale issues and pull requests
+
+# This workflow is triggered on a schedule. 
+# In this case, it runs daily at 12:00 PM UTC.
+on:
+  schedule:
+    - cron: '00 12 * * *'  # Executes at 12:00 PM UTC every day
+
+jobs:
+  stale:
+    # The job runs on the latest Ubuntu runner provided by GitHub Actions.
+    runs-on: ubuntu-latest
+    
+    # Required permissions to write to issues and pull requests in the repository.
+    permissions:
+      issues: write  # Grants permission to modify issues
+      pull-requests: write  # Grants permission to modify pull requests
+
+    steps:
+      # Uses the Stale GitHub Action to manage inactive issues and pull requests.
+      - uses: actions/stale@v8
+        with:
+          # Repository token to authenticate the workflow (automatically provided by GitHub).
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Message added as a comment when an issue is marked as stale.
+          stale-issue-message: 'This issue has been automatically marked as stale due to inactivity. Please add a comment if it is still relevant to prevent it from being closed.'
+          
+          # Message added as a comment when a pull request is marked as stale.
+          stale-pr-message: 'This pull request has been automatically marked as stale due to inactivity. Please add a comment or make changes to keep it open.'
+          
+          # Label applied to stale issues.
+          stale-issue-label: 'no-issue-activity'
+          
+          # Label applied to stale pull requests.
+          stale-pr-label: 'no-pr-activity'
+          
+          # Number of days before closing a stale issue or PR. 
+          # '-1' means the issue or PR will be closed immediately after being marked as stale.
+          days-before-close: -1
