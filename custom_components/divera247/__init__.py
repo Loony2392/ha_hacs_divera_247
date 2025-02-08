@@ -11,6 +11,7 @@ from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
     DATA_ACCESSKEY,
+    DATA_ACCESSKEY,
     DATA_BASE_URL,
     DATA_UCRS,
     DIVERA_BASE_URL,
@@ -19,7 +20,7 @@ from .const import (
 )
 from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
-from .divera import DiveraClient, DiveraError
+from .divera247 import DiveraClient, DiveraError
 
 PLATFORMS = [
     Platform.SELECT,

@@ -32,7 +32,7 @@ from .const import (
     ERROR_AUTH,
     ERROR_CONNECTION,
 )
-from .divera import DiveraAuthError, DiveraClient, DiveraConnectionError
+from .divera247 import DiveraAuthError, DiveraClient, DiveraConnectionError
 
 
 class DiveraFlow(FlowHandler):

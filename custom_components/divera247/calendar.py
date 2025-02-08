@@ -16,7 +16,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 
 from . import DiveraConfigEntry, DiveraCoordinator
-from .divera import DiveraClient
+from .divera247 import DiveraClient
 from .entity import DiveraEntity, DiveraEntityDescription
 
 

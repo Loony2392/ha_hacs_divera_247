@@ -13,7 +13,7 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DIVERA_BASE_URL, DIVERA_GMBH, DOMAIN
 from .coordinator import DiveraCoordinator
-from .divera import DiveraClient
+from .divera247 import DiveraClient
 
 
 @dataclass(frozen=True, kw_only=True)

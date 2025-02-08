@@ -12,7 +12,7 @@ from homeassistant.helpers.typing import StateType
 
 from . import DiveraConfigEntry
 from .coordinator import DiveraCoordinator
-from .divera import DiveraClient
+from .divera247 import DiveraClient
 from .entity import DiveraEntity, DiveraEntityDescription
 
 

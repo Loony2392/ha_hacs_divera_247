@@ -14,7 +14,7 @@ from homeassistant.helpers.typing import StateType
 
 from . import DiveraConfigEntry, DiveraCoordinator
 from .const import DOMAIN
-from .divera import DiveraClient, DiveraError
+from .divera247 import DiveraClient, DiveraError
 from .entity import DiveraEntity, DiveraEntityDescription
 
 
