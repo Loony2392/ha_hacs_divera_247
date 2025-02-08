@@ -1,9 +1,9 @@
-"""Select Module for Divera 24/7 Integration."""
+"""Sensor Module for Divera 24/7 Integration."""
 
 from __future__ import annotations
-
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Any
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
@@ -15,119 +15,146 @@ from .coordinator import DiveraCoordinator
 from .divera247 import DiveraClient
 from .entity import DiveraEntity, DiveraEntityDescription
 
+# -------------------------------------------------------------------
+# Beschreibung für Helfer-Infos (ohne E-Mail)
+# -------------------------------------------------------------------
 
 @dataclass(frozen=True, kw_only=True)
-class DiveraSensorEntityDescription(DiveraEntityDescription, SensorEntityDescription):
-    """Description of a Divera sensor entity.
-
-    Inherits from both DiveraEntityDescription and SensorEntityDescription.
+class DiveraHelperEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description of a Divera helper sensor entity.
 
     Attributes:
-        value_fn (Callable[[DiveraClient], StateType]):
-            Function that returns the value of the sensor.
-
+        value_fn (Callable[[DiveraClient, dict], Any]):
+            Function that returns the value of the sensor based on a helper dict.
     """
+    value_fn: Callable[[DiveraClient, dict], Any]
 
-    value_fn: Callable[[DiveraClient], StateType]
 
-
-SENSORS: tuple[DiveraSensorEntityDescription, ...] = (
-    DiveraSensorEntityDescription(
-        key="alarm",
-        translation_key="alarm",
-        icon="mdi:message-alert",
-        value_fn=lambda divera: divera.get_last_alarm(),
-        attribute_fn=lambda divera: divera.get_last_alarm_attributes(),
+HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
+    DiveraHelperEntityDescription(
+        key="helper_name",
+        translation_key="helper_name",
+        icon="mdi:account",
+        value_fn=lambda divera, helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
     ),
-    DiveraSensorEntityDescription(
-        key="news",
-        translation_key="news",
-        icon="mdi:message-text",
-        value_fn=lambda divera: divera.get_last_news(),
-        attribute_fn=lambda divera: divera.get_last_news_attributes(),
+    DiveraHelperEntityDescription(
+        key="helper_status",
+        translation_key="helper_status",
+        icon="mdi:account-check",
+        value_fn=lambda divera, helper: helper.get("status", "unknown"),
     ),
 )
 
+class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
+    """Sensor representing an individual helper with personal info."""
+    
+    entity_description: DiveraHelperEntityDescription
+
+    def __init__(
+        self,
+        coordinator: DiveraCoordinator,
+        helper: dict,
+        description: DiveraHelperEntityDescription,
+    ) -> None:
+        """Initialize a helper sensor entity.
+
+        Args:
+            coordinator (DiveraCoordinator): The coordinator for the integration.
+            helper (dict): A dictionary with the helper's data.
+            description (DiveraHelperEntityDescription): Description of the sensor.
+        """
+        super().__init__(coordinator, description)
+        self._helper = helper
+
+    def _divera_update(self) -> None:
+        self._attr_native_value = self.entity_description.value_fn(self.coordinator.data, self._helper)
+        # Optional: Setze weitere Attribute aus dem Helfer-Dict
+        self._attr_extra_state_attributes = self._helper
+
+# -------------------------------------------------------------------
+# Sensor für die Anzahl der Helfer pro Status
+# -------------------------------------------------------------------
+
+@dataclass(frozen=True, kw_only=True)
+class DiveraStatusCountEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description of a status count sensor.
+    
+    Attributes:
+        status (str): The status to count.
+    """
+    status: str
+
+STATUS_SENSORS: tuple[DiveraStatusCountEntityDescription, ...] = (
+    DiveraStatusCountEntityDescription(
+        key="status_active",
+        translation_key="status_active",
+        icon="mdi:check-circle",
+        status="active",
+    ),
+    DiveraStatusCountEntityDescription(
+        key="status_inactive",
+        translation_key="status_inactive",
+        icon="mdi:close-circle",
+        status="inactive",
+    ),
+    DiveraStatusCountEntityDescription(
+        key="status_on_duty",
+        translation_key="status_on_duty",
+        icon="mdi:briefcase",
+        status="on_duty",
+    ),
+)
+
+class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
+    """Sensor that counts helpers by a given status."""
+    
+    entity_description: DiveraStatusCountEntityDescription
+
+    def __init__(
+        self,
+        coordinator: DiveraCoordinator,
+        description: DiveraStatusCountEntityDescription,
+    ) -> None:
+        """Initialize a status count sensor.
+        
+        Args:
+            coordinator (DiveraCoordinator): The coordinator for the integration.
+            description (DiveraStatusCountEntityDescription): Description of the sensor.
+        """
+        super().__init__(coordinator, description)
+        self._status = description.status
+
+    def _divera_update(self) -> None:
+        # Angenommen, die Liste der Helfer steht unter dem Schlüssel "helpers" im Daten-Dict
+        helpers = self.coordinator.data.get("helpers", [])
+        count = sum(1 for helper in helpers if helper.get("status") == self._status)
+        self._attr_native_value = count
+
+# -------------------------------------------------------------------
+# async_setup_entry für Sensoren
+# -------------------------------------------------------------------
 
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: DiveraConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Divera 24/7 sensor entities.
-
-    Args:
-        hass (HomeAssistant): Home Assistant instance.
-        entry (ConfigEntry): Configuration entry for the integration.
-        async_add_entities (AddEntitiesCallback): Function to add entities.
-
-    """
-
+    """Set up Divera sensor entities."""
     coordinators = entry.runtime_data.coordinators
+    entities: list[SensorEntity] = []
 
-    entities: list[DiveraSensorEntity] = [
-        DiveraSensorEntity(coordinators[ucr_id], description)
-        for ucr_id in coordinators
-        for description in SENSORS
-    ]
-
+    # Erstelle für jeden Helfer individuelle Sensoren (Name und Status)
     for ucr_id in coordinators:
-        divera_client = coordinators[ucr_id]
-        vehicle_id_list = divera_client.data.get_vehicle_id_list()
-        for vehicle_id in vehicle_id_list:
-            vehicle_attributes = divera_client.data.get_vehicle_attributes(vehicle_id)
-            vehicle_name = vehicle_attributes.get("name", f"Vehicle {vehicle_id}")
-
-            vehicle_entity = DiveraSensorEntity(
-                coordinators[ucr_id],
-                DiveraSensorEntityDescription(
-                    key=vehicle_id,
-                    translation_key="vehicle",
-                    translation_placeholders={
-                        "vehicle_name": vehicle_name,
-                    },
-                    icon="mdi:fire-truck",
-                    value_fn=lambda divera, vid=vehicle_id: divera.get_vehicle_state(vid),
-                    attribute_fn=lambda divera,
-                    vid=vehicle_id: divera.get_vehicle_attributes(vid),
-                ),
-            )
-            entities.append(vehicle_entity)
-
+        coordinator = coordinators[ucr_id]
+        helpers = coordinator.data.get("helpers", [])  # Erwartet, dass die Helferdaten hier liegen
+        for helper in helpers:
+            for description in HELPER_SENSORS:
+                entities.append(DiveraHelperSensorEntity(coordinator, helper, description))
+    
+    # Erstelle Sensoren, die den Status aggregieren (z.B. Anzahl aktiver Helfer)
+    for ucr_id in coordinators:
+        coordinator = coordinators[ucr_id]
+        for description in STATUS_SENSORS:
+            entities.append(DiveraStatusCountSensorEntity(coordinator, description))
+    
     async_add_entities(entities, False)
-
-
-class DiveraSensorEntity(DiveraEntity, SensorEntity):
-    """Represents a Divera sensor entity.
-
-    Inherits from both DiveraEntity and SensorEntity.
-
-    Attributes:
-        entity_description (DiveraSensorEntityDescription):
-            Description of the sensor entity.
-
-    """
-
-    entity_description: DiveraSensorEntityDescription
-
-    def __init__(
-        self,
-        coordinator: DiveraCoordinator,
-        description: DiveraSensorEntityDescription,
-    ) -> None:
-        """Initialize DiveraSensorEntity.
-
-        Args:
-            coordinator (DiveraCoordinator): The coordinator managing this entity.
-            description (DiveraSensorEntityDescription): Description of the sensor entity.
-
-        """
-        super().__init__(coordinator, description)
-
-    def _divera_update(self) -> None:
-        self._attr_native_value = self.entity_description.value_fn(
-            self.coordinator.data
-        )
-        self._attr_extra_state_attributes = self.entity_description.attribute_fn(
-            self.coordinator.data
-        )
