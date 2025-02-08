@@ -4,6 +4,10 @@ Die DIVERA 24/7 Integration für Home Assistant ermöglicht es dir, Daten und Er
 
 The DIVERA 24/7 integration for Home Assistant allows you to integrate data and events from the DIVERA 24/7 platform into your Home Assistant system. With this integration, you can retrieve information about alarm incidents, vehicle status, user status, and much more.
 
+[![GitHub Release](https://img.shields.io/github/v/release/loony2392/ha_hacs_divera_247?sort=semver&style=for-the-badge&color=green)](https://github.com/loony2392/ha_hacs_divera_247/releases/)
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/loony2392/ha_hacs_divera_247/latest/total?style=for-the-badge&label=Downloads%20latest%20Release)
+[![Ko-Fi](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge)](https://ko-fi.com/loony_tech)
+
 ## Features ⚡
 
 - 🚨 Abruf von Alarm- und Notrufereignissen.  
