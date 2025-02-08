@@ -1,6 +1,9 @@
 {
-    "name": "Divera 24/7",
+    "name": "DIVERA 24/7",
     "render_readme": true,
     "hide_default_branch": true,
-    "country": "DE"
-}  
+    "country": "DE",
+    "content_in_root": false,
+    "domains": ["divera247"]
+  }
+  
