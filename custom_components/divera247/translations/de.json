@@ -1,9 +1,9 @@
 {
-  "title": "Divera 24/7",
+  "title": "DIVERA 24/7",
   "config": {
     "step": {
       "api": {
-        "title": "Divera 24/7 Einrichtung",
+        "title": "DIVERA 24/7 Einrichtung",
         "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
         "data": {
           "accesskey": "Accesskey",
@@ -38,7 +38,7 @@
   "options": {
     "step": {
       "scan_interval": {
-        "title": "Divera 24/7 Optionen",
+        "title": "DIVERA 24/7 Optionen",
         "description": "Das Update Interval muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Interval führt evt. zu Problemen.",
         "data": {
           "scan_interval": "Update Interval (Sekunden)"
