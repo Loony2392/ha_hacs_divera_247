@@ -15,16 +15,16 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 ### Verfügbare Organisationseinheiten:
 
 #### THW
-<img src="https://imgs.search.brave.com/JTKWNabfAU_GsdHJEDFwQaZOav4Pi2ik9AZxPATA-7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8y/LzIyL1Rody5sb2dv/LnN2Zw" alt="THW Logo" width="50" height="50"> **THW**  
-Status: ![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
+<img src="https://imgs.search.brave.com/JTKWNabfAU_GsdHJEDFwQaZOav4Pi2ik9AZxPATA-7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8y/LzIyL1Rody5sb2dv/LnN2Zw" alt="THW Logo" width="50" height="50">
+![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
 
 #### Feuerwehr
-<img src="https://imgs.search.brave.com/i7OXzyBbw52wQ0InMr1Bt_iypcGLktxh39J6d79kJQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZmV1ZXJ3ZWhyLW5l/dXNhZXNzLmRlL3dw/LWNvbnRlbnQvdGhl/bWVzL2ZmbjE4L2lt/Zy91ZWJlcnVucy9h/dWZnYWJlbi9GZXVl/cndlaHJfUkxCU19M/b2dvLnN2Zw" alt="Feuerwehr Logo" width="50" height="50"> **Feuerwehr**  
-Status: ![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
+<img src="https://imgs.search.brave.com/i7OXzyBbw52wQ0InMr1Bt_iypcGLktxh39J6d79kJQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZmV1ZXJ3ZWhyLW5l/dXNhZXNzLmRlL3dw/LWNvbnRlbnQvdGhl/bWVzL2ZmbjE4L2lt/Zy91ZWJlcnVucy9h/dWZnYWJlbi9GZXVl/cndlaHJfUkxCU19M/b2dvLnN2Zw" alt="Feuerwehr Logo" width="50" height="50">
+![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
 
 #### DRK
-<img src="https://imgs.search.brave.com/99MOXySJPhLWgLgJ_xzVWDzpxL44A__CMkM3jBxLxCc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZGUvZC9kMS9E/UkstUnVuZGxvZ28u/cG5n" alt="DRK Logo" width="50" height="50"> **DRK**  
-Status: ![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
+<img src="https://imgs.search.brave.com/99MOXySJPhLWgLgJ_xzVWDzpxL44A__CMkM3jBxLxCc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZGUvZC9kMS9E/UkstUnVuZGxvZ28u/cG5n" alt="DRK Logo" width="50" height="50">
+![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)
 
 ### So funktioniert es:
 
