@@ -1,6 +1,6 @@
 {
   "domain": "divera247",
-  "name": "Divera 24/7",
+  "name": "DIVERA 24/7",
   "codeowners": ["@loony2392"],
   "config_flow": true,
   "documentation": "https://github.com/Loony2392/ha_hacs_divera_247",
