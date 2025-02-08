@@ -1,4 +1,18 @@
-bs:
+name: DIVERA 24/7 Test
+
+on:
+  release:
+    types:
+      - published
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
   legacy:
     name: With pytest with Home Assistant (min. supported version)
     runs-on: ubuntu-latest
