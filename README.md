@@ -47,8 +47,8 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 
 ## Voraussetzungen 📋
 
-- 💻 **Home Assistant Version 2023.2** oder neuer.  
-  **Home Assistant version 2023.2** or newer.
+- 💻 **Home Assistant Version 2025.2** oder neuer.  
+  **Home Assistant version 2025.2** or newer.
 
 - 📝 Ein aktiver **DIVERA 24/7 Account**.  
   An active **DIVERA 24/7 account**.
