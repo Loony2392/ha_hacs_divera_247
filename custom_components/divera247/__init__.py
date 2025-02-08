@@ -100,9 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         )
 
     entry.runtime_data = DiveraRuntimeData(coordinators)
-
     await asyncio.wait(tasks)
-
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
     # Registriere den Service zum Auslösen eines Probealarms
