@@ -11,7 +11,6 @@ from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
     DATA_ACCESSKEY,
-    DATA_ACCESSKEY,
     DATA_BASE_URL,
     DATA_UCRS,
     DIVERA_BASE_URL,
@@ -28,7 +27,6 @@ PLATFORMS = [
     Platform.CALENDAR,
     Platform.BINARY_SENSOR,
 ]
-
 
 # Diese Klasse stellt die Organisations-Auswahl als Select-Entität dar
 class OrganizationSelectEntity(SelectEntity):
@@ -59,13 +57,10 @@ class OrganizationSelectEntity(SelectEntity):
         self._current_value = option
         self.async_write_ha_state()
 
-
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
-
 
 async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     """Set up Divera as config entry."""
-
     accesskey: str = entry.data.get(DATA_ACCESSKEY)
     ucr_ids = entry.data.get(DATA_UCRS)
     base_url = entry.data.get(DATA_BASE_URL, DIVERA_BASE_URL)
@@ -79,13 +74,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     # Erstelle die Select-Entität für die Auswahl der Organisation
     organization_select = OrganizationSelectEntity(
-        name="Organisation wählen", 
-        options=["THW", "Feuerwehr", "DRK", "DLRG"],  # Optionen
-        initial="THW",  # Standard-Auswahl
+        name="Organisation wählen",
+        options=["THW", "Feuerwehr", "DRK", "DLRG"],
+        initial="THW",
     )
-
     # Füge die Entität zu den Hass-Daten hinzu
     hass.data[DOMAIN]["organization_select"] = organization_select
+
+    # Registriere die Select-Entität in Home Assistant
+    hass.async_create_task(
+        hass.helpers.entity_platform.async_add_entities([organization_select])
+    )
+
+    # Erstelle eine DiveraClient-Instanz und speichere sie für den Service
+    divera_client = DiveraClient(websession, accesskey, base_url=base_url)
+    hass.data[DOMAIN]["divera_client"] = divera_client
 
     for ucr_id in ucr_ids:
         divera_coordinator = DiveraCoordinator(
@@ -102,25 +105,30 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
+    # Registriere den Service zum Auslösen eines Probealarms
+    async def trigger_probe_alarm_service(call):
+        """Service to trigger a test probe alarm."""
+        divera_client = hass.data[DOMAIN].get("divera_client")
+        if divera_client is None:
+            LOGGER.error("No DiveraClient instance available for triggering probe alarm.")
+            return
+        await divera_client.trigger_probe_alarm()
+
+    hass.services.async_register(DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service)
+
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
-
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Asynchronous update listener."""
-
     await hass.config_entries.async_reload(entry_id=entry.entry_id)
-
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload Divera config entry."""
-
     unload_ok = all(
         await asyncio.gather(
-            *[
-                hass.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
-            ]
+            *[hass.config_entries.async_forward_entry_unload(entry, component)
+              for component in PLATFORMS]
         )
     )
     if unload_ok:
@@ -129,16 +137,11 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
             hass.data.pop(DOMAIN)
     return unload_ok
 
-
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
-
     LOGGER.debug("Migrating from version %s", config_entry.version)
-
-    if (
-        config_entry.version > CONF_FLOW_VERSION
-        or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
-    ):
+    if (config_entry.version > CONF_FLOW_VERSION or
+        config_entry.minor_version > CONF_FLOW_MINOR_VERSION):
         LOGGER.debug(
             "Migration to version %s.%s failed. Downgraded ",
             config_entry.version,
