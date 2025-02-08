@@ -80,7 +80,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     # Erstelle die Select-Entität für die Auswahl der Organisation
     organization_select = OrganizationSelectEntity(
         name="Organisation wählen", 
-        options=["THW", "Feuerwehr"],  # Optionen
+        options=["THW", "Feuerwehr", "DRK", "DLRG"],  # Optionen
         initial="THW",  # Standard-Auswahl
     )
 
