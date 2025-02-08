@@ -1,60 +1,131 @@
-DIVERA 24/7 Integration für Home Assistant
+# DIVERA 24/7 Integration für Home Assistant 🚨🔔
+
 Die DIVERA 24/7 Integration für Home Assistant ermöglicht es dir, Daten und Ereignisse von der DIVERA 24/7-Plattform in dein Home Assistant System zu integrieren. Mit dieser Integration kannst du Informationen zu Alarmeinsätzen, Fahrzeugstatus, Benutzerstatus und vieles mehr abrufen.
 
-Features
-Abruf von Alarm- und Notrufereignissen.
-Anzeige von Fahrzeugstatusinformationen.
-Integration von Benutzerdaten, einschließlich Status und Aktivitäten.
-Anzeige von Kalenderereignissen und News.
-Möglichkeit zur Konfiguration mehrerer Einheiten (Cluster) innerhalb eines Accounts.
-Voraussetzungen
-Home Assistant Version 2023.2 oder neuer.
-Ein aktiver DIVERA 24/7 Account.
-Dein DIVERA 24/7 Zugangsschlüssel (zu finden in deinen Benutzer-Einstellungen unter Debug).
-Installation
-1. Installation über HACS (Home Assistant Community Store)
-Öffne Home Assistant und gehe zu HACS.
-Klicke auf "Integrationen" und suche nach "DIVERA 24/7".
-Klicke auf "Installieren" und warte, bis die Installation abgeschlossen ist.
-Nach der Installation wirst du aufgefordert, die Integration zu konfigurieren.
-2. Manuelle Installation
-Lade das Repository herunter:
-bash
-Kopieren
-Bearbeiten
-git clone https://github.com/Loony2392/ha_hacs_divera_247.git
-Kopiere den Ordner custom_components/divera_247 in das Verzeichnis config/custom_components/ deines Home Assistant Setups.
-Starte Home Assistant neu.
-Konfiguration
-Gehe zu Einstellungen > Integrationen in deinem Home Assistant.
-Klicke auf "Integration hinzufügen" und wähle DIVERA 24/7.
-Gib deinen Zugangsschlüssel (Access Key) und die Server-Adresse ein. Weitere Informationen zum Finden des Zugangsschlüssels findest du hier.
-(Optional) Wähle die Einheit (Cluster), die du überwachen möchtest. Standardmäßig wird die Stammeinheit geladen.
-Speichere die Konfiguration und starte Home Assistant neu, wenn du dazu aufgefordert wirst.
-Optionen
+The DIVERA 24/7 integration for Home Assistant allows you to integrate data and events from the DIVERA 24/7 platform into your Home Assistant system. With this integration, you can retrieve information about alarm incidents, vehicle status, user status, and much more.
+
+## Features ⚡
+
+- 🚨 Abruf von Alarm- und Notrufereignissen.  
+  Retrieve alarm and emergency events.
+
+- 🚗 Anzeige von Fahrzeugstatusinformationen.  
+  Display vehicle status information.
+
+- 🧑‍🤝‍🧑 Integration von Benutzerdaten, einschließlich Status und Aktivitäten.  
+  Integration of user data, including status and activities.
+
+- 📅 Anzeige von Kalenderereignissen und News.  
+  Display calendar events and news.
+
+- 🛠️ Möglichkeit zur Konfiguration mehrerer Einheiten (Cluster) innerhalb eines Accounts.  
+  Possibility to configure multiple units (clusters) within one account.
+
+## Voraussetzungen 📋
+
+- 💻 **Home Assistant Version 2023.2** oder neuer.  
+  **Home Assistant version 2023.2** or newer.
+
+- 📝 Ein aktiver **DIVERA 24/7 Account**.  
+  An active **DIVERA 24/7 account**.
+
+- 🔑 Dein DIVERA 24/7 Zugangsschlüssel (zu finden in deinen Benutzer-Einstellungen unter Debug).  
+  Your DIVERA 24/7 access key (found in your user settings under Debug).
+
+## Installation 🔧
+
+### 1. Installation über HACS (Home Assistant Community Store) 📦
+1. Öffne **Home Assistant** und gehe zu **HACS**.  
+   Open **Home Assistant** and go to **HACS**.
+
+2. Klicke auf **"Integrationen"** und suche nach **"DIVERA 24/7"**.  
+   Click on **"Integrations"** and search for **"DIVERA 24/7"**.
+
+3. Klicke auf **"Installieren"** und warte, bis die Installation abgeschlossen ist.  
+   Click **"Install"** and wait for the installation to complete.
+
+4. Nach der Installation wirst du aufgefordert, die Integration zu konfigurieren.  
+   After installation, you will be prompted to configure the integration.
+
+[![HACS Install](https://img.shields.io/badge/HACS-Install-blue.svg)](https://github.com/Loony2392/ha_hacs_divera_247)
+
+### 2. Manuelle Installation 💻
+1. Lade das Repository herunter:  
+   Download the repository:
+
+    ```bash
+    git clone https://github.com/Loony2392/ha_hacs_divera_247.git
+    ```
+
+2. Kopiere den Ordner `custom_components/divera_247` in das Verzeichnis `config/custom_components/` deines Home Assistant Setups.  
+   Copy the folder `custom_components/divera_247` into the `config/custom_components/` directory of your Home Assistant setup.
+
+3. Starte **Home Assistant** neu.  
+   Restart **Home Assistant**.
+
+## Konfiguration ⚙️
+
+1. Gehe zu **Einstellungen > Integrationen** in deinem Home Assistant.  
+   Go to **Settings > Integrations** in your Home Assistant.
+
+2. Klicke auf **"Integration hinzufügen"** und wähle **DIVERA 24/7**.  
+   Click **"Add Integration"** and select **DIVERA 24/7**.
+
+3. Gib deinen Zugangsschlüssel (Access Key) und die Server-Adresse ein. Weitere Informationen zum Finden des Zugangsschlüssels findest du [hier](#).  
+   Enter your access key (Access Key) and the server address. For more information on finding the access key, see [here](#).
+
+4. (Optional) Wähle die Einheit (Cluster), die du überwachen möchtest. Standardmäßig wird die Stammeinheit geladen.  
+   (Optional) Choose the unit (cluster) you want to monitor. The default unit is loaded.
+
+5. Speichere die Konfiguration und starte Home Assistant neu, wenn du dazu aufgefordert wirst.  
+   Save the configuration and restart Home Assistant when prompted.
+
+## Optionen ⚙️
+
 Nach der ersten Konfiguration kannst du die folgenden Optionen anpassen:
 
-Update Intervall: Bestimme das Intervall, in dem die Daten von DIVERA 24/7 aktualisiert werden. Das Intervall muss zwischen 10 und 300 Sekunden liegen.
-Verwendung
-Verfügbare Entitäten
+After the initial configuration, you can adjust the following options:
+
+- ⏱️ **Update Intervall**: Bestimme das Intervall, in dem die Daten von DIVERA 24/7 aktualisiert werden. Das Intervall muss zwischen **10 und 300 Sekunden** liegen.  
+  **Update Interval**: Set the interval at which data from DIVERA 24/7 is updated. The interval must be between **10 and 300 seconds**.
+
+## Verwendung 🛠️
+
+### Verfügbare Entitäten 🔌
+
 Die Integration erstellt mehrere Entitäten, die du in deinen Home Assistant Dashboards verwenden kannst:
 
-Sensoren:
-sensor.letzter_alarm: Zeigt den letzten Alarm an.
-sensor.letzte_news: Zeigt die letzten News von DIVERA 24/7 an.
-sensor.fahrzeug_status_{vehicle_name}: Zeigt den Status eines Fahrzeugs an.
-Binary Sensoren:
-binary_sensor.aktiver_alarm: Zeigt an, ob ein Alarm aktiv ist.
-Select:
-select.benutzer_status: Zeigt den aktuellen Benutzerstatus an.
-Kalender:
-calendar.termine: Zeigt alle kommenden Termine an.
-Automationen und Benachrichtigungen
+The integration creates several entities that you can use in your Home Assistant dashboards:
+
+- 🕰️ **Sensoren**:
+  - `sensor.letzter_alarm`: Zeigt den letzten Alarm an.  
+    `sensor.last_alarm`: Shows the last alarm.
+
+  - `sensor.letzte_news`: Zeigt die letzten News von DIVERA 24/7 an.  
+    `sensor.latest_news`: Shows the latest news from DIVERA 24/7.
+
+  - `sensor.fahrzeug_status_{vehicle_name}`: Zeigt den Status eines Fahrzeugs an.  
+    `sensor.vehicle_status_{vehicle_name}`: Shows the status of a vehicle.
+
+- 🚨 **Binary Sensoren**:
+  - `binary_sensor.aktiver_alarm`: Zeigt an, ob ein Alarm aktiv ist.  
+    `binary_sensor.active_alarm`: Shows if an alarm is active.
+
+- 🧑‍🤝‍🧑 **Select**:
+  - `select.benutzer_status`: Zeigt den aktuellen Benutzerstatus an.  
+    `select.user_status`: Displays the current user status.
+
+- 📅 **Kalender**:
+  - `calendar.termine`: Zeigt alle kommenden Termine an.  
+    `calendar.events`: Shows all upcoming events.
+
+### Automationen und Benachrichtigungen 🔔
+
 Du kannst Automationen und Benachrichtigungen erstellen, die auf den Status von Alarmen, Fahrzeugen oder Benutzern reagieren. Beispiel:
 
-yaml
-Kopieren
-Bearbeiten
+You can create automations and notifications that respond to the status of alarms, vehicles, or users. Example:
+
+```yaml
 automation:
   - alias: "Benachrichtigung bei Alarm"
     trigger:
@@ -64,21 +135,33 @@ automation:
     action:
       service: notify.notify
       message: "Es wurde ein aktiver Alarm ausgelöst!"
-Fehlerbehebung
-Verbindungsfehler: Überprüfe, ob die angegebene Server-Adresse korrekt ist und dass dein Zugangsschlüssel gültig ist.
-Authentifizierungsfehler: Stelle sicher, dass du den richtigen Zugangsschlüssel verwendest. Du findest diesen in den Debug-Einstellungen deines DIVERA 24/7 Accounts.
-Allgemeine Fehler: Wenn der Fehler weiterhin besteht, starte Home Assistant neu oder wende dich an die Community auf Home Assistant Community Forum.
-Beitragen
-Wenn du Verbesserungen oder Fehlerbehebungen für diese Integration einreichen möchtest, öffne einen Pull Request (PR). Sieh dir bitte unsere Contributing Guidelines an, bevor du mit dem Beitrag beginnst.
+```
+Fehlerbehebung 🛠️  
+🔌 Verbindungsfehler: Überprüfe, ob die angegebene Server-Adresse korrekt ist und dass dein Zugangsschlüssel gültig ist.  
+Connection error: Check if the provided server address is correct and if your access key is valid.
 
-Lizenz
-Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe die Datei LICENSE für weitere Details.
+🔑 Authentifizierungsfehler: Stelle sicher, dass du den richtigen Zugangsschlüssel verwendest. Du findest diesen in den Debug-Einstellungen deines DIVERA 24/7 Accounts.  
+Authentication error: Make sure you're using the correct access key. You can find it in the Debug settings of your DIVERA 24/7 account.
 
-Hilfe und Unterstützung
-Besuche das Home Assistant Forum für allgemeine Unterstützung und Diskussionen.
-Melde Fehler oder schlage neue Funktionen auf GitHub Issues vor.
-Viel Spaß mit der DIVERA 24/7 Integration! 😎
+⚠️ Allgemeine Fehler: Wenn der Fehler weiterhin besteht, starte Home Assistant neu oder wende dich an die Community auf Home Assistant Community Forum.  
+General errors: If the error persists, restart Home Assistant or contact the community at the Home Assistant Community Forum.
 
-Zusätzliche Hinweise
-Unterstützte Home Assistant Versionen: Die Integration ist mit allen Versionen von Home Assistant kompatibel, die Custom Components unterstützen.
-Zukunftspläne: Weitere Funktionen wie Echtzeit-Benachrichtigungen und erweiterte API-Integration werden in zukünftigen Versionen erwartet.
+## Beitragen 🤝  
+Wenn du Verbesserungen oder Fehlerbehebungen für diese Integration einreichen möchtest, öffne einen Pull Request (PR). Sieh dir bitte unsere Contributing Guidelines an, bevor du mit dem Beitrag beginnst.  
+If you'd like to contribute improvements or bug fixes for this integration, open a Pull Request (PR). Please review our Contributing Guidelines before starting your contribution.
+
+## Hilfe und Unterstützung 🤗  
+Besuche das Home Assistant Forum für allgemeine Unterstützung und Diskussionen.  
+Visit the Home Assistant Forum for general support and discussions.
+
+Melde Fehler oder schlage neue Funktionen auf GitHub Issues vor.  
+Report bugs or suggest new features on GitHub Issues.
+
+## Viel Spaß mit der DIVERA 24/7 Integration! 😎  
+Enjoy the DIVERA 24/7 integration! 😎
+
+---
+
+## Zusätzliche Hinweise 💡  
+✅ Unterstützte Home Assistant Versionen: Die Integration ist mit allen Versionen von Home Assistant kompatibel, die Custom Components unterstützen.  
+Supported Home Assistant Versions: The integration is compatible with all versions of Home Assistant that support custom components.
