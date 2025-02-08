@@ -70,7 +70,7 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 4. Nach der Installation wirst du aufgefordert, die Integration zu konfigurieren.  
    After installation, you will be prompted to configure the integration.
 
-[![HACS Install](https://img.shields.io/badge/HACS-Install-blue.svg)](https://github.com/Loony2392/ha_hacs_divera_247)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=loony2392&repository=ha_hacs_divera_247&category=Integration)
 
 ### 2. Manuelle Installation 💻
 1. Lade das Repository herunter:  
