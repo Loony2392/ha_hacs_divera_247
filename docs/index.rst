@@ -1,22 +1,32 @@
-.. Divera 24/7 documentation master file, created by sphinx-quickstart.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. Divera 24/7 Documentation Master File
+   (Created with Sphinx-Quickstart)
 
-Willkommen zur Dokumentation der Divera 24/7 Home Assistant Integration!
-==========================================================================
+🚀 **Willkommen zur Divera 24/7 Home Assistant Integration!**
+================================================================
 
-Diese Dokumentation beschreibt die Installation, Konfiguration und Nutzung der
-Divera 24/7 Integration für Home Assistant.
+Diese Dokumentation liefert dir alle Informationen rund um die Installation, Konfiguration, Nutzung und Weiterentwicklung der Divera 24/7 Integration.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Inhalte:
+   :caption: 📚 Inhalte
 
+   anforderungen
+   vorbereitungen
    installation
-   usage
+   inbetriebnahme
+   konfiguration
+   automationen
+   visualisierungen
+   updates
+   changelog
+   faq
+   troubleshooting
+   erweiterte_funktionen
 
-Indices und Tabellen
-====================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+---
+
+Indizes und Tabellen
+=====================
+* :ref:`genindex` – Allgemeiner Themenindex 📖
+* :ref:`modindex` – Modulübersicht 🧩
+* :ref:`search`   – Suchfunktion 🔍
