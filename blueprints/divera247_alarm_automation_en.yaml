@@ -1,0 +1,74 @@
+blueprint:
+  name: Divera Alarm Automation (English)
+  description: Automate actions when a Divera alarm is triggered.
+  domain: automation
+  author: YourName
+  source_url: https://github.com/YourGitHubRepo/your-blueprint-en.yaml
+  homeassistant:
+    min_version: 2022.4.0
+  input:
+    divera_sensor_module:
+      name: Divera Alarm Sensor
+      description: The sensor that shows the current Divera alarm state.
+      selector:
+        entity:
+          integration: divera
+          domain:
+            - sensor
+          multiple: true
+    self_addressed:
+      name: Self Addressed
+      description: Check if the alarm addresses me directly.
+      selector:
+        boolean: {}
+      default: true
+    abort_keyword:
+      name: (optional) Abort Keyword
+      description:
+        "(optional) Alarm title/keyword when the action should not be triggered. E.g., Probealarm"
+      default: ""
+      selector:
+        text:
+          multiline: false
+          multiple: false
+    action_to_execute:
+      name: Action
+      description: What should happen when a new Divera alarm is triggered?
+      selector:
+        action: {}
+mode: parallel
+max: 10
+variables:
+  self_addressed: !input self_addressed
+trigger:
+  - platform: state
+    entity_id: !input divera_sensor_module
+    attribute: id
+    not_to:
+      - unknown
+condition:
+  condition: and
+  conditions:
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: !input divera_sensor_module
+          state:
+            - !input abort_keyword
+            - unknown
+    - condition: or
+      conditions:
+        - condition: template
+          value_template: "{{ not self_addressed }}"
+        - condition: state
+          entity_id: !input divera_sensor_module
+          attribute: self_addressed
+          state: true
+    - condition: state
+      entity_id: !input divera_sensor_module
+      attribute: closed
+      state: false
+action:
+  - service: notify.notify
+    data:
+      message: "Alarm triggered! Please check immediately!"
