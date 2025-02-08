@@ -14,8 +14,12 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 
 ### Verfügbare Organisationseinheiten:
 
-- ![THW Icon](https://img.shields.io/badge/THW-Organisation-blue?style=for-the-badge&logo=github)
-- ![Feuerwehr Icon](https://img.shields.io/badge/Feuerwehr-Organisation-red?style=for-the-badge&logo=github)
+#### THW
+<img src="https://commons.wikimedia.org/wiki/File:Thw.logo.svg" alt="THW Logo" width="50" height="50"> **THW**
+
+#### Feuerwehr
+<img src="https://imgs.search.brave.com/i7OXzyBbw52wQ0InMr1Bt_iypcGLktxh39J6d79kJQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZmV1ZXJ3ZWhyLW5l/dXNhZXNzLmRlL3dw/LWNvbnRlbnQvdGhl/bWVzL2ZmbjE4L2lt/Zy91ZWJlcnVucy9h/dWZnYWJlbi9GZXVl/cndlaHJfUkxCU19M/b2dvLnN2Zw" alt="Feuerwehr Logo" width="50" height="50"> **Feuerwehr**
+
 
 ### So funktioniert es:
 
