@@ -63,7 +63,7 @@ jobs:
           coverage report -m
 
   docs:
-    name: 📚 Documentation
+    name: 📚 Generate Documentation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -72,9 +72,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
-      - name: Install Documentation Tools
+      - name: Install Towncrier and Documentation Tools
         run: |
-          pip install sphinx sphinx_rtd_theme
+          pip install towncrier sphinx sphinx_rtd_theme
+      - name: Generate Changelog
+        run: towncrier --yes
       - name: Build Documentation
         run: make -C docs html
 
