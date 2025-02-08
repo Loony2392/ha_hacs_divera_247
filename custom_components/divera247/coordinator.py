@@ -47,7 +47,7 @@ class DiveraCoordinator(DataUpdateCoordinator):
         super().__init__(
             hass,
             LOGGER,
-            name=f"Divera Coordinator {ucr_id}",
+            name=f"DIVERA Coordinator {ucr_id}",
             update_interval=timedelta(seconds=update_interval),
         )
         self.divera_client = DiveraClient(
