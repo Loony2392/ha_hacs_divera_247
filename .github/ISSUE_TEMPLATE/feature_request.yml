@@ -1,0 +1,64 @@
+---
+name: "Feature Request für DIVERA 24/7 Integration"
+description: "Schlage eine neue Idee oder Funktion für die DIVERA 24/7 Integration vor."
+labels: 
+  - "Feature Request"
+  - "DIVERA 24/7"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Bevor du eine neue Feature-Anfrage erstellst**, stelle sicher, dass du bereits nach bestehenden Anfragen gesucht hast, um doppelte Meldungen zu vermeiden.
+
+        Falls du eine ähnliche Idee hast, stelle sicher, dass du auf den bestehenden Issue verweist. Dies hilft, Redundanzen zu vermeiden.
+
+        ---
+        
+        **Before submitting a new feature request**, make sure you have already searched for existing requests to avoid duplicate reports.
+
+        If you have a similar idea, make sure to reference the existing issue. This helps avoid redundancies.
+
+  - type: checkboxes
+    attributes:
+      label: "Checkliste / Checklist"
+      options:
+        - label: "Ich habe das Template vollständig ausgefüllt. / I have filled out the template to the best of my ability."
+          required: true
+        - label: "Dies enthält nur eine Feature-Anfrage. (Wenn du mehrere Anfragen hast, öffne bitte für jede eine eigene Anfrage.) / This contains only 1 feature request. (If you have multiple feature requests, open one feature request for each.)"
+          required: true
+        - label: "Diese Anfrage ist kein Duplikat einer [vorherigen Feature-Anfrage](https://github.com/ludeeus/integration_blueprint/issues?q=is%3Aissue+label%3A%22Feature+Request%22+). / This feature request is not a duplicate of [previous feature requests](https://github.com/ludeeus/integration_blueprint/issues?q=is%3Aissue+label%3A%22Feature+Request%22+)."
+          required: true
+
+  - type: textarea
+    attributes:
+      label: "Hängt deine Feature-Anfrage mit einem Problem zusammen? Bitte beschreibe es. / Is your feature request related to a problem? Please describe."
+      description: |
+        Eine klare und präzise Beschreibung des Problems, das du mit der bestehenden Funktionalität hast. / A clear and concise description of the problem you are facing with the current functionality.
+      placeholder: |
+        Ich bin immer frustriert, wenn [...] / I'm always frustrated when [...]
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Beschreibe die Lösung, die du dir wünschst / Describe the solution you'd like"
+      description: |
+        Eine klare und präzise Beschreibung der Funktionalität, die du gerne hättest. / A clear and concise description of the functionality you'd like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Beschreibe Alternativen, die du in Betracht gezogen hast / Describe alternatives you've considered"
+      description: |
+        Eine klare und präzise Beschreibung von alternativen Lösungen oder Funktionen, die du in Erwägung gezogen hast. / A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Zusätzlicher Kontext / Additional context"
+      description: |
+        Füge jeglichen weiteren Kontext oder Screenshots zur Feature-Anfrage hinzu. / Add any other context or screenshots about the feature request here.
+    validations:
+      required: true

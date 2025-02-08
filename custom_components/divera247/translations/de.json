@@ -1,0 +1,82 @@
+{
+  "title": "Divera 24/7",
+  "config": {
+    "step": {
+      "api": {
+        "title": "Divera 24/7 Einrichtung",
+        "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
+        "data": {
+          "accesskey": "Accesskey",
+          "base_url": "Die Serveradresse von DIVERA 24/7 (in der Regel unverändert lassen)"
+        }
+      },
+      "user_cluster_relation": {
+        "data": {
+          "clusters": "Aktive Einheiten:"
+        },
+        "description": "Ein DIVERA 24/7 Account kann mehrere Einheiten gleichzeitig haben. Standardmäßig wird nur die Stammeinheit geladen."
+      },
+      "reconfigure_confirm": {
+        "data": {
+          "clusters": "Aktive Einheiten:"
+        },
+        "description": "Rekonfigurieren Sie den Eintrag für ihren Benutzer."
+      }
+    },
+    "error": {
+      "cannot_connect": "Fehler bei der Verbindung.",
+      "authentication": "Fehler bei der Authentifizierung.",
+      "unknown": "Unbekannter Fehler"
+    },
+    "abort": {
+      "already_configured": "Dieser Benutzer ist bereits konfiguriert.",
+      "reconfigure_successful": "Rekonfigurieren erfolgreich.",
+      "only_one_unit": "Dieser Benutzer hat nur eine Einheit.",
+      "not_supported": "Dieser Accesskey wird nicht unterstüzt. Bitte verwende den Accesskey eines Benutzers."
+    }
+  },
+  "options": {
+    "step": {
+      "scan_interval": {
+        "title": "Divera 24/7 Optionen",
+        "description": "Das Update Interval muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Interval führt evt. zu Problemen.",
+        "data": {
+          "scan_interval": "Update Interval (Sekunden)"
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "user_state_error": {
+      "message": "Fehler beim Ändern des Benutzer Status von {cluster_name}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "alarm": {
+        "name": "letzter Alarm"
+      },
+      "news": {
+        "name": "letzte News"
+      },
+      "vehicle": {
+        "name": "Fahrzeug Status {vehicle_name}"
+      }
+    },
+    "binary_sensor": {
+      "active_alarm": {
+        "name": "Aktiver Alarm"
+      }
+    },
+    "select": {
+      "user_status": {
+        "name": "Benutzer Status"
+      }
+    },
+    "calendar": {
+      "events": {
+        "name": "Termine"
+      }
+    }
+  }
+}

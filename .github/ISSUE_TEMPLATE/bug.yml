@@ -1,0 +1,96 @@
+---
+name: "Bug Report für DIVERA 24/7 Integration"
+description: "Melde einen Fehler mit der DIVERA 24/7 Integration."
+labels: 
+  - "Bug"
+  - "DIVERA 24/7"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Bevor du ein neues Issue erstellst**, stelle sicher, dass du bereits nach bestehenden Issues gesucht hast, um doppelte Meldungen zu vermeiden. 
+
+        Falls der Fehler weiterhin besteht, gib bitte so viele Details wie möglich an. Dies hilft uns, das Problem schneller zu identifizieren und zu beheben.
+
+        **Stelle sicher, dass du alle nachfolgenden Schritte vollständig ausfüllst**, andernfalls kann dein Issue geschlossen werden.
+
+        ---
+        
+        **Before you open a new issue**, make sure you have already searched through the existing issues to avoid duplicate reports.
+
+        If the issue persists, please provide as many details as possible. This will help us identify and resolve the issue more quickly.
+
+        **Please ensure you fill out all the following steps fully**, otherwise your issue may be closed.
+
+  - type: textarea
+    attributes:
+      label: "System Health Details / System Health Details"
+      description: |
+        Füge die System Health-Daten aus Home Assistant hier ein. Du kannst diese Daten über die System Health-Karte im Home Assistant unter 'Einstellungen' -> 'System' -> 'System Health' einsehen.
+
+        Please paste the System Health data from Home Assistant here. You can find this data under 'Settings' -> 'System' -> 'System Health' in Home Assistant.
+      validations:
+        required: true
+
+  - type: checkboxes
+    attributes:
+      label: "Checkliste / Checklist"
+      options:
+        - label: "Ich habe Debug-Logging für meine Installation aktiviert. / I have enabled debug logging for my installation."
+          required: true
+        - label: "Ich habe das Issue-Template vollständig ausgefüllt. / I have filled out the issue template completely."
+          required: true
+        - label: "Dieses Issue beschreibt nur 1 Problem. (Falls du mehrere Probleme hast, öffne bitte für jedes ein eigenes Issue.) / This issue describes only 1 problem. (If you have multiple problems, please open a separate issue for each one.)"
+          required: true
+        - label: "Dieses Issue ist kein Duplikat eines bestehenden Issues. / This issue is not a duplicate of an existing issue."
+          required: true
+
+  - type: textarea
+    attributes:
+      label: "Beschreibe das Problem / Describe the issue"
+      description: |
+        Gib eine klare und präzise Beschreibung des Problems, das du erlebst. / Provide a clear and concise description of the issue you are experiencing.
+      validations:
+        required: true
+
+  - type: textarea
+    attributes:
+      label: "Schritte zur Reproduktion / Reproduction steps"
+      description: |
+        **Ohne klare Reproduktionsschritte** wird es schwer, das Problem zu beheben. Achte darauf, so detailliert wie möglich zu sein, damit wir den Fehler nachvollziehen können. 
+        Issues ohne Reproduktionsschritte werden in der Regel geschlossen.
+
+        **Without clear reproduction steps**, it will be hard to fix the issue. Be as detailed as possible so we can reproduce the problem.
+        Issues without reproduction steps will generally be closed.
+      value: |
+        1. Schritt 1 / Step 1
+        2. Schritt 2 / Step 2
+        3. Schritt 3 / Step 3
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Debug-Logs / Debug logs"
+      description: |
+        **Bitte aktiviere Debug-Logs** gemäß dieser [Anleitung](https://www.home-assistant.io/integrations/logger/), damit wir alle relevanten Log-Daten erhalten.
+        Das Protokoll sollte alles abdecken, von dem Start von Home Assistant bis zu dem Punkt, an dem der Fehler auftritt.
+        **Wichtig**: Ohne vollständige Debug-Logs können wir das Problem nicht effizient beheben.
+
+        **Please enable debug logs** following this [guide](https://www.home-assistant.io/integrations/logger/), so we get all relevant log data.
+        The log should cover everything from the startup of Home Assistant to the point where the issue occurs.
+        **Important**: Without complete debug logs, we cannot effectively fix the issue.
+    render: text
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Diagnose-Dump / Diagnostics dump"
+      description: |
+        Ziehe die Diagnose-Datei hier hinein. Weitere Informationen findest du in der [Home Assistant Dokumentation für Diagnosen](https://www.home-assistant.io/integrations/diagnostics/).
+
+        Drag the diagnostics dump file here. More information can be found in the [Home Assistant diagnostics documentation](https://www.home-assistant.io/integrations/diagnostics/).
+    validations:
+      required: false
