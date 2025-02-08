@@ -1,11 +1,11 @@
 """Divera 24/7 Component."""
 
 import asyncio
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.components.select import SelectEntity
 
 from .const import (
     CONF_FLOW_MINOR_VERSION,
@@ -29,17 +29,42 @@ PLATFORMS = [
 ]
 
 
+# Diese Klasse stellt die Organisations-Auswahl als Select-Entität dar
+class OrganizationSelectEntity(SelectEntity):
+    """Repräsentiert die Organisations-Auswahl als Select-Entität."""
+
+    def __init__(self, name, options, initial):
+        self._name = name
+        self._options = options
+        self._current_value = initial
+
+    @property
+    def name(self):
+        """Gibt den Namen der Entität zurück."""
+        return self._name
+
+    @property
+    def current_option(self):
+        """Gibt die aktuell gewählte Option zurück."""
+        return self._current_value
+
+    @property
+    def options(self):
+        """Gibt die möglichen Optionen zurück."""
+        return self._options
+
+    async def async_select_option(self, option: str) -> None:
+        """Ändert die aktuell gewählte Option."""
+        self._current_value = option
+        self.async_write_ha_state()
+
+
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
-    """Set up Divera as config entry.
+    """Set up Divera as config entry."""
 
-    Args:
-        hass (HomeAssistant): The Home Assistant instance.
-        entry (ConfigEntry): The config entry for Divera.
-
-    """
     accesskey: str = entry.data.get(DATA_ACCESSKEY)
     ucr_ids = entry.data.get(DATA_UCRS)
     base_url = entry.data.get(DATA_BASE_URL, DIVERA_BASE_URL)
@@ -50,6 +75,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     websession = async_get_clientsession(hass)
     tasks = []
     coordinators = {}
+
+    # Erstelle die Select-Entität für die Auswahl der Organisation
+    organization_select = OrganizationSelectEntity(
+        name="Organisation wählen", 
+        options=["THW", "Feuerwehr"],  # Optionen
+        initial="THW",  # Standard-Auswahl
+    )
+
+    # Füge die Entität zu den Hass-Daten hinzu
+    hass.data[DOMAIN]["organization_select"] = organization_select
 
     for ucr_id in ucr_ids:
         divera_coordinator = DiveraCoordinator(
@@ -71,27 +106,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
 
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    """Asynchronous update listener.
+    """Asynchronous update listener."""
 
-    Args:
-        hass (HomeAssistant): Home Assistant instance.
-        entry (ConfigEntry): Configuration entry to update.
-
-    """
     await hass.config_entries.async_reload(entry_id=entry.entry_id)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Unload Divera config entry.
+    """Unload Divera config entry."""
 
-    Args:
-        hass (HomeAssistant): The Home Assistant instance.
-        entry (ConfigEntry): The config entry to unload.
-
-    Returns:
-        bool: True if unloading was successful, False otherwise.
-
-    """
     unload_ok = all(
         await asyncio.gather(
             *[
@@ -108,16 +130,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
-    """Migrate old entry.
-
-    Args:
-        hass (HomeAssistant): The Home Assistant instance.
-        config_entry (ConfigEntry): The config entry to migrate.
-
-    Returns:
-        bool: True if migration was successful, False otherwise.
-
-    """
+    """Migrate old entry."""
 
     LOGGER.debug("Migrating from version %s", config_entry.version)
 
@@ -125,7 +138,6 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         config_entry.version > CONF_FLOW_VERSION
         or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
     ):
-        # This means the user has downgraded from a future version
         LOGGER.debug(
             "Migration to version %s.%s failed. Downgraded ",
             config_entry.version,
