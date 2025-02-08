@@ -26,6 +26,7 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 <img src="https://imgs.search.brave.com/99MOXySJPhLWgLgJ_xzVWDzpxL44A__CMkM3jBxLxCc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZGUvZC9kMS9E/UkstUnVuZGxvZ28u/cG5n" alt="DRK Logo" width="50" height="50">
 [![Nicht verfügbar](https://img.shields.io/badge/Status-Nicht%20verfügbar-red?style=flat)]
 
+
 ### So funktioniert es:
 
 1. **Konfiguration:** Gehe zu den **Home Assistant**-Einstellungen und suche nach der DIVERA 24/7 Integration.
