@@ -86,7 +86,6 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
             DeviceInfo: Device information object.
 
         """
-        # TODO Configuration Url anpassen je nach Divera Server #108
         config_url = DIVERA_BASE_URL
         version = self.coordinator.data.get_cluster_version()
         return DeviceInfo(
