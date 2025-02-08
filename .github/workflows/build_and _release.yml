@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    name: 🔍 Linting & Static Analysis
+    name: "🔍 Linting & Static Analysis"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -25,7 +25,7 @@ jobs:
         run: flake8 .
 
   tests:
-    name: ✅ Unit Tests
+    name: "✅ Unit Tests"
     runs-on: ubuntu-latest
     needs: lint
     steps:
@@ -43,7 +43,7 @@ jobs:
         run: pytest
 
   coverage:
-    name: 📊 Code Coverage
+    name: "📊 Code Coverage"
     runs-on: ubuntu-latest
     needs: tests
     steps:
@@ -63,7 +63,7 @@ jobs:
           coverage report -m
 
   docs:
-    name: 📚 Generate Documentation
+    name: "📚 Generate Documentation"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -72,6 +72,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
+      - name: Install Custom Component
+        run: pip install -e custom_components/divera247
       - name: Install Towncrier and Documentation Tools
         run: |
           pip install towncrier sphinx sphinx_rtd_theme
@@ -81,7 +83,7 @@ jobs:
         run: make -C docs html
 
   release:
-    name: 🚀 Create Release
+    name: "🚀 Create Release"
     runs-on: ubuntu-latest
     needs: coverage
     if: startsWith(github.ref, 'refs/tags/')
