@@ -5,7 +5,7 @@ from datetime import timedelta
 from aiohttp import ClientSession
 
 from custom_components.divera247.const import DEFAULT_SCAN_INTERVAL, LOGGER
-from custom_components.divera247 import (
+from custom_components.divera247.divera247 import (
     DiveraAuthError,
     DiveraClient,
     DiveraConnectionError,
