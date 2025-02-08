@@ -1,0 +1,30 @@
+name: Update README with Docs Link
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bash (optional)
+        run: echo "Running in Bash"
+
+      - name: Update README with Docs Link
+        run: |
+          REPO_NAME=$(basename "$GITHUB_REPOSITORY")
+          DOCS_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/"
+          echo "Using docs URL: $DOCS_URL"
+          sed -i "s|<DOCS_LINK>|$DOCS_URL|g" README.md
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update docs link in README"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

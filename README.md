@@ -113,7 +113,7 @@ After the initial configuration, you can adjust the following options:
 - ⏱️ **Update Intervall**: Bestimme das Intervall, in dem die Daten von DIVERA 24/7 aktualisiert werden. Das Intervall muss zwischen **10 und 300 Sekunden** liegen.  
   **Update Interval**: Set the interval at which data from DIVERA 24/7 is updated. The interval must be between **10 and 300 seconds**.
 
-## Verwendung 🛠️
+## Verwendung 🛠️ Weitere Informationen findest du in der [Dokumentation](<DOCS_LINK>).
 
 ### Verfügbare Entitäten 🔌
 
