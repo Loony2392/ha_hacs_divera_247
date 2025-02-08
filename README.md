@@ -8,6 +8,21 @@ The DIVERA 24/7 integration for Home Assistant allows you to integrate data and 
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/loony2392/ha_hacs_divera_247/latest/total?style=for-the-badge&label=Downloads%20latest%20Release)
 [![Ko-Fi](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge)](https://ko-fi.com/loony_tech)
 
+## Organisationseinheit Auswahl
+
+Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun die Organisationseinheit auswählen, die sie verwenden möchten. Die Auswahl erfolgt über ein Dropdown-Menü, das bei der Integration konfiguriert wird.
+
+### Verfügbare Organisationseinheiten:
+
+- ![THW Icon](https://img.shields.io/badge/THW-Organisation-blue?style=for-the-badge&logo=github)
+- ![Feuerwehr Icon](https://img.shields.io/badge/Feuerwehr-Organisation-red?style=for-the-badge&logo=github)
+
+### So funktioniert es:
+
+1. **Konfiguration:** Gehe zu den **Home Assistant**-Einstellungen und suche nach der DIVERA 24/7 Integration.
+2. **Wählen Sie Ihre Organisation:** In der Konfiguration kannst du nun die Organisationseinheit aus einem Dropdown-Menü auswählen, z. B. **THW** oder **Feuerwehr**.
+3. **Bilder und Daten:** Nachdem du die Organisation ausgewählt hast, wird die Integration mit den entsprechenden Bildern und Informationen zu deiner Auswahl aktualisiert.
+
 ## Features ⚡
 
 - 🚨 Abruf von Alarm- und Notrufereignissen.  
