@@ -1,4 +1,4 @@
-# <img src="https://www.divera247.com/images/divera247.svg" alt="Feuerwehr Logo" width="200" height="80"> *** Integration für Home Assistant 🚨🔔 ***
+# <img src="https://www.divera247.com/images/divera247.svg" alt="Feuerwehr Logo" width="200" height="80"> Integration für Home Assistant 🚨🔔
 
 Die DIVERA 24/7 Integration für Home Assistant ermöglicht es dir, Daten und Ereignisse von der DIVERA 24/7-Plattform in dein Home Assistant System zu integrieren. Mit dieser Integration kannst du Informationen zu Alarmeinsätzen, Fahrzeugstatus, Benutzerstatus und vieles mehr abrufen.
 
