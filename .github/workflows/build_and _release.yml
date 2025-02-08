@@ -1,86 +1,84 @@
-name: CI Pipeline für Home Assistant Custom Component
+name: CI Pipeline for Home Assistant Custom Component
 
 on:
   push:
     branches: [main]
-    # Für automatisierte Releases: Trigger nur bei Tag-Pushes
     tags:
       - 'v*'
   pull_request:
     branches: [main]
 
 jobs:
-  🔍_lint:
-    name: Linting & Static Analysis
+  lint:
+    name: 🔍 Linting & Static Analysis
     runs-on: ubuntu-latest
     steps:
-      - name: Code Checkout
+      - name: Checkout Code
         uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Installiere Linting-Tools
+      - name: Install Linting Tools
         run: pip install flake8
-      - name: Führe Linting aus
+      - name: Run Linting
         run: flake8 .
 
-  ✅_tests:
-    name: Unit-Tests
+  tests:
+    name: ✅ Unit Tests
     runs-on: ubuntu-latest
-    needs: 🔍_lint
+    needs: lint
     steps:
-      - name: Code Checkout
+      - name: Checkout Code
         uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Installiere Abhängigkeiten und Test-Tools
+      - name: Install Dependencies and Test Tools
         run: |
           pip install -r requirements.txt
           pip install pytest
-      - name: Führe Tests aus
+      - name: Run Tests
         run: pytest
 
-  📊_coverage:
-    name: Code Coverage
+  coverage:
+    name: 📊 Code Coverage
     runs-on: ubuntu-latest
-    needs: ✅_tests
+    needs: tests
     steps:
-      - name: Code Checkout
+      - name: Checkout Code
         uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Installiere Abhängigkeiten und Coverage-Tools
+      - name: Install Dependencies and Coverage Tools
         run: |
           pip install -r requirements.txt
           pip install pytest coverage
-      - name: Führe Coverage aus
+      - name: Run Coverage
         run: |
           coverage run -m pytest
           coverage report -m
 
-  🚀_release:
-    name: Release erstellen
+  release:
+    name: 🚀 Create Release
     runs-on: ubuntu-latest
-    needs: 📊_coverage
-    # Dieser Job wird nur ausgeführt, wenn ein Tag gepusht wird.
+    needs: coverage
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - name: Code Checkout
+      - name: Checkout Code
         uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Erstelle Distributionspakete
+      - name: Build Distribution Packages
         run: python setup.py sdist bdist_wheel
-      - name: Erstelle GitHub Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           files: dist/*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
