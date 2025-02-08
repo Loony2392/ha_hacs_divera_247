@@ -1,0 +1,59 @@
+name: Publish DIVERA 24/7 zip file
+
+on:
+  release:
+    types:
+      - published
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release_zip_file:
+    name: Publish DIVERA 24/7 zip file asset
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: 🛠️ Set up Python
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: "3.12"
+
+      - name: 🔢 Get version
+        if: ${{ github.event_name == 'release' }}
+        id: version
+        uses: home-assistant/actions/helpers/version@master
+
+      - name: 🔢 Set version number
+        if: ${{ github.event_name == 'release' }}
+        run: |
+          sed -i "/MINIMUM_HA_VERSION = /c\MINIMUM_HA_VERSION = \"$(jq .homeassistant -r ${{ github.workspace }}/divera247.json)\"" ${{ github.workspace }}/custom_components/divera247/const.py
+          python3 ${{ github.workspace }}/scripts/update/manifest.py --version ${{ steps.version.outputs.version }}
+
+      - name: 📤 Upload zip to action
+        uses: actions/upload-artifact@v4.6.0
+        if: ${{ github.event_name == 'push' }}
+        with:
+          name: divera247
+          path: ${{ github.workspace }}/custom_components/divera247
+          retention-days: 7
+
+      - name: 📦 ZIP Integration Dir
+        if: ${{ github.event_name == 'release' }}
+        run: |
+          cd ${{ github.workspace }}/custom_components/divera247
+          zip divera247.zip -r ./
+
+      - name: 📤 Upload zip to release
+        uses: softprops/action-gh-release@v2.2.1
+        if: ${{ github.event_name == 'release' }}
+        with:
+          files: ${{ github.workspace }}/custom_components/divera247/divera247.zip

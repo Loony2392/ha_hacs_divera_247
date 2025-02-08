@@ -1,32 +1,73 @@
-name: Home Assistant Integration Test 🔥
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
+bs:
+  legacy:
+    name: With pytest with Home Assistant (min. supported version)
     runs-on: ubuntu-latest
-
     steps:
-      - name: 🔍 Checkout repository
-        uses: actions/checkout@v2
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@v4.2.2
 
-      - name: 🐍 Set up Python 3.9
-        uses: actions/setup-python@v2
+      - name: 🛠️ Set up Python 3.12
+        uses: actions/setup-python@v5.4.0
         with:
-          python-version: '3.9'
+          python-version: "3.12"
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements_core_min.txt
+            requirements_base.txt
+            requirements_test.txt
 
-      - name: ⬆️ Upgrade pip
-        run: python -m pip install --upgrade pip
-
-      - name: 📦 Install test dependencies
+      - name: 📦 Install dependencies
         run: |
-          pip install pytest
-          pip install pytest-homeassistant-custom-component
-          pip install pytest-asyncio
+          scripts/install/pip_packages \
+            --requirement requirements_core_min.txt \
+            --requirement requirements_test.txt
+          scripts/install/frontend
 
-      - name: 🚀 Run tests
-        run: pytest --maxfail=1 --disable-warnings -q
+      - name: ⏲️ Set time zone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Asia/Singapore'
+
+      - name: 🏃 Run tests
+        env:
+          PYTEST: true
+        run: scripts/test
+
+  dev:
+    name: With pytest with Home Assistant (${{ matrix.homeassistant-version }}) & Python (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        homeassistant-version:
+          - "dev"
+        python-version:
+          - "3.13"
+    steps:
+      - name: 📥 Checkout the repository
+        uses: actions/checkout@v4.2.2
+
+      - name: 🛠️ Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5.4.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements_core_min.txt
+            requirements_base.txt
+            requirements_test.txt
+
+      - name: 📦 Install dependencies
+        run: |
+          scripts/install/pip_packages --requirement requirements_test.txt
+          scripts/install/core_dev
+          scripts/install/frontend
+
+      - name: ⏲️ Set time zone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: 'Europe/Berlin'
+
+      - name: 🏃 Run tests
+        env:
+          PYTEST: true
+        run: scripts/test
