@@ -1,8 +1,7 @@
 {
     "name": "DIVERA 24/7",
+    "zip_release": true,
     "hide_default_branch": true,
-    "country": "DE",
-    "content_in_root": false,
-    "zip_release": true
+    "filename": "divera247.zip"
   }
   
