@@ -1,4 +1,4 @@
-name: ✅ Passed: Home Assistant CI/CD
+name: ✅ Home Assistant CI/CD
 
 on:
   push:
