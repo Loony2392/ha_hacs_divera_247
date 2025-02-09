@@ -1,5 +1,5 @@
 ---
-    name: HACS Validation
+    name: ✅ HACS Validation
     
     on:
       pull_request:
