@@ -1,9 +1,8 @@
 {
     "name": "DIVERA 24/7",
-    "render_readme": true,
     "hide_default_branch": true,
     "country": "DE",
     "content_in_root": false,
-    "domains": ["divera247"]
+    "zip_release": true
   }
   
