@@ -7,11 +7,71 @@ on:
       - 'v*'
   pull_request:
     branches: [main]
+  schedule:
+    - cron: "0 3 * * 1"  # Jeden Montag um 03:00 UTC automatische Updates
 
 jobs:
+  dependency_update:
+    name: "🔄 Update Dependencies"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install pip-tools
+        run: pip install pip-tools
+
+      - name: Update Dependencies
+        run: |
+          pip-compile --upgrade
+          pip-sync
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-dependencies
+          git add requirements.txt
+          git commit -m "🔄 Auto-update dependencies"
+          git push origin update-dependencies
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "🔄 Auto-update dependencies"
+          body: "This PR updates dependencies to their latest versions."
+          base: main
+          branch: update-dependencies
+          labels: dependencies, automated
+          assignees: ${{ github.actor }}
+
+  format:
+    name: "🎨 Code Formatting"
+    runs-on: ubuntu-latest
+    needs: dependency_update
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+      - name: Install Formatting Tools
+        run: pip install black isort
+      - name: Check Formatting
+        run: |
+          black --check .
+          isort --check-only .
+
   lint:
     name: "🔍 Linting & Static Analysis"
     runs-on: ubuntu-latest
+    needs: format
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -24,10 +84,44 @@ jobs:
       - name: Run Linting
         run: flake8 .
 
+  security_checks:
+    name: "🔒 Security Checks"
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+      - name: Install Security Tools
+        run: pip install bandit safety
+      - name: Run Bandit (Code Security)
+        run: bandit -r .
+      - name: Run Safety (Dependency Security)
+        run: safety check --full-report
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  secrets_scan:
+    name: "🕵️ Secret Scanning"
+    runs-on: ubuntu-latest
+    needs: security_checks
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Install TruffleHog
+        run: pip install trufflehog
+      - name: Scan for Secrets
+        run: trufflehog filesystem --path . --regex --entropy=True
+
   tests:
     name: "✅ Unit Tests"
     runs-on: ubuntu-latest
-    needs: lint
+    needs: secrets_scan
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
