@@ -77,10 +77,7 @@ jobs:
 
       - name: 🔍 Check Formatting
         run: |
-          black .
           black --check .
-          isort .
-          isort --check-only
 
   lint:
     name: "🔍 Linting & Static Analysis"
