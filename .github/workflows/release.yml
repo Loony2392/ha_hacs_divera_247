@@ -121,7 +121,7 @@ jobs:
         run: safety check --full-report
 
       - name: 📦 Dependency Review
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
 
