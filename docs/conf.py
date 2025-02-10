@@ -26,7 +26,7 @@ html_static_path = ['_static']
 
 # -- Internationalization (i18n) settings ------------------------------------
 # Set the default language for the documentation.
-language = 'en'
+language = 'de'
 
 # Specify the directory where the translation files (.po and .mo) are stored.
 locale_dirs = ['locale/']  # Relative to this conf.py file
