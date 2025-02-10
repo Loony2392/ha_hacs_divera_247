@@ -79,7 +79,8 @@ jobs:
         run: |
           black .
           black --check .
-          isort --check-only .
+          isort .
+          isort --check-only
 
   lint:
     name: "🔍 Linting & Static Analysis"
