@@ -14,7 +14,7 @@
         runs-on: ubuntu-latest
         steps:
           - name: ⤵️ Check out code from GitHub
-            uses: actions/checkout@v4.2.2
+            uses: actions/checkout@v4
     
           - name: 🚀 Run HACS validation
             uses: hacs/action@main
