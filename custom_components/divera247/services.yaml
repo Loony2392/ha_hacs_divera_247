@@ -1,2 +1,3 @@
 trigger_probe_alarm:
-  description: "Löst einen Probealarm in Divera 24/7 aus."
+  name: "Trigger Probe Alarm"
+  description: "Triggers a test probe alarm in Divera 24/7."
