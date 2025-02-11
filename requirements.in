@@ -88,7 +88,7 @@ boolean-py==4.0
     # via license-expression
 boto3==1.36.16
     # via pycognito
-botocore==1.36.16
+botocore==1.36.17
     # via
     #   boto3
     #   s3transfer
