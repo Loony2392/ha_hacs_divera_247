@@ -1,0 +1,82 @@
+{
+  "title": "DIVERA 24/7",
+  "config": {
+    "step": {
+      "api": {
+        "title": "DIVERA 24/7 Setup",
+        "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: https://app.divera247.com/account/einstellungen.html",
+        "data": {
+          "accesskey": "Access key",
+          "base_url": "The server address of DIVERA 24/7 (usually left unchanged)"
+        }
+      },
+      "user_cluster_relation": {
+        "data": {
+          "clusters": "Active Units:"
+        },
+        "description": "A DIVERA 24/7 account can have multiple units simultaneously. By default, only the main unit is loaded."
+      },
+      "reconfigure_confirm": {
+        "data": {
+          "clusters": "Active Units:"
+        },
+        "description": "Reconfigure the entry for your user."
+      }
+    },
+    "error": {
+      "cannot_connect": "Connection error.",
+      "authentication": "Authentication error.",
+      "unknown": "Unknown error"
+    },
+    "abort": {
+      "already_configured": "This user is already configured.",
+      "reconfigure_successful": "Reconfiguration successful.",
+      "only_one_unit": "This user has only one unit.",
+      "not_supported": "This access key is not supported. Please use a user’s access key."
+    }
+  },
+  "options": {
+    "step": {
+      "scan_interval": {
+        "title": "DIVERA 24/7 Options",
+        "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval may cause issues.",
+        "data": {
+          "scan_interval": "Update Interval (seconds)"
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "user_state_error": {
+      "message": "Error changing user status for {cluster_name}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "alarm": {
+        "name": "Last alarm"
+      },
+      "news": {
+        "name": "Latest news"
+      },
+      "vehicle": {
+        "name": "Vehicle status {vehicle_name}"
+      }
+    },
+    "binary_sensor": {
+      "active_alarm": {
+        "name": "Active alarm"
+      }
+    },
+    "select": {
+      "user_status": {
+        "name": "User status"
+      }
+    },
+    "calendar": {
+      "events": {
+        "name": "Events"
+      }
+    }
+  }
+}
