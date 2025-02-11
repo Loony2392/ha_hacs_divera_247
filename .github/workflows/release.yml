@@ -72,12 +72,17 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: 🎨 Install Formatting Tools
-        run: pip install black isort
-
-      - name: 🔍 Check Formatting
+      - name: 🎨 Format Code
         run: |
-          black --check .
+          black .
+
+      - name: 🚀 Commit and Push Formatting Fixes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git add .
+          git diff --cached --quiet || git commit -m "🎨 Auto-format code using Black"
+          git push
 
   lint:
     name: "🔍 Linting & Static Analysis"
