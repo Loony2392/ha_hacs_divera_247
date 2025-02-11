@@ -95,8 +95,8 @@ Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun d
 2. Klicke auf **"Integration hinzufügen"** und wähle **DIVERA 24/7**.  
    Click **"Add Integration"** and select **DIVERA 24/7**.
 
-3. Gib deinen Zugangsschlüssel (Access Key) und die Server-Adresse ein. Weitere Informationen zum Finden des Zugangsschlüssels findest du [hier](#).  
-   Enter your access key (Access Key) and the server address. For more information on finding the access key, see [here](#).
+3. Gib deinen Zugangsschlüssel (Access Key) und die Server-Adresse ein. Weitere Informationen zum Finden des Zugangsschlüssels findest du [hier]([#](https://app.divera247.com/account/einstellungen.html)).  
+   Enter your access key (Access Key) and the server address. For more information on finding the access key, see [here](https://app.divera247.com/account/einstellungen.html).
 
 4. (Optional) Wähle die Einheit (Cluster), die du überwachen möchtest. Standardmäßig wird die Stammeinheit geladen.  
    (Optional) Choose the unit (cluster) you want to monitor. The default unit is loaded.
