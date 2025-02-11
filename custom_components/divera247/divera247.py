@@ -787,7 +787,7 @@ class DiveraClient:
 
         LOGGER.warning("Unsupported Usergroup ID: %s", usergroup_id)
         return False
-    
+
     async def trigger_probe_alarm(self):
         """Trigger a test push (probe alarm) via the Divera API."""
         url = f"{self.__base_url}/api/test-push"  # Passe den Endpunkt ggf. an
@@ -795,11 +795,14 @@ class DiveraClient:
         try:
             async with self.__session.post(url, params=params) as response:
                 response.raise_for_status()
-                LOGGER.info("Probealarm successfully triggered: %s", await response.text())
+                LOGGER.info(
+                    "Probealarm successfully triggered: %s", await response.text()
+                )
                 return await response.json()
         except (ClientError, ClientResponseError) as exc:
             LOGGER.error("Failed to trigger probe alarm: %s", exc)
             raise
+
 
 class DiveraError(Exception):
     """Base class for Divera-related exceptions."""
