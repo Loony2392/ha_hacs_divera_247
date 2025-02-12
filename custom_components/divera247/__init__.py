@@ -83,9 +83,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
+
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Asynchronous update listener."""
     await hass.config_entries.async_reload(entry_id=entry.entry_id)
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload Divera config entry."""
@@ -100,6 +102,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
         if not hass.data[DOMAIN]:
             hass.data.pop(DOMAIN)
     return unload_ok
+
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
