@@ -93,8 +93,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload Divera config entry."""
     unload_ok = all(
         await asyncio.gather(
-            *[hass.config_entries.async_forward_entry_unload(entry, component)
-            for component in PLATFORMS]
+            *[
+                hass.config_entries.async_forward_entry_unload(entry, component)
+                for component in PLATFORMS
+            ]
         )
     )
     if unload_ok:
@@ -107,8 +109,10 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
     LOGGER.debug("Migrating from version %s", config_entry.version)
-    if (config_entry.version > CONF_FLOW_VERSION or
-        config_entry.minor_version > CONF_FLOW_MINOR_VERSION):
+    if (
+        config_entry.version > CONF_FLOW_VERSION
+        or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
+    ):
         LOGGER.debug(
             "Migration to version %s.%s failed. Downgraded ",
             config_entry.version,
