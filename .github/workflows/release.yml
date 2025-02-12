@@ -116,7 +116,9 @@ jobs:
       - name: 📦 Dependency Review
         uses: actions/dependency-review-action@v4
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          repo-token: ${{ secrets.GH_TOKEN }}
+          base-ref: ${{ github.event.pull_request.base.ref }}
+          head-ref: ${{ github.event.pull_request.head.ref }}
 
   secrets_scan:
     name: "🕵️ Secret Scanning"
