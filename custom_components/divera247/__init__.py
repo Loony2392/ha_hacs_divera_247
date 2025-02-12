@@ -6,6 +6,7 @@ from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
+
 from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
@@ -20,6 +21,7 @@ from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
 
+
 PLATFORMS = [
     Platform.SELECT,
     Platform.SENSOR,
@@ -28,6 +30,7 @@ PLATFORMS = [
 ]
 
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     """Set up Divera as config entry."""
@@ -59,6 +62,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     await asyncio.wait(tasks)
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
+
     # Registriere den Service zum Auslösen eines Probealarms
     async def trigger_probe_alarm_service(call):
         """Service to trigger a test probe alarm."""
@@ -70,15 +74,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         await divera_client.trigger_probe_alarm()
 
     LOGGER.info("Registering service divera247.trigger_probe_alarm")
-    hass.services.async_register(DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service)
+    hass.services.async_register(
+        DOMAIN,
+        "trigger_probe_alarm",
+        trigger_probe_alarm_service
+        )
 
     # Forward the config entry setups for all platforms (select, sensor, calendar, binary_sensor)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
+
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Asynchronous update listener."""
-    await hass.config_entries.async_reload(entry_id=entry.entry_id)
+    await hass.config_entries.async_reload(
+        entry_id=entry.entry_id
+        )
+
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload Divera config entry."""
@@ -93,6 +105,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
         if not hass.data[DOMAIN]:
             hass.data.pop(DOMAIN)
     return unload_ok
+
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
