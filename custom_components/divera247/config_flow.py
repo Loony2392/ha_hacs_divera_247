@@ -149,7 +149,9 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
 
         """
         errors: dict[str, str] = {}
-        assert self._config_entry
+        if not self._config_entry:
+            errors["base"] = "config_entry_missing"
+            return self.async_abort(reason="config_entry_missing")
 
         try:
             await self._divera_client.pull_data()
