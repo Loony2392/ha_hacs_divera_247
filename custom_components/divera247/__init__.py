@@ -17,7 +17,6 @@ from .const import (
     LOGGER,
 )
 from .coordinator import DiveraCoordinator
-from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
 
