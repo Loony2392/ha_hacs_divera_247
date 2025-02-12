@@ -45,7 +45,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     tasks = []
     coordinators = {}
 
-    # Erstelle eine DiveraClient-Instanz und speichere sie für den Service
+    # Create a DiveraClient instance and store it for the service
     divera_client = DiveraClient(websession, accesskey, base_url=base_url)
     hass.data[DOMAIN]["divera_client"] = divera_client
 
@@ -62,17 +62,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     await asyncio.wait(tasks)
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
-    # Registriere den Service zum Auslösen eines Probealarms
+    # Register the service to trigger a test probe alarm
     async def trigger_probe_alarm_service(call):
         # Service to trigger a test probe alarm
-        LOGGER.info("trigger_probe_alarm_service is being called")
+        LOGGER.info("🔔 trigger_probe_alarm_service is being called")
         divera_client = hass.data[DOMAIN].get("divera_client")
         if divera_client is None:
-            LOGGER.error("No DiveraClient instance available for triggering probe alarm.")
+            LOGGER.error("❌ No DiveraClient instance available for triggering probe alarm.")
             return
         await divera_client.trigger_probe_alarm()
 
-    LOGGER.info("Registering service divera247.trigger_probe_alarm")
+    LOGGER.info("🔔 Registering service divera247.trigger_probe_alarm")
     hass.services.async_register(
         DOMAIN,
         "trigger_probe_alarm",
@@ -108,13 +108,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
-    LOGGER.debug("Migrating from version %s", config_entry.version)
+    LOGGER.debug("🔄 Migrating from version %s", config_entry.version)
     if (
         config_entry.version > CONF_FLOW_VERSION
         or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
     ):
         LOGGER.debug(
-            "Migration to version %s.%s failed. Downgraded ",
+            "❌ Migration to version %s.%s failed. Downgraded ",
             config_entry.version,
             config_entry.minor_version,
         )
@@ -133,7 +133,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
             await divera_client.pull_data()
         except DiveraError:
             LOGGER.debug(
-                "Migration to version %s.%s failed.",
+                "❌ Migration to version %s.%s failed.",
                 config_entry.version,
                 config_entry.minor_version,
             )
@@ -148,7 +148,7 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
         version=CONF_FLOW_VERSION,
     )
     LOGGER.debug(
-        "Migration to version %s.%s successful",
+        "✅ Migration to version %s.%s successful",
         config_entry.version,
         config_entry.minor_version,
     )
