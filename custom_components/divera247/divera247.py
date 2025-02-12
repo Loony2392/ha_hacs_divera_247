@@ -320,8 +320,8 @@ class DiveraClient:
         alarm = self.__data["data"]["alarm"]["items"].get(str(last_alarm_id), {})
 
         cross_unit_meta = alarm.get("cross_unit_meta", {})
-        cross_unit_groups = cross_unit_meta.get("groups", [])
-        cross_unit_clusters = cross_unit_meta.get("clusters", [])
+        cross_unit_groups = cross_unit_meta.get("groups", {})
+        cross_unit_clusters = cross_unit_meta.get("clusters", {})
 
         groups = []
 
@@ -330,7 +330,7 @@ class DiveraClient:
             if group_name is not None:
                 groups.append(group_name)
             else:
-                cug = cross_unit_groups.get(str(group_id))
+                cug = cross_unit_groups.get(str(group_id), {})
                 if cug:
                     cluster_id = cug.get("cluster_id")
                     cluster_name = cross_unit_clusters.get(str(cluster_id), {}).get(
