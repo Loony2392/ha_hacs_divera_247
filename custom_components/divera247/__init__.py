@@ -77,7 +77,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         DOMAIN,
         "trigger_probe_alarm",
         trigger_probe_alarm_service
-        )
+    )
 
     # Forward the config entry setups for all platforms (select, sensor, calendar, binary_sensor)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
@@ -92,7 +92,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[hass.config_entries.async_forward_entry_unload(entry, component)
-              for component in PLATFORMS]
+            for component in PLATFORMS]
         )
     )
     if unload_ok:
