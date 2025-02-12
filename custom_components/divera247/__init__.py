@@ -110,8 +110,8 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
     LOGGER.debug("🔄 Migrating from version %s", config_entry.version)
     if (
-        config_entry.version > CONF_FLOW_VERSION
-        or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
+        config_entry.version > CONF_FLOW_VERSION or
+        config_entry.minor_version > CONF_FLOW_MINOR_VERSION
     ):
         LOGGER.debug(
             "❌ Migration to version %s.%s failed. Downgraded ",
