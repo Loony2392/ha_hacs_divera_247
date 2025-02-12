@@ -8,7 +8,6 @@ from typing import Any
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-#from homeassistant.helpers.typing import StateType
 
 from . import DiveraConfigEntry
 from .coordinator import DiveraCoordinator
