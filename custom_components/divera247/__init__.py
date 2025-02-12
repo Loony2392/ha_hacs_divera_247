@@ -62,10 +62,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     await asyncio.wait(tasks)
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
-
     # Registriere den Service zum Auslösen eines Probealarms
     async def trigger_probe_alarm_service(call):
-        """Service to trigger a test probe alarm."""
+        # Service to trigger a test probe alarm
         LOGGER.info("trigger_probe_alarm_service is being called")
         divera_client = hass.data[DOMAIN].get("divera_client")
         if divera_client is None:
@@ -84,13 +83,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
-
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Asynchronous update listener."""
-    await hass.config_entries.async_reload(
-        entry_id=entry.entry_id
-        )
-
+    await hass.config_entries.async_reload(entry_id=entry.entry_id)
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload Divera config entry."""
@@ -105,7 +100,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
         if not hass.data[DOMAIN]:
             hass.data.pop(DOMAIN)
     return unload_ok
-
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """Migrate old entry."""
