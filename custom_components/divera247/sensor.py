@@ -14,14 +14,11 @@ from .coordinator import DiveraCoordinator
 from .divera247 import DiveraClient
 from .entity import DiveraEntity, DiveraEntityDescription
 
-# -------------------------------------------------------------------
-# Beschreibung für Helfer-Infos (ohne E-Mail)
-# -------------------------------------------------------------------
-
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraHelperEntityDescription(DiveraEntityDescription, SensorEntityDescription):
-    """Description of a Divera helper sensor entity.
+    """
+    Description of a Divera helper sensor entity.
 
     Attributes:
         value_fn (Callable[[DiveraClient, dict], Any]):
@@ -48,7 +45,13 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
 
 
 class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
-    """Sensor representing an individual helper with personal info."""
+    """
+    Sensor representing an individual helper with personal info.
+
+    Attributes:
+        entity_description (DiveraHelperEntityDescription): Description of the sensor.
+        _helper (dict): A dictionary with the helper's data.
+    """
 
     entity_description: DiveraHelperEntityDescription
 
@@ -58,7 +61,8 @@ class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
         helper: dict,
         description: DiveraHelperEntityDescription,
     ) -> None:
-        """Initialize a helper sensor entity.
+        """
+        Initialize a helper sensor entity.
 
         Args:
             coordinator (DiveraCoordinator): The coordinator for the integration.
@@ -69,23 +73,23 @@ class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
         self._helper = helper
 
     def _divera_update(self) -> None:
+        """
+        Update the state of the entity.
+
+        This method is called to update the state of the entity based on the latest data from the coordinator.
+        """
         self._attr_native_value = self.entity_description.value_fn(
             self.coordinator.data, self._helper
         )
-        # Optional: Setze weitere Attribute aus dem Helfer-Dict
         self._attr_extra_state_attributes = self._helper
-
-
-# -------------------------------------------------------------------
-# Sensor für die Anzahl der Helfer pro Status
-# -------------------------------------------------------------------
 
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraStatusCountEntityDescription(
     DiveraEntityDescription, SensorEntityDescription
 ):
-    """Description of a status count sensor.
+    """
+    Description of a status count sensor.
 
     Attributes:
         status (str): The status to count.
@@ -117,7 +121,13 @@ STATUS_SENSORS: tuple[DiveraStatusCountEntityDescription, ...] = (
 
 
 class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
-    """Sensor that counts helpers by a given status."""
+    """
+    Sensor that counts helpers by a given status.
+
+    Attributes:
+        entity_description (DiveraStatusCountEntityDescription): Description of the sensor.
+        _status (str): The status to count.
+    """
 
     entity_description: DiveraStatusCountEntityDescription
 
@@ -126,7 +136,8 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
         coordinator: DiveraCoordinator,
         description: DiveraStatusCountEntityDescription,
     ) -> None:
-        """Initialize a status count sensor.
+        """
+        Initialize a status count sensor.
 
         Args:
             coordinator (DiveraCoordinator): The coordinator for the integration.
@@ -136,15 +147,14 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
         self._status = description.status
 
     def _divera_update(self) -> None:
-        # Angenommen, die Liste der Helfer steht unter dem Schlüssel "helpers" im Daten-Dict
+        """
+        Update the state of the entity.
+
+        This method is called to update the state of the entity based on the latest data from the coordinator.
+        """
         helpers = self.coordinator.data.get("helpers", [])
         count = sum(1 for helper in helpers if helper.get("status") == self._status)
         self._attr_native_value = count
-
-
-# -------------------------------------------------------------------
-# async_setup_entry für Sensoren
-# -------------------------------------------------------------------
 
 
 async def async_setup_entry(
@@ -152,23 +162,28 @@ async def async_setup_entry(
     entry: DiveraConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Divera sensor entities."""
+    """
+    Set up Divera sensor entities.
+
+    Args:
+        hass (HomeAssistant): Home Assistant instance.
+        entry (DiveraConfigEntry): Configuration entry for the integration.
+        async_add_entities (AddEntitiesCallback): Function to add entities.
+    """
     coordinators = entry.runtime_data.coordinators
     entities: list[SensorEntity] = []
 
-    # Erstelle für jeden Helfer individuelle Sensoren (Name und Status)
+    # Create individual sensors for each helper (name and status)
     for ucr_id in coordinators:
         coordinator = coordinators[ucr_id]
-        helpers = coordinator.data.get(
-            "helpers", []
-        )  # Erwartet, dass die Helferdaten hier liegen
+        helpers = coordinator.data.get("helpers", [])
         for helper in helpers:
             for description in HELPER_SENSORS:
                 entities.append(
                     DiveraHelperSensorEntity(coordinator, helper, description)
                 )
 
-    # Erstelle Sensoren, die den Status aggregieren (z.B. Anzahl aktiver Helfer)
+    # Create sensors that aggregate status (e.g., number of active helpers)
     for ucr_id in coordinators:
         coordinator = coordinators[ucr_id]
         for description in STATUS_SENSORS:

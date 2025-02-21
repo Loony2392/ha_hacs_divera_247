@@ -36,20 +36,35 @@ from .divera247 import DiveraAuthError, DiveraClient, DiveraConnectionError
 
 
 class DiveraFlow(FlowHandler):
-    """Flow handler for Divera integration."""
+    """
+    Flow handler for Divera integration.
+
+    This class manages the configuration flow for setting up the Divera integration.
+    """
 
     def __init__(self, config_entry: ConfigEntry = None):
-        """Initialize DiveraFlow.
+        """
+        Initialize DiveraFlow.
 
         Args:
             config_entry (ConfigEntry, optional): Configuration entry for Divera integration. Defaults to None.
-
         """
         self._config_entry: ConfigEntry | None = config_entry
         self._divera_client: DiveraClient | None = None
         self._data: dict[str, Any] = {}
 
     async def _show_clusters_form(self, active_cluster_names, cluster_names, errors):
+        """
+        Show the form to select clusters.
+
+        Args:
+            active_cluster_names (list): List of active cluster names.
+            cluster_names (list): List of all cluster names.
+            errors (dict): Dictionary of errors.
+
+        Returns:
+            dict: The form to present to the user.
+        """
         cluster_schema = Schema(
             {
                 Required(CONF_CLUSTERS, default=active_cluster_names): SelectSelector(
@@ -62,6 +77,15 @@ class DiveraFlow(FlowHandler):
         )
 
     async def _show_api_form(self, errors):
+        """
+        Show the form to enter API details.
+
+        Args:
+            errors (dict): Dictionary of errors.
+
+        Returns:
+            dict: The form to present to the user.
+        """
         api_schema = Schema(
             {
                 Required(CONF_ACCESSKEY, default=""): str,
@@ -75,11 +99,14 @@ class DiveraFlow(FlowHandler):
         )
 
     def create_entry(self, ucr_ids: list[int]):
-        """Create a config entry.
+        """
+        Create a config entry.
+
+        Args:
+            ucr_ids (list[int]): List of UCR IDs.
 
         Returns:
             ConfigEntry: The created config entry.
-
         """
         self._data[DATA_UCRS] = ucr_ids
         self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
@@ -91,10 +118,10 @@ class DiveraFlow(FlowHandler):
 
 @HANDLERS.register(DOMAIN)
 class DiveraConfigFlow(DiveraFlow, ConfigFlow):
-    """Handle a config flow for Divera integration.
+    """
+    Handle a config flow for Divera integration.
 
     This class manages the configuration flow for setting up the Divera integration.
-
     """
 
     VERSION = CONF_FLOW_VERSION
@@ -105,26 +132,26 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         super().__init__()
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None):
-        """Handle the initial step.
+        """
+        Handle the initial step.
 
         Args:
             user_input (dict): User input.
 
         Returns:
             dict: The next step or form to present to the user.
-
         """
         return await self.async_step_api(user_input)
 
     async def async_step_reconfigure(self, user_input: dict[str, Any] | None = None):
-        """Handle the reconfigure step to allow to reconfigure a config entry.
+        """
+        Handle the reconfigure step to allow to reconfigure a config entry.
 
         Args:
             user_input (dict): User input.
 
         Returns:
             dict: The next step or form to present to the user.
-
         """
         self._config_entry = self._get_reconfigure_entry()
 
@@ -139,14 +166,14 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
     async def async_step_reconfigure_confirm(
         self, user_input: dict[str, Any] | None = None
     ):
-        """Handle the reconfigure confirm step to reconfigure active clusters of a config entry.
+        """
+        Handle the reconfigure confirm step to reconfigure active clusters of a config entry.
 
         Args:
             user_input (dict): User input.
 
         Returns:
             ConfigFlowResult: The next step or form to present to the user.
-
         """
         errors: dict[str, str] = {}
         if not self._config_entry:
@@ -190,14 +217,14 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         )
 
     async def async_step_api(self, user_input: dict[str, Any] | None = None):
-        """Handle the API step of the config flow.
+        """
+        Handle the API step of the config flow.
 
         Args:
             user_input (dict[str, Any], optional): User input. Defaults to None.
 
         Returns:
             Dict[str, Any]: Dictionary of step results.
-
         """
         errors: dict[str, str] = {}
 
@@ -230,14 +257,14 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
     async def async_step_user_cluster_relation(
         self, user_input: dict[str, Any] | None = None
     ):
-        """Second step in config flow to select the cluster of the user.
+        """
+        Second step in config flow to select the cluster of the user.
 
         Args:
             user_input (dict): User input.
 
         Returns:
             dict: The next step or form to present to the user.
-
         """
         errors: dict[str, str] = {}
 
@@ -255,12 +282,12 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         )
 
     async def check_unique_id(self):
-        """Check the uniqueness of the unique ID.
+        """
+        Check the uniqueness of the unique ID.
 
         This method retrieves the unique ID based on the user's email,
         sets it as the unique ID for the config entry, and aborts the
         configuration if the unique ID is already configured.
-
         """
         uid = self._divera_client.get_email()
         await self.async_set_unique_id(uid)

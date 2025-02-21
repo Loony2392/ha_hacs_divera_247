@@ -18,25 +18,25 @@ from .divera247 import DiveraClient
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraEntityDescription(EntityDescription):
-    """Description of a Divera entity.
+    """
+    Description of a Divera entity.
 
     Attributes:
         attribute_fn (Callable[[DiveraClient], MutableMapping[str, Any]]):
             Function that returns a mapping of attributes for the entity,
             based on a DiveraClient instance.
-
     """
 
     attribute_fn: Callable[[DiveraClient], MutableMapping[str, Any]]
 
 
 class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
-    """Represents a Divera entity.
+    """
+    Represents a Divera entity.
 
     Attributes:
         entity_description (DiveraEntityDescription):
             Description of the entity.
-
     """
 
     _attr_has_entity_name = True
@@ -45,12 +45,12 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
     def __init__(
         self, coordinator: DiveraCoordinator, description: DiveraEntityDescription
     ) -> None:
-        """Initialize DiveraEntity.
+        """
+        Initialize DiveraEntity.
 
         Args:
             coordinator (DiveraCoordinator): The coordinator managing this entity.
             description (DiveraEntityDescription): Description of the entity.
-
         """
         super().__init__(coordinator)
         self.entity_description = description
@@ -72,19 +72,29 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
 
     @callback
     def _handle_coordinator_update(self) -> None:
+        """
+        Handle updates from the coordinator.
+
+        This method is called when the coordinator has new data.
+        """
         self._divera_update()
         self.async_write_ha_state()
 
     def _divera_update(self) -> None:
+        """
+        Update the state of the entity.
+
+        This method should be implemented by subclasses to update the state of the entity.
+        """
         raise NotImplementedError
 
     @property
     def device_info(self) -> DeviceInfo:
-        """Device information property.
+        """
+        Device information property.
 
         Returns:
             DeviceInfo: Device information object.
-
         """
         config_url = DIVERA_BASE_URL
         version = self.coordinator.data.get_cluster_version()

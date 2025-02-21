@@ -20,7 +20,8 @@ from .entity import DiveraEntity, DiveraEntityDescription
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraSelectEntityDescription(DiveraEntityDescription, SelectEntityDescription):
-    """Description of a selectable Divera entity.
+    """
+    Description of a selectable Divera entity.
 
     Inherits from both DiveraEntityDescription and SelectEntityDescription.
 
@@ -31,7 +32,6 @@ class DiveraSelectEntityDescription(DiveraEntityDescription, SelectEntityDescrip
             Function that returns the list of available options.
         select_option_fn (Callable[[DiveraClient, str], Any]):
             Function that selects an option.
-
     """
 
     current_option_fn: Callable[[DiveraClient], StateType]
@@ -57,13 +57,13 @@ async def async_setup_entry(
     entry: DiveraConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Set up Divera select entities.
+    """
+    Set up Divera select entities.
 
     Args:
         hass (HomeAssistant): Home Assistant instance.
-        entry (ConfigEntry): Configuration entry for the integration.
+        entry (DiveraConfigEntry): Configuration entry for the integration.
         async_add_entities (AddEntitiesCallback): Function to add entities.
-
     """
     coordinators = entry.runtime_data.coordinators
     entities: list[DiveraSelectEntity] = [
@@ -75,14 +75,14 @@ async def async_setup_entry(
 
 
 class DiveraSelectEntity(DiveraEntity, SelectEntity):
-    """Represents a selectable Divera entity.
+    """
+    Represents a selectable Divera entity.
 
     Inherits from both DiveraEntity and SelectEntity.
 
     Attributes:
         entity_description (DiveraSelectEntityDescription):
             Description of the selectable entity.
-
     """
 
     entity_description: DiveraSelectEntityDescription
@@ -92,16 +92,21 @@ class DiveraSelectEntity(DiveraEntity, SelectEntity):
         coordinator: DiveraCoordinator,
         description: DiveraSelectEntityDescription,
     ) -> None:
-        """Initialize DiveraSelectEntity.
+        """
+        Initialize DiveraSelectEntity.
 
         Args:
             coordinator (DiveraCoordinator): The coordinator managing this entity.
             description (DiveraSelectEntityDescription): Description of the selectable entity.
-
         """
         super().__init__(coordinator, description)
 
     def _divera_update(self) -> None:
+        """
+        Update the state of the entity.
+
+        This method is called to update the state of the entity based on the latest data from the coordinator.
+        """
         option = self.entity_description.current_option_fn(self.coordinator.data)
         self._attr_current_option = option
 
@@ -112,14 +117,14 @@ class DiveraSelectEntity(DiveraEntity, SelectEntity):
         self._attr_extra_state_attributes = attributes
 
     async def async_select_option(self, option: str) -> None:
-        """Select an option asynchronously.
+        """
+        Select an option asynchronously.
 
         Args:
             option (str): The option to select.
 
         Raises:
             HomeAssistantError: If an error occurs while selecting the option.
-
         """
         try:
             await self.entity_description.select_option_fn(

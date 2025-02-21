@@ -15,13 +15,13 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 
 class DiveraCoordinator(DataUpdateCoordinator):
-    """Coordinator for updating Divera data.
+    """
+    Coordinator for updating Divera data.
 
     This coordinator manages the update process for Divera data.
 
     Parameters:
         DataUpdateCoordinator: The base class for data update coordinators.
-
     """
 
     def __init__(
@@ -33,7 +33,8 @@ class DiveraCoordinator(DataUpdateCoordinator):
         ucr_id: str,
         update_interval: int = DEFAULT_SCAN_INTERVAL,
     ) -> None:
-        """Initialize DiveraCoordinator.
+        """
+        Initialize DiveraCoordinator.
 
         Args:
             hass: Home Assistant instance.
@@ -42,7 +43,6 @@ class DiveraCoordinator(DataUpdateCoordinator):
             base_url (str): Base URL for Divera API.
             ucr_id (str): Unique identifier for the organization.
             update_interval (int | None, optional): Interval in seconds for updating data. Defaults to DEFAULT_SCAN_INTERVAL.
-
         """
         super().__init__(
             hass,
@@ -55,6 +55,18 @@ class DiveraCoordinator(DataUpdateCoordinator):
         )
 
     async def _async_update_data(self):
+        """
+        Fetch data from Divera API.
+
+        This method is called to fetch the latest data from the Divera API.
+
+        Raises:
+            ConfigEntryAuthFailed: If authentication with the Divera API fails.
+            UpdateFailed: If there is an error communicating with the Divera API.
+
+        Returns:
+            DiveraClient: The Divera client with the latest data.
+        """
         try:
             await self.divera_client.pull_data()
         except DiveraAuthError as err:

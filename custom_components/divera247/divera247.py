@@ -33,14 +33,14 @@ class DiveraClient:
     def __init__(
         self, session: ClientSession, accesskey, base_url=DIVERA_BASE_URL, ucr_id=None
     ) -> None:
-        """Initialize DiveraClient.
+        """
+        Initialize DiveraClient.
 
         Args:
             session (ClientSession): Client session for making HTTP requests.
             accesskey (str): Access key for accessing Divera data.
             base_url (str, optional): Base URL for Divera API. Defaults to DIVERA_BASE_URL.
             ucr_id (str, optional): Unique identifier for the organization. Defaults to None.
-
         """
         self.__session = session
         self.__data = None
@@ -49,14 +49,14 @@ class DiveraClient:
         self.__ucr_id = ucr_id
 
     async def pull_data(self):
-        """Pull data from the Divera API.
+        """
+        Pull data from the Divera API.
 
         Retrieves data from the Divera API and updates the internal data store.
 
         Raises:
             DiveraConnectionError: If an error occurs while connecting to the Divera API.
             DiveraAuthError: If authentication fails while connecting to the Divera API.
-
         """
         url = "".join([self.__base_url, DIVERA_API_PULL_PATH])
         time = int(datetime.now().timestamp())
@@ -85,30 +85,31 @@ class DiveraClient:
             raise DiveraConnectionError from None
 
     def get_base_url(self) -> str:
-        """Get the base URL of the Divera API.
+        """
+        Get the base URL of the Divera API.
 
         Returns:
             str: The base URL.
-
         """
         return self.__base_url
 
     def get_full_name(self) -> str:
-        """Retrieve the full name of the user associated with the data.
+        """
+        Retrieve the full name of the user associated with the data.
 
         Returns:
             str: The full name of the user, combining the first name and last name.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         firstname = self.__data["data"]["user"]["firstname"]
         lastname = self.__data["data"]["user"]["lastname"]
         return firstname + " " + lastname
 
     def get_user(self) -> dict:
-        """Return information about the user.
+        """
+        Return information about the user.
 
         Returns:
             dict: A dictionary containing information about the user including first name, last name,
@@ -116,7 +117,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         data = {}
         data["firstname"] = self.__data["data"]["user"]["firstname"]
@@ -126,7 +126,8 @@ class DiveraClient:
         return data
 
     def get_state_id_by_name(self, name) -> str:
-        """Return the state_id of the given state name.
+        """
+        Return the state_id of the given state name.
 
         Args:
             name (str): The name of the state.
@@ -137,7 +138,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         status = self.__data["data"]["cluster"]["status"]
         status_sorting = self.__data["data"]["cluster"]["statussorting"]
@@ -148,14 +148,14 @@ class DiveraClient:
         raise ValueError(f"State name '{name}' not found.")
 
     def get_all_state_name(self) -> list:
-        """Return the list of all available names of the states.
+        """
+        Return the list of all available names of the states.
 
         Returns:
             list: A list containing all the names of the states.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         states = []
         for state_id in self.__data["data"]["cluster"]["statussorting"]:
@@ -164,20 +164,21 @@ class DiveraClient:
         return states
 
     def get_user_state(self) -> str:
-        """Give the name of the current status of the user.
+        """
+        Give the name of the current status of the user.
 
         Returns:
             str: The name of the current status of the user.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         status_id = self.__data["data"]["status"]["status_id"]
         return self.get_state_name_by_id(status_id)
 
     def get_state_name_by_id(self, status_id) -> str:
-        """Return the name of the state of the user by given id.
+        """
+        Return the name of the state of the user by given id.
 
         Args:
             status_id (int): The ID of the status.
@@ -187,12 +188,12 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["cluster"]["status"][str(status_id)]["name"]
 
     def get_user_state_attributes(self) -> dict:
-        """Return additional information of the user's state.
+        """
+        Return additional information of the user's state.
 
         Returns:
             dict: A dictionary containing additional information of the user's state,
@@ -200,7 +201,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         data = {}
         timestamp = self.__data["data"]["status"]["status_set_date"]
@@ -211,7 +211,8 @@ class DiveraClient:
         return data
 
     def get_last_event(self) -> CalendarEvent | None:
-        """Retrieve the last event from the Divera data.
+        """
+        Retrieve the last event from the Divera data.
 
         This method fetches the last event based on the sorting order defined in the
         Divera data. If there are no events, it returns None.
@@ -219,7 +220,6 @@ class DiveraClient:
         Returns:
             CalendarEvent | None: The last event as a CalendarEvent object if available,
             otherwise None.
-
         """
         sorting_list = self.__data["data"]["events"]["sorting"]
         if sorting_list:
@@ -230,7 +230,8 @@ class DiveraClient:
 
     @staticmethod
     def __map_event_to_calendar(event) -> CalendarEvent:
-        """Map a raw event from Divera data to a CalendarEvent.
+        """
+        Map a raw event from Divera data to a CalendarEvent.
 
         This private method converts a raw event dictionary from the Divera data
         into a CalendarEvent object. It extracts the start and end times, title,
@@ -241,7 +242,6 @@ class DiveraClient:
 
         Returns:
             CalendarEvent: A CalendarEvent object populated with the event data.
-
         """
         timezone = get_default_time_zone()
         start = datetime.fromtimestamp(event.get("start"), tz=timezone)
@@ -258,7 +258,8 @@ class DiveraClient:
     def get_events(
         self, start_date: datetime, end_date: datetime
     ) -> list[CalendarEvent]:
-        """Retrieve all events within a specified date range.
+        """
+        Retrieve all events within a specified date range.
 
         This method fetches all events from the Divera data that fall within the
         specified start and end dates. It uses the sorting order to iterate through
@@ -271,7 +272,6 @@ class DiveraClient:
         Returns:
             list[CalendarEvent]: A list of CalendarEvent objects that fall within
             the specified date range.
-
         """
         sorting_list = self.__data["data"]["events"]["sorting"]
         events = []
@@ -283,14 +283,14 @@ class DiveraClient:
         return events
 
     def has_open_alarms(self) -> bool:
-        """Check if there are any open alarms.
+        """
+        Check if there are any open alarms.
 
         This method iterates through the list of alarm IDs specified in the
         sorting order and checks if any of the corresponding alarms are not closed.
 
         Returns:
             bool: True if there is at least one open alarm; False otherwise.
-
         """
         sorting_list = self.__data["data"]["alarm"]["sorting"]
         items = self.__data["data"]["alarm"]["items"]
@@ -299,7 +299,8 @@ class DiveraClient:
         )
 
     def get_last_alarm_attributes(self) -> dict:
-        """Return additional information of the last alarm.
+        """
+        Return additional information of the last alarm.
 
         Returns information about the most recent alarm, including its attributes like ID,
         text, date, address, location coordinates, groups involved, priority, closed status,
@@ -310,7 +311,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         sorting_list = self.__data["data"]["alarm"]["sorting"]
         if not sorting_list:
@@ -358,14 +358,14 @@ class DiveraClient:
         }
 
     def get_answered_state(self, alarm):
-        """Return the state of the user who answered the alarm.
+        """
+        Return the state of the user who answered the alarm.
 
         Args:
             alarm (dict): The alarm data.
 
         Returns:
             str: The state of the user who answered the alarm.
-
         """
         ucr_id = str(self.get_active_ucr())
         answered = alarm.get("ucr_answered", {})
@@ -376,14 +376,14 @@ class DiveraClient:
         return "not answered"
 
     def get_last_alarm(self) -> dict:
-        """Return information of the last alarm.
+        """
+        Return information of the last alarm.
 
         Returns:
             str: The title of the last alarm, or 'unknown' if no alarm exists.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         sorting_list = self.__data["data"]["alarm"]["sorting"]
         if sorting_list:
@@ -393,14 +393,14 @@ class DiveraClient:
         return STATE_UNKNOWN
 
     def get_last_news(self) -> dict:
-        """Return information of the last news.
+        """
+        Return information of the last news.
 
         Returns:
             str: The title of the last news, or 'unknown' if no news exists.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         sorting_list = self.__data["data"]["news"]["sorting"]
         if sorting_list:
@@ -410,7 +410,8 @@ class DiveraClient:
         return STATE_UNKNOWN
 
     def get_last_news_attributes(self) -> dict:
-        """Return additional information of the last news.
+        """
+        Return additional information of the last news.
 
         This method retrieves the attributes of the most recent news item, including
         its ID, text, date, address, location coordinates, groups involved, new status,
@@ -421,7 +422,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         sorting_list = self.__data["data"]["news"]["sorting"]
         if not sorting_list:
@@ -449,16 +449,17 @@ class DiveraClient:
         }
 
     def get_vehicle_id_list(self):
-        """Retrieve the IDs of all vehicles.
+        """
+        Retrieve the IDs of all vehicles.
 
         Returns:
             list[int]: A list containing all the vehicle IDs.
-
         """
         return list(self.__data["data"]["cluster"]["vehicle"].keys())
 
     def get_vehicle_state(self, vehicle_id: str) -> dict:
-        """Retrieve the state of a vehicle by its ID.
+        """
+        Retrieve the state of a vehicle by its ID.
 
         Args:
             vehicle_id (str): The ID of the vehicle.
@@ -468,7 +469,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the vehicle ID or key 'fmsstatus_id' is not found in the data dictionary.
-
         """
         try:
             vehicle = self.__data["data"]["cluster"]["vehicle"][vehicle_id]
@@ -480,7 +480,8 @@ class DiveraClient:
             return {}
 
     def get_vehicle_attributes(self, vehicle_id: str) -> dict:
-        """Retrieve the status attributes of a vehicle by its ID.
+        """
+        Retrieve the status attributes of a vehicle by its ID.
 
         Args:
             vehicle_id (str): The ID of the vehicle.
@@ -493,7 +494,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         try:
             vehicle_status = self.__data["data"]["cluster"]["vehicle"][vehicle_id]
@@ -519,7 +519,8 @@ class DiveraClient:
             return {}
 
     def get_group_name_by_id(self, group_id):
-        """Return the name from the given group id.
+        """
+        Return the name from the given group id.
 
         Args:
             group_id (int): The ID of the group.
@@ -530,7 +531,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         try:
             group = self.__data["data"]["cluster"]["group"][str(group_id)]
@@ -539,63 +539,63 @@ class DiveraClient:
             return None
 
     def get_default_ucr(self) -> int:
-        """Retrieve the default User Cluster Relation (UCR) associated with the data.
+        """
+        Retrieve the default User Cluster Relation (UCR) associated with the data.
 
         Returns:
             int: The default UCR representing the relation between a user and a cluster.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["ucr_default"]
 
     def get_active_ucr(self) -> int:
-        """Retrieve the active User Cluster Relation (UCR) associated with the data.
+        """
+        Retrieve the active User Cluster Relation (UCR) associated with the data.
 
         Returns:
             int: The active UCR representing the current relation between a user and a cluster.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["ucr_active"]
 
     def get_default_cluster_name(self) -> str:
-        """Retrieve the name of the default cluster associated with the data.
+        """
+        Retrieve the name of the default cluster associated with the data.
 
         Returns:
             str: The name of the default cluster.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         ucr_id = self.get_default_ucr()
         return self.get_cluster_name_from_ucr(ucr_id)
 
     def get_ucr_count(self) -> int:
-        """Return the count of User Cluster Relations (UCRs) associated with the data.
+        """
+        Return the count of User Cluster Relations (UCRs) associated with the data.
 
         Returns:
             int: The count of UCRs.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return len(self.get_all_ucrs())
 
     def get_all_cluster_names(self) -> list:
-        """Return a list of all cluster names associated with the data.
+        """
+        Return a list of all cluster names associated with the data.
 
         Returns:
             list: A list containing all the cluster names.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         ucr_ids = list(self.__data["data"]["ucr"])
         cluster_names = []
@@ -605,31 +605,32 @@ class DiveraClient:
         return cluster_names
 
     def get_all_ucrs(self) -> list:
-        """Retrieve a list of all User Cluster Relations (UCRs) associated with the data.
+        """
+        Retrieve a list of all User Cluster Relations (UCRs) associated with the data.
 
         Returns:
             list: A list containing all the UCR IDs.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return list(self.__data["data"]["ucr"])
 
     def get_cluster_names_from_ucrs(self, ucr_ids: list[int]) -> list[str]:
-        """Get cluster names from a list of UCR IDs.
+        """
+        Get cluster names from a list of UCR IDs.
 
         Args:
             ucr_ids (List[int]): List of UCR IDs.
 
         Returns:
             List[str]: List of cluster names corresponding to the given UCR IDs.
-
         """
         return [self.get_cluster_name_from_ucr(id) for id in ucr_ids]
 
     def get_cluster_name_from_ucr(self, ucr_id) -> str:
-        """Retrieve the name of the cluster associated with the given User Cluster Relation (UCR) ID.
+        """
+        Retrieve the name of the cluster associated with the given User Cluster Relation (UCR) ID.
 
         Args:
             ucr_id (int): The ID of the User Cluster Relation (UCR) to retrieve the cluster name for.
@@ -639,12 +640,12 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["ucr"][str(ucr_id)]["name"]
 
     def get_cluster_id_from_ucr(self, ucr_id) -> int:
-        """Retrieve the ID of the cluster associated with the given User Cluster Relation (UCR) ID.
+        """
+        Retrieve the ID of the cluster associated with the given User Cluster Relation (UCR) ID.
 
         Args:
             ucr_id (int): The ID of the User Cluster Relation (UCR) to retrieve the cluster ID for.
@@ -654,12 +655,12 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["ucr"][str(ucr_id)]["cluster_id"]
 
     def get_ucr_ids(self, ucr_names) -> list:
-        """Retrieve the IDs of User Cluster Relations (UCRs) associated with the given names.
+        """
+        Retrieve the IDs of User Cluster Relations (UCRs) associated with the given names.
 
         Args:
             ucr_names (list): A list of UCR names.
@@ -669,7 +670,6 @@ class DiveraClient:
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         ucr_ids = list(self.__data["data"]["ucr"])
         ucr_name_ids = []
@@ -680,31 +680,32 @@ class DiveraClient:
         return ucr_name_ids
 
     def get_accesskey(self) -> str:
-        """Retrieve the access key of the user associated with the data.
+        """
+        Retrieve the access key of the user associated with the data.
 
         Returns:
             str: The access key of the user.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["user"]["accesskey"]
 
     def get_email(self) -> str:
-        """Retrieve the email of the user associated with the data.
+        """
+        Retrieve the email of the user associated with the data.
 
         Returns:
             str: The email address of the user.
 
         Raises:
             KeyError: If the required keys are not found in the data dictionary.
-
         """
         return self.__data["data"]["user"]["email"]
 
     async def set_user_state_by_id(self, state_id: str):
-        """Set the state of the user to the given id.
+        """
+        Set the state of the user to the given id.
 
         This method sends a POST request to the Divera API with the specified
         access key and UCR to update the user's state.
@@ -715,7 +716,6 @@ class DiveraClient:
         Raises:
             DiveraAuthError: If authentication fails while connecting to the Divera API.
             DiveraConnectionError: If an error occurs while connecting to the Divera API.
-
         """
         state = {"Status": {"id": state_id}}
         params = {PARAM_ACCESSKEY: self.__accesskey, PARAM_UCR: self.__ucr_id}
@@ -734,7 +734,8 @@ class DiveraClient:
             raise DiveraConnectionError from None
 
     def get_cluster_version(self) -> str:
-        """Retrieve the version of the cluster.
+        """
+        Retrieve the version of the cluster.
 
         Returns:
             str: The version of the cluster, indicating whether it's a free version,
@@ -745,7 +746,6 @@ class DiveraClient:
 
         Note:
             The version_id is extracted from the 'data' dictionary attribute of the instance.
-
         """
         version = self.__data["data"]["cluster"]["version_id"]
         match version:
@@ -759,17 +759,18 @@ class DiveraClient:
                 return VERSION_UNKNOWN
 
     async def set_user_state_by_name(self, option: str):
-        """Set user state by name.
+        """
+        Set user state by name.
 
         Args:
             option (str): The name of the option to set the user state.
-
         """
         sid = self.get_state_id_by_name(option)
         await self.set_user_state_by_id(sid)
 
     def check_usergroup_id(self):
-        """Check if the user's group ID is allowed.
+        """
+        Check if the user's group ID is allowed.
 
         This method retrieves the user's group ID from the stored data and verifies whether it belongs
         to the set of allowed group IDs (4 or 8). If the ID is valid, it returns True. Otherwise, it logs
@@ -777,7 +778,6 @@ class DiveraClient:
 
         Returns:
             bool: True if the user belongs to an allowed group (ID 4 or 8), False otherwise.
-
         """
         # normal users only have group id 8 or 4
         ucr_id = self.get_default_ucr()
