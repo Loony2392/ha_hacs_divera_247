@@ -6,7 +6,6 @@ from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-
 from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
@@ -21,7 +20,6 @@ from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
 
-
 PLATFORMS = [
     Platform.SELECT,
     Platform.SENSOR,
@@ -33,7 +31,13 @@ type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
-    """Set up Divera as config entry."""
+    """
+    Set up Divera as config entry.
+
+    :param hass: Home Assistant instance
+    :param entry: Config entry for Divera
+    :return: True if setup was successful
+    """
     accesskey: str = entry.data.get(DATA_ACCESSKEY)
     ucr_ids = entry.data.get(DATA_UCRS)
     base_url = entry.data.get(DATA_BASE_URL, DIVERA_BASE_URL)
@@ -64,7 +68,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     # Register the service to trigger a test probe alarm
     async def trigger_probe_alarm_service(call):
-        # Service to trigger a test probe alarm
+        """
+        Service to trigger a test probe alarm.
+
+        :param call: Service call
+        """
         LOGGER.info("🔔 trigger_probe_alarm_service is being called")
         divera_client = hass.data[DOMAIN].get("divera_client")
         if divera_client is None:
@@ -85,12 +93,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
 
 async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    """Asynchronous update listener."""
+    """
+    Asynchronous update listener.
+
+    :param hass: Home Assistant instance
+    :param entry: Config entry for Divera
+    """
     await hass.config_entries.async_reload(entry_id=entry.entry_id)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Unload Divera config entry."""
+    """
+    Unload Divera config entry.
+
+    :param hass: Home Assistant instance
+    :param entry: Config entry for Divera
+    :return: True if unload was successful
+    """
     unload_ok = all(
         await asyncio.gather(
             *[
@@ -107,7 +126,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 
 async def async_migrate_entry(hass, config_entry: ConfigEntry):
-    """Migrate old entry."""
+    """
+    Migrate old entry.
+
+    :param hass: Home Assistant instance
+    :param config_entry: Config entry for Divera
+    :return: True if migration was successful
+    """
     LOGGER.debug("🔄 Migrating from version %s", config_entry.version)
     if (
         config_entry.version > CONF_FLOW_VERSION or
