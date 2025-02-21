@@ -2,6 +2,7 @@ import pytest
 from custom_components.divera247.divera247 import DiveraClient
 import os
 
+
 @pytest.fixture
 
 
