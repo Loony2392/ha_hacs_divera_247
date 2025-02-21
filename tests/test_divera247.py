@@ -5,7 +5,6 @@ import os
 
 @pytest.fixture
 
-
 def divera_client():
     """Fixture to create a DiveraClient instance."""
     access_key = os.getenv("DIVERA_ACCESS_KEY")
