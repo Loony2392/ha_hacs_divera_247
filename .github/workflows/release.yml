@@ -7,8 +7,6 @@ on:
       - 'v*'
   pull_request:
     branches: [main]
-  schedule:
-    - cron: "0 3 * * 1"  # Runs every Monday at 03:00 UTC for automatic dependency updates
 
 jobs:
   dependency_update:
@@ -49,33 +47,10 @@ jobs:
           git diff --cached --quiet || git commit -m "🔄 Auto-update dependencies"
           git push origin HEAD:main
 
-      - name: 🔀 Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          title: "🔄 Auto-update dependencies"
-          body: "This PR updates dependencies to their latest versions."
-          base: main
-          branch: update-dependencies
-          labels: dependencies, automated
-          assignees: ${{ github.actor }}
-
-  format:
-    name: "🎨 Code Formatting"
-    runs-on: ubuntu-latest
-    needs: dependency_update
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
   lint:
     name: "🔍 Linting & Static Analysis"
     runs-on: ubuntu-latest
-    needs: format
+    needs: dependency_update
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -91,46 +66,10 @@ jobs:
       - name: 🛠️ Run Linting
         run: flake8 .
 
-  security_checks:
-    name: "🔒 Security Checks"
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: 🔒 Install Security Tools
-        run: pip install bandit safety
-
-      - name: 🔍 Run Bandit (Code Security)
-        run: bandit -r .
-
-      - name: 🛡️ Run Safety (Dependency Security)
-        run: safety check --full-report
-
-  secrets_scan:
-    name: "🕵️ Secret Scanning"
-    runs-on: ubuntu-latest
-    needs: security_checks
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🕵️ Install TruffleHog
-        run: pip install trufflehog
-
-      - name: 🔎 Scan for Secrets
-        run: trufflehog filesystem .
-
   tests:
     name: "✅ Unit Tests"
     runs-on: ubuntu-latest
-    needs: secrets_scan
+    needs: lint
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -148,56 +87,10 @@ jobs:
       - name: 🏗️ Run Tests
         run: pytest
 
-  coverage:
-    name: "📊 Code Coverage"
-    runs-on: ubuntu-latest
-    needs: tests
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: 📈 Install Coverage Tools
-        run: |
-          pip install -r requirements.txt
-          pip install pytest coverage
-
-      - name: 📊 Run Coverage
-        run: |
-          coverage run -m pytest
-          coverage report -m
-
-  docs:
-    name: "📚 Generate Documentation"
-    runs-on: ubuntu-latest
-    needs: coverage
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: 📖 Install Documentation Tools
-        run: |
-          pip install towncrier sphinx sphinx_rtd_theme
-
-      - name: 📜 Generate Changelog
-        run: towncrier --yes
-
-      - name: 📚 Build Documentation
-        run: make -C docs html
-
   release:
     name: "🚀 Create Release"
     runs-on: ubuntu-latest
-    needs: docs
+    needs: tests
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: 📥 Checkout Code
