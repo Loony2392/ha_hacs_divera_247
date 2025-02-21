@@ -82,10 +82,12 @@ jobs:
       - name: 🧪 Install Dependencies and Test Tools
         run: |
           pip install -r requirements.txt
-          pip install pytest
+          pip install pytest pytest-mock
 
       - name: 🏗️ Run Tests
-        run: pytest
+        env:
+          DIVERA_ACCESS_KEY: ${{ secrets.DIVERA_ACCESS_KEY }}
+        run: pytest tests/
 
   release:
     name: "🚀 Create Release"
