@@ -3,10 +3,13 @@ from custom_components.divera247.divera247 import DiveraClient
 import os
 
 @pytest.fixture
+
+
 def divera_client():
     """Fixture to create a DiveraClient instance."""
     access_key = os.getenv("DIVERA_ACCESS_KEY")
     return DiveraClient(access_key=access_key, base_url="https://api.divera247.com")
+
 
 def test_trigger_probe_alarm_success(divera_client, mocker):
     """Test successful triggering of probe alarm."""
@@ -17,6 +20,7 @@ def test_trigger_probe_alarm_success(divera_client, mocker):
 
     response = divera_client.trigger_probe_alarm()
     assert response["status"] == "success"
+
 
 def test_trigger_probe_alarm_failure(divera_client, mocker):
     """Test failure in triggering probe alarm."""
