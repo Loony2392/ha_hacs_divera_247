@@ -3,7 +3,7 @@ import os
 import sys
 
 # If you need access to your integration:
-sys.path.insert(0, os.path.abspath("../custom_components/divera247"))
+sys.path.insert(0, os.path.abspath("../../custom_components/divera247"))
 
 # -- Project information -----------------------------------------------------
 project = "Divera 24/7 Home Assistant Integration"
@@ -31,6 +31,3 @@ language = "de"
 
 # Specify the directory where the translation files (.po and .mo) are stored.
 locale_dirs = ["locale/"]  # Relative to this conf.py file
-gettext_compact = (
-    False  # Prevents all translations from being merged into a single file
-)
