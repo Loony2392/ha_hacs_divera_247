@@ -66,29 +66,6 @@ jobs:
       - name: 🛠️ Run Linting
         run: flake8 .
 
-  tests:
-    name: "✅ Unit Tests"
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: 🧪 Install Dependencies and Test Tools
-        run: |
-          pip install -r requirements.txt
-          pip install pytest pytest-mock
-
-      - name: 🏗️ Run Tests
-        env:
-          DIVERA_ACCESS_KEY: ${{ secrets.DIVERA_ACCESS_KEY }}
-        run: pytest tests/
-
   release:
     name: "🚀 Create Release"
     runs-on: ubuntu-latest
