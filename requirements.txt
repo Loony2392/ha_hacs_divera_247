@@ -120,7 +120,7 @@ bluetooth-adapters==0.21.4
     #   bleak-retry-connector
     #   bluetooth-auto-recovery
     #   habluetooth
-bluetooth-auto-recovery==1.4.2
+bluetooth-auto-recovery==1.4.4
     # via
     #   -r requirements.in
     #   habluetooth
