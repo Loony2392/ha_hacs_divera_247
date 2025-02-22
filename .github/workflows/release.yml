@@ -5,8 +5,6 @@ on:
     branches: [main]
     tags:
       - 'v*'
-  pull_request:
-    branches: [main]
 
 jobs:
   dependency_update:
@@ -78,7 +76,12 @@ jobs:
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.8'
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel
 
       - name: 🏗️ Build Distribution Packages
         run: python setup.py sdist bdist_wheel

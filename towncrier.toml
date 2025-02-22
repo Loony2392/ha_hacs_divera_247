@@ -1,4 +1,5 @@
 [tool.towncrier]
 package = "divera247"
-filename = "CHANGELOG.rst"
 directory = "newsfragments"
+filename = "CHANGELOG.md"
+template = "towncrier:default"
