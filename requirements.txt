@@ -89,7 +89,7 @@ attrs==24.2.0
     #   hass-nabucasa
     #   homeassistant
     #   snitun
-audioop-lts==0.2.1
+audioop-lts
     # via
     #   -r requirements.in
     #   homeassistant
