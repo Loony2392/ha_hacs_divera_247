@@ -80,7 +80,7 @@ bluetooth-adapters==0.21.4
     #   bleak-retry-connector
     #   bluetooth-auto-recovery
     #   habluetooth
-bluetooth-auto-recovery==1.4.2
+bluetooth-auto-recovery==1.4.4
     # via habluetooth
 bluetooth-data-tools==1.23.4
     # via habluetooth
@@ -162,7 +162,7 @@ greenlet==3.1.1
     # via sqlalchemy
 h11==0.14.0
     # via httpcore
-habluetooth==3.21.1
+habluetooth==3.24.0
     # via home-assistant-bluetooth
 hass-nabucasa==0.88.1
     # via homeassistant
@@ -389,7 +389,7 @@ typing-extensions==4.12.2
     #   sqlalchemy
 tzdata==2025.1
     # via aiozoneinfo
-uart-devices==0.1.0
+uart-devices==0.1.1
     # via bluetooth-adapters
 ulid-transform==1.2.0
     # via homeassistant

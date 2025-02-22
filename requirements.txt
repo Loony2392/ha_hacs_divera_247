@@ -120,7 +120,7 @@ bluetooth-adapters==0.21.4
     #   bleak-retry-connector
     #   bluetooth-auto-recovery
     #   habluetooth
-bluetooth-auto-recovery==1.4.2
+bluetooth-auto-recovery==1.4.4
     # via
     #   -r requirements.in
     #   habluetooth
@@ -245,7 +245,7 @@ h11==0.14.0
     # via
     #   -r requirements.in
     #   httpcore
-habluetooth==3.21.1
+habluetooth==3.24.0
     # via
     #   -r requirements.in
     #   home-assistant-bluetooth
@@ -604,7 +604,7 @@ tzdata==2025.1
     # via
     #   -r requirements.in
     #   aiozoneinfo
-uart-devices==0.1.0
+uart-devices==0.1.1
     # via
     #   -r requirements.in
     #   bluetooth-adapters
