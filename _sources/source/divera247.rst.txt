@@ -12,6 +12,14 @@ divera247.binary\_sensor module
    :undoc-members:
    :show-inheritance:
 
+divera247.button module
+-----------------------
+
+.. automodule:: divera247.button
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 divera247.calendar module
 -------------------------
 
