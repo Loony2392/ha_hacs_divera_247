@@ -7,15 +7,14 @@ on:
 
 jobs:
   build:
-    name: 📦 Build and Deploy Documentation
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v2
         with:
           python-version: '3.8'
 
@@ -27,7 +26,7 @@ jobs:
       - name: 🛠️ Build documentation
         run: |
           sphinx-apidoc -o docs/source custom_components/divera247
-          sphinx-build -b html docs docs/build
+          sphinx-build -b html docs/source docs/build
 
       - name: 🚀 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
