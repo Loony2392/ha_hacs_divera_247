@@ -35,7 +35,7 @@ jobs:
           sphinx-build -b html docs docs/build
 
       - name: 🚀 Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v3.8.0
         with:
           github_token: ${{ secrets.GH_TOKEN }}
           publish_dir: docs/build
