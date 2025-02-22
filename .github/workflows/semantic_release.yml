@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: "lts/*"
       - name: 📦 Install Dependencies
-        run: npm clean-install
+        run: npm install
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
