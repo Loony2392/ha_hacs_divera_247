@@ -8,6 +8,7 @@ from . import DiveraConfigEntry, DiveraCoordinator
 from .const import DOMAIN
 from .entity import DiveraEntity
 
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: DiveraConfigEntry,
