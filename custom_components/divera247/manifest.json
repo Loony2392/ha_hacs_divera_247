@@ -1,10 +1,14 @@
 {
   "domain": "divera247",
-  "name": "DIVERA 24/7",
+  "name": "Divera 24/7",
+  "version": "1.0.1",
+  "documentation": "https://github.com/loony2392/ha_hacs_divera_247",
+  "requirements": [],
+  "dependencies": [],
   "codeowners": ["@loony2392"],
   "config_flow": true,
-  "documentation": "https://github.com/Loony2392/ha_hacs_divera_247",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/Loony2392/ha_hacs_divera_247/issues",
-  "version": "1.0.0"
+  "integration_type": "hub",
+  "supported_brands": ["divera247"],
+  "supported_platforms": ["sensor", "binary_sensor", "select", "button"]
 }

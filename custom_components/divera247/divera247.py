@@ -790,7 +790,7 @@ class DiveraClient:
 
     async def trigger_probe_alarm(self):
         """Trigger a test push (probe alarm) via the Divera API."""
-        url = f"{self.__base_url}/api/test-push"  # Passe den Endpunkt ggf. an
+        url = f"{self.__base_url}/api/test-push"
         params = {PARAM_ACCESSKEY: self.__accesskey}
         try:
             async with self.__session.post(url, params=params) as response:
