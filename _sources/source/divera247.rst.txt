@@ -9,101 +9,101 @@ divera247.binary\_sensor module
 
 .. automodule:: divera247.binary_sensor
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.button module
 -----------------------
 
 .. automodule:: divera247.button
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.calendar module
 -------------------------
 
 .. automodule:: divera247.calendar
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.config\_flow module
 -----------------------------
 
 .. automodule:: divera247.config_flow
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.const module
 ----------------------
 
 .. automodule:: divera247.const
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.coordinator module
 ----------------------------
 
 .. automodule:: divera247.coordinator
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.data module
 ---------------------
 
 .. automodule:: divera247.data
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.divera247 module
 --------------------------
 
 .. automodule:: divera247.divera247
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.entity module
 -----------------------
 
 .. automodule:: divera247.entity
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.select module
 -----------------------
 
 .. automodule:: divera247.select
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.sensor module
 -----------------------
 
 .. automodule:: divera247.sensor
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 divera247.utils module
 ----------------------
 
 .. automodule:: divera247.utils
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: divera247
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
