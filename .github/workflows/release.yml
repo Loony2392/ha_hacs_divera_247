@@ -17,6 +17,12 @@ on:
         description: 'Release body'
         required: false
 
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
 jobs:
   dependency_update:
     name: "🔄 Update Dependencies"
@@ -48,7 +54,7 @@ jobs:
 
       - name: 🚀 Commit and Push Changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
