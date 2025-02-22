@@ -48,7 +48,7 @@ jobs:
 
       - name: 🚀 Commit and Push Changes
         env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -103,37 +103,6 @@ jobs:
       - name: 📜 Generate Changelog
         run: towncrier build --yes
 
-      - name: 🚀 Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*
-          body_path: ./CHANGELOG.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: 📦 Upload Release Assets
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/divera247.zip
-          asset_name: divera247.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-  create_tag_and_release:
-    name: "🚀 Create Tag and Release"
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout repository
-        uses: actions/checkout@v2
-
-      - name: 🏷️ Read Version from manifest.json
-        id: get_version
-        run: |
-          VERSION=$(jq -r '.version' custom_components/divera247/manifest.json)
-          echo "::set-output name=version::$VERSION"
-
       - name: 🏷️ Create Tag
         id: create_tag
         run: |
@@ -158,7 +127,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/divera247.zip
+          asset_path: divera247.zip
           asset_name: divera247.zip
           asset_content_type: application/zip
         env:
