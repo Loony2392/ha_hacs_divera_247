@@ -253,7 +253,7 @@ propcache==0.2.1
     #   aiohttp
     #   homeassistant
     #   yarl
-psutil==6.1.1
+psutil==7.0.0
     # via psutil-home-assistant
 psutil-home-assistant==0.0.1
     # via homeassistant
