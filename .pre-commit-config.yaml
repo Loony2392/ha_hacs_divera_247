@@ -16,7 +16,7 @@ repos:
           - --skip="./.*,*.csv,*.json,*.ambr"
           - --quiet-level=2
         exclude_types: [csv, json]
-        exclude: ^tests/fixtures/|homeassistant/generated/|tests/components/.*/snapshots/
+        exclude: ^tests/fixtures/|homeassistant/generated/|tests/components/.*/snapshots/|README.md
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.35.1
     hooks:
@@ -25,6 +25,7 @@ repos:
     rev: v3.0.3
     hooks:
       - id: prettier
+        exclude: README.md
   - repo: https://github.com/cdce8p/python-typing-update
     rev: v0.6.0
     hooks:
