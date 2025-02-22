@@ -73,7 +73,7 @@ bleak==0.22.3
     #   bleak-retry-connector
     #   bluetooth-adapters
     #   habluetooth
-bleak-retry-connector==3.8.1
+bleak-retry-connector==3.9.0
     # via habluetooth
 bluetooth-adapters==0.21.4
     # via
