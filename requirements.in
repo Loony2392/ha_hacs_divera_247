@@ -162,7 +162,7 @@ greenlet==3.1.1
     # via sqlalchemy
 h11==0.14.0
     # via httpcore
-habluetooth==3.21.1
+habluetooth==3.22.0
     # via home-assistant-bluetooth
 hass-nabucasa==0.88.1
     # via homeassistant

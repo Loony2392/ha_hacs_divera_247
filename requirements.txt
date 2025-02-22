@@ -89,7 +89,7 @@ attrs==24.2.0
     #   hass-nabucasa
     #   homeassistant
     #   snitun
-audioop-lts
+audioop-lts==0.2.1
     # via
     #   -r requirements.in
     #   homeassistant
@@ -245,7 +245,7 @@ h11==0.14.0
     # via
     #   -r requirements.in
     #   httpcore
-habluetooth==3.21.1
+habluetooth==3.22.0
     # via
     #   -r requirements.in
     #   home-assistant-bluetooth
