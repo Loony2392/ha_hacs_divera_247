@@ -19,10 +19,6 @@ repos:
             currenty,datas,farenheit,falsy,fo,frequence,haa,hass,iif,incomfort,ines,
             ist,nam,nd,pres,pullrequests,resset,rime,ser,serie,te,technik,ue,unsecure,
             vor,withing,zar
-          - --skip="./.*,*.csv,*.json,*.ambr"
-          - --quiet-level=2
-        exclude_types: [csv, json]
-        exclude: ^(.github/|tests/fixtures/|homeassistant/generated/|tests/components/.*/snapshots/|README.md)
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.35.1
     hooks:
@@ -36,10 +32,6 @@ repos:
   - repo: https://github.com/cdce8p/python-typing-update
     rev: v0.6.0
     hooks:
-      # Run `python-typing-update` hook manually from time to time
-      # to update python typing syntax.
-      # Will require manual work, before submitting changes!
-      # pre-commit run --hook-stage manual python-typing-update --all-files
       - id: python-typing-update
         stages: [manual]
         args:
