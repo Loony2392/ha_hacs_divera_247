@@ -1,0 +1,22 @@
+name: 🛠️ Pre-Commit Checks
+
+on: # yamllint disable-line rule:truthy
+  pull_request:
+  push:
+    branches:
+      - develop
+
+jobs:
+  pre-commit:
+    name: 🛠️ Run Pre-Commit Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+
+      - name: 🛠️ Run Pre-Commit Hooks
+        uses: pre-commit/action@v3.0.1
