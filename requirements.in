@@ -176,7 +176,7 @@ httpx==0.28.1
     # via
     #   homeassistant
     #   respx
-identify==2.6.7
+identify==2.6.8
     # via pre-commit
 idna==3.10
     # via
