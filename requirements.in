@@ -389,7 +389,7 @@ typing-extensions==4.12.2
     #   sqlalchemy
 tzdata==2025.1
     # via aiozoneinfo
-uart-devices==0.1.0
+uart-devices==0.1.1
     # via bluetooth-adapters
 ulid-transform==1.2.0
     # via homeassistant
