@@ -1,4 +1,5 @@
 # <img src="https://www.divera247.com/images/divera247.svg" alt="DIVERA Logo" width="200"> Integration für Home Assistant 🚨🔔
+
 [![✅ Release](https://github.com/Loony2392/ha_hacs_divera_247/actions/workflows/release.yml/badge.svg)](https://github.com/Loony2392/ha_hacs_divera_247/actions/workflows/release.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/loony2392/ha_hacs_divera_247?sort=semver&style=for-the-badge&color=green)](https://github.com/loony2392/ha_hacs_divera_247/releases/)
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/loony2392/ha_hacs_divera_247/latest/total?style=for-the-badge&label=Downloads%20latest%20Release)
