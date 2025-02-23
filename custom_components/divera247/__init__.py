@@ -76,15 +76,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         LOGGER.info("🔔 trigger_probe_alarm_service is being called")
         divera_client = hass.data[DOMAIN].get("divera_client")
         if divera_client is None:
-            LOGGER.error("❌ No DiveraClient instance available for triggering probe alarm.")
+            LOGGER.error(
+                "❌ No DiveraClient instance available for triggering probe alarm."
+            )
             return
         await divera_client.trigger_probe_alarm()
 
     LOGGER.info("🔔 Registering service divera247.trigger_probe_alarm")
     hass.services.async_register(
-        DOMAIN,
-        "trigger_probe_alarm",
-        trigger_probe_alarm_service
+        DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service
     )
 
     # Forward the config entry setups for all platforms (select, sensor, calendar, binary_sensor)
@@ -135,8 +135,8 @@ async def async_migrate_entry(hass, config_entry: ConfigEntry):
     """
     LOGGER.debug("🔄 Migrating from version %s", config_entry.version)
     if (
-        config_entry.version > CONF_FLOW_VERSION or
-        config_entry.minor_version > CONF_FLOW_MINOR_VERSION
+        config_entry.version > CONF_FLOW_VERSION
+        or config_entry.minor_version > CONF_FLOW_MINOR_VERSION
     ):
         LOGGER.debug(
             "❌ Migration to version %s.%s failed. Downgraded ",
