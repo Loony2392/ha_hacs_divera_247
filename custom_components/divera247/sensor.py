@@ -33,7 +33,8 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         key="helper_name",
         translation_key="helper_name",
         icon="mdi:account",
-        value_fn=lambda divera, helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
+        value_fn=lambda divera,
+        helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
     ),
     DiveraHelperEntityDescription(
         key="helper_status",
