@@ -24,8 +24,7 @@ async def async_setup_entry(
     """
     coordinators = entry.runtime_data.coordinators
     entities = [
-        DiveraTestAlarmButton(coordinator)
-        for coordinator in coordinators.values()
+        DiveraTestAlarmButton(coordinator) for coordinator in coordinators.values()
     ]
     async_add_entities(entities, False)
 
