@@ -1,6 +1,5 @@
 {
     "name": "DIVERA 24/7",
     "zip_release": false,
-    "hide_default_branch": true,
-    "blueprints": true
+    "hide_default_branch": true
 }
