@@ -10,6 +10,8 @@ jobs:
   pre-commit:
     name: 🛠️ Run Pre-Commit Checks
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: 📥 Checkout Code
