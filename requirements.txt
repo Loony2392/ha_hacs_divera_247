@@ -132,7 +132,7 @@ boolean-py==4.0
     # via
     #   -r requirements.in
     #   license-expression
-boto3==1.36.17
+boto3==1.36.26
     # via
     #   -r requirements.in
     #   pycognito
