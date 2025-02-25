@@ -1,15 +1,21 @@
 #!/bin/bash
 
+# Überprüfe, ob eine Versionsnummer als Argument übergeben wurde
+if [ -z "$1" ]; then
+  echo "Fehler: Keine Versionsnummer angegeben."
+  exit 1
+fi
+
 VERSION=$1
 
-# Change directory to custom_components/divera247
+# Ändere das Verzeichnis zu custom_components/divera247
 cd custom_components/divera247
 
-# Update the version in the manifest.json file
+# Aktualisiere die Versionsnummer in der manifest.json Datei
 sed -i "s/\"version\": \"[0-9]\+\.[0-9]\+\.[0-9]\+\"/\"version\": \"${VERSION}\"/g" manifest.json
 
-# Go back to the root directory of the repository
+# Gehe zurück zum Stammverzeichnis des Repositories
 cd ../..
 
-# Create a ZIP file that contains only the divera247 folder
+# Erstelle eine ZIP-Datei, die nur den divera247 Ordner enthält
 zip -r divera247.zip custom_components/divera247
