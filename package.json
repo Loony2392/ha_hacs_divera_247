@@ -1,4 +1,8 @@
 {
+    "name": "ha_hacs_divera_247",
+    "version": "1.0.0",
+    "description": "DIVERA 24/7 Integration für Home Assistant",
+    "main": "index.js",
     "devDependencies": {
         "@semantic-release/changelog": "6.0.3",
         "@semantic-release/exec": "6.0.3",
