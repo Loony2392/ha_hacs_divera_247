@@ -17,5 +17,5 @@ sed -i "s/\"version\": \"[0-9]\+\.[0-9]\+\.[0-9]\+\"/\"version\": \"${VERSION}\"
 # Gehe zurück zum Stammverzeichnis des Repositories
 cd ../..
 
-# Erstelle eine ZIP-Datei, die nur den divera247 Ordner enthält
-zip -r divera247.zip custom_components/divera247
+# Erstelle eine ZIP-Datei mit dem Namen source.zip, die nur den divera247 Ordner enthält
+zip -r source.zip custom_components/divera247
