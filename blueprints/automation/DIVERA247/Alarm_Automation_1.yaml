@@ -3,7 +3,7 @@ blueprint:
     description: Trigger some actions when a new DIVERA 24/7 alarm is triggered.
     domain: automation
     author: loony2392
-    source_url: https://github.com/loony2392/ha_hacs_divera247/blob/main/blueprints/Alarm_Automation_1.yaml
+    source_url: https://raw.githubusercontent.com/Loony2392/ha_hacs_divera_247/refs/heads/develop/blueprints/automation/DIVERA%2024/Alarm_Automation_1.yaml
     homeassistant:
         min_version: 2025.1.0
     input:
