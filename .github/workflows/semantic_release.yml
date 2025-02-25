@@ -1,23 +1,21 @@
 name: 🚀 Semantic-Release
 
-on: # yamllint disable-line rule:truthy
-  workflow_dispatch:
+on:
   push:
     branches:
       - release
       - develop
+  workflow_dispatch:
 
 permissions:
-  contents: read # for checkout
+  contents: write # to be able to publish a GitHub release
+  issues: write # to be able to comment on released issues
+  pull-requests: write # to be able to comment on released pull requests
 
 jobs:
   release:
     name: 🚀 Semantic-Release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v4
@@ -29,6 +27,8 @@ jobs:
           node-version: "lts/*"
       - name: 📦 Install Dependencies
         run: npm install
+      - name: 🔧 Prepare Release
+        run: bash scripts/prep_release.sh ${{ github.ref_name }}
       - name: 🚀 Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
