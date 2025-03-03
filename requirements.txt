@@ -245,7 +245,7 @@ h11==0.14.0
     # via
     #   -r requirements.in
     #   httpcore
-habluetooth==3.24.0
+habluetooth==3.24.1
     # via
     #   -r requirements.in
     #   home-assistant-bluetooth
