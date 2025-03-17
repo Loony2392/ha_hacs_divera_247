@@ -80,7 +80,7 @@ bluetooth-adapters==0.21.4
     #   bleak-retry-connector
     #   bluetooth-auto-recovery
     #   habluetooth
-bluetooth-auto-recovery==1.4.4
+bluetooth-auto-recovery==1.4.5
     # via habluetooth
 bluetooth-data-tools==1.23.4
     # via habluetooth
