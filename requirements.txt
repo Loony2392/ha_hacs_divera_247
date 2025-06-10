@@ -203,6 +203,7 @@ dbus-fast==2.39.3
     #   bleak
     #   bleak-retry-connector
     #   bluetooth-adapters
+    #   habluetooth
 distlib==0.3.9
     # via
     #   -r requirements.in
@@ -245,7 +246,7 @@ h11==0.14.0
     # via
     #   -r requirements.in
     #   httpcore
-habluetooth==3.24.1
+habluetooth==3.39.0
     # via
     #   -r requirements.in
     #   home-assistant-bluetooth
