@@ -330,7 +330,7 @@ multidict==6.1.0
     #   -r requirements.in
     #   aiohttp
     #   yarl
-mypy-extensions==1.0.0
+mypy-extensions==1.1.0
     # via
     #   -r requirements.in
     #   black
