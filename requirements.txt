@@ -601,7 +601,7 @@ typing-extensions==4.12.2
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
-tzdata==2025.1
+tzdata==2025.2
     # via
     #   -r requirements.in
     #   aiozoneinfo
