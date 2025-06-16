@@ -348,7 +348,7 @@ orjson==3.10.12
     #   aiohasupervisor
     #   homeassistant
     #   webrtc-models
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements.in
     #   black
