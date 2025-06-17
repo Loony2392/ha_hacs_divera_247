@@ -397,7 +397,7 @@ psutil-home-assistant==0.0.1
     # via
     #   -r requirements.in
     #   homeassistant
-pycares==4.5.0
+pycares==4.9.0
     # via
     #   -r requirements.in
     #   aiodns
