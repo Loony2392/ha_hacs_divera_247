@@ -341,6 +341,7 @@ async def async_setup_entry(
         # Determine name mode once per entry
         mode = entry.options.get(CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODE_AUTO)
         for vid in vehicle_ids:
+            # Main vehicle status sensor
             description = DiveraVehicleEntityDescription(
                 key=f"vehicle_{vid}_state",
                 translation_key="vehicle",  # uses sensor.vehicle translation
@@ -352,6 +353,56 @@ async def async_setup_entry(
                 name_mode=mode,
             )
             entities.append(DiveraVehicleSensorEntity(coordinator, vid, description))
+            
+            # Additional attribute sensors for each vehicle
+            # Location sensor (for map display)
+            location_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_location",
+                translation_key="vehicle_location",
+                icon="mdi:map-marker",
+                attribute_fn=(
+                    lambda divera, _vid=vid: {
+                        "latitude": divera.get_vehicle_attributes(_vid).get("latitude"),
+                        "longitude": divera.get_vehicle_attributes(_vid).get("longitude"),
+                    }
+                ),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("fmsstatus_note", "Unknown")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, location_desc))
+            
+            # OPTA sensor
+            opta_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_opta",
+                translation_key="vehicle_opta",
+                icon="mdi:radio-tower",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("opta")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, opta_desc))
+            
+            # ISSI sensor
+            issi_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_issi",
+                translation_key="vehicle_issi",
+                icon="mdi:identifier",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("issi")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, issi_desc))
+            
+            # Vehicle number sensor
+            number_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_number",
+                translation_key="vehicle_number",
+                icon="mdi:numeric",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("number")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, number_desc))
 
     # Create sensors that aggregate status (e.g., number of active helpers)
     for ucr_id in coordinators:

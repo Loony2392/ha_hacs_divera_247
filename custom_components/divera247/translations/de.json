@@ -86,6 +86,18 @@
             "vehicle": {
                 "name": "Fahrzeug Status {vehicle_name}"
             },
+            "vehicle_location": {
+                "name": "Standort {vehicle_name}"
+            },
+            "vehicle_opta": {
+                "name": "OPTA {vehicle_name}"
+            },
+            "vehicle_issi": {
+                "name": "ISSI {vehicle_name}"
+            },
+            "vehicle_number": {
+                "name": "Nummer {vehicle_name}"
+            },
             "status_overview": {
                 "name": "Helfer Status Übersicht"
             }

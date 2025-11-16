@@ -542,6 +542,17 @@ class DiveraClient:
                 f"Vehicle with ID {vehicle_id} or one of the required keys not found."
             )
             return {}
+    
+    def get_organization_name(self) -> str | None:
+        """Get organization name from cluster data (e.g., 'THW', 'Feuerwehr').
+        
+        Returns:
+            str | None: Organization name or None if not found.
+        """
+        try:
+            return self.__data["data"]["cluster"].get("organisation")
+        except (KeyError, TypeError):
+            return None
 
     def get_group_name_by_id(self, group_id):
         """

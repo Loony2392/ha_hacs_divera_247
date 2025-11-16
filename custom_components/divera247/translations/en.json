@@ -84,7 +84,19 @@
                 "name": "Latest news"
             },
             "vehicle": {
-                "name": "Vehicle status {vehicle_name}"
+                "name": "Vehicle Status {vehicle_name}"
+            },
+            "vehicle_location": {
+                "name": "Location {vehicle_name}"
+            },
+            "vehicle_opta": {
+                "name": "OPTA {vehicle_name}"
+            },
+            "vehicle_issi": {
+                "name": "ISSI {vehicle_name}"
+            },
+            "vehicle_number": {
+                "name": "Number {vehicle_name}"
             },
             "status_overview": {
                 "name": "Helper status overview"
