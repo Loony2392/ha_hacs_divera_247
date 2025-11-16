@@ -59,10 +59,12 @@
     },
     "selector": {
         "vehicle_name_mode": {
-            "auto": "Auto (korte naam→naam→volledige naam)",
-            "shortname": "Korte naam",
-            "name": "Naam",
-            "fullname": "Volledige naam"
+            "options": {
+                "auto": "Auto (korte naam → naam → volledige naam)",
+                "shortname": "Korte naam (bijv. 'FtKW')",
+                "name": "Naam (bijv. 'Heros Halver 21/10')",
+                "fullname": "Volledige naam (bijv. 'Commandovoertuig FtKW')"
+            }
         }
     },
     "exceptions": {

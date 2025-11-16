@@ -59,10 +59,12 @@
     },
     "selector": {
         "vehicle_name_mode": {
-            "auto": "Auto (nome breve→nome→nome completo)",
-            "shortname": "Nome breve",
-            "name": "Nome",
-            "fullname": "Nome completo"
+            "options": {
+                "auto": "Auto (nome breve → nome → nome completo)",
+                "shortname": "Nome breve (es. 'FtKW')",
+                "name": "Nome (es. 'Heros Halver 21/10')",
+                "fullname": "Nome completo (es. 'Veicolo di comando FtKW')"
+            }
         }
     },
     "exceptions": {
