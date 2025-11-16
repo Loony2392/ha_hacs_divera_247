@@ -4,7 +4,7 @@ from typing import Any
 
 from voluptuous import Optional, Required, Schema
 
-from homeassistant.config_entries import HANDLERS, ConfigEntry, ConfigFlow
+from homeassistant.config_entries import HANDLERS, ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.data_entry_flow import FlowHandler
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.selector import (
@@ -24,6 +24,8 @@ from .const import (
     CONF_FLOW_NAME_RECONFIGURE,
     CONF_FLOW_NAME_UCR,
     CONF_FLOW_VERSION,
+    CONF_SCAN_INTERVAL,
+    CONF_VEHICLE_NAME_MODE,
     DATA_ACCESSKEY,
     DATA_BASE_URL,
     DATA_UCRS,
@@ -31,6 +33,7 @@ from .const import (
     DOMAIN,
     ERROR_AUTH,
     ERROR_CONNECTION,
+    VEHICLE_NAME_MODES,
 )
 from .divera247 import DiveraAuthError, DiveraClient, DiveraConnectionError
 
@@ -257,39 +260,75 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
     async def async_step_user_cluster_relation(
         self, user_input: dict[str, Any] | None = None
     ):
-        """
-        Second step in config flow to select the cluster of the user.
+        """Second step in config flow to select the cluster of the user.
 
-        Args:
-            user_input (dict): User input.
-
-        Returns:
-            dict: The next step or form to present to the user.
+        When the account is part of multiple clusters we let the user pick which to activate.
         """
         errors: dict[str, str] = {}
 
-        if user_input is not None:
-            if not errors:
-                selected_cluster_names = user_input[CONF_CLUSTERS]
-                ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
-                return self.create_entry(ucr_ids)
+        if user_input is not None and not errors:
+            selected_cluster_names = user_input[CONF_CLUSTERS]
+            ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
+            return self.create_entry(ucr_ids)
 
         cluster_names = self._divera_client.get_all_cluster_names()
-        active_cluster_names = [cluster_names[0]]
+        # Preselect first cluster
+        active_cluster_names = [cluster_names[0]] if cluster_names else []
 
         return await self._show_clusters_form(
             active_cluster_names, cluster_names, errors
         )
 
     async def check_unique_id(self):
-        """
-        Check the uniqueness of the unique ID.
-
-        This method retrieves the unique ID based on the user's email,
-        sets it as the unique ID for the config entry, and aborts the
-        configuration if the unique ID is already configured.
-        """
+        """Check uniqueness of user email to avoid duplicate entries."""
         uid = self._divera_client.get_email()
         await self.async_set_unique_id(uid)
-        # self._abort_if_unique_id_mismatch() todo sollte bei reconfiguration benutzt werden
         self._abort_if_unique_id_configured()
+
+    # NOTE: Options flow handled by separate handler below
+
+
+class DiveraOptionsFlowHandler(OptionsFlow):
+    """Options flow for Divera integration (scan interval, vehicle name mode)."""
+
+    def __init__(self, config_entry: ConfigEntry) -> None:
+        self._entry = config_entry
+
+    async def async_step_init(self, user_input: dict[str, Any] | None = None):  # type: ignore[override]
+        errors: dict[str, str] = {}
+        current_scan = self._entry.options.get(CONF_SCAN_INTERVAL, 60)
+        current_mode = self._entry.options.get(
+            CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
+        )
+
+        if user_input is not None:
+            scan = user_input.get(CONF_SCAN_INTERVAL, current_scan)
+            try:
+                scan_int = int(scan)
+                if scan_int < 10 or scan_int > 300:
+                    errors[CONF_SCAN_INTERVAL] = "range_error"
+                else:
+                    new_options = {
+                        **self._entry.options,
+                        CONF_SCAN_INTERVAL: scan_int,
+                        CONF_VEHICLE_NAME_MODE: user_input.get(
+                            CONF_VEHICLE_NAME_MODE, current_mode
+                        ),
+                    }
+                    return self.async_create_entry(title="Divera Options", data=new_options)
+            except (TypeError, ValueError):
+                errors[CONF_SCAN_INTERVAL] = "invalid_int"
+
+        schema = Schema(
+            {
+                Required(CONF_SCAN_INTERVAL, default=current_scan): str,
+                Required(CONF_VEHICLE_NAME_MODE, default=current_mode): SelectSelector(
+                    SelectSelectorConfig(options=VEHICLE_NAME_MODES, multiple=False)
+                ),
+            }
+        )
+        return self.async_show_form(step_id="init", data_schema=schema, errors=errors)
+
+
+async def async_get_options_flow(config_entry: ConfigEntry):  # type: ignore[override]
+    return DiveraOptionsFlowHandler(config_entry)
