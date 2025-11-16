@@ -178,12 +178,9 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         if user_input is not None and not errors:
             selected_cluster_names = user_input[CONF_CLUSTERS]
             ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
-            data = {DATA_UCRS: ucr_ids}
-            return self.async_update_reload_and_abort(
-                self._config_entry,
-                data_updates=data,
-                reason="reconfigure_successful",
-            )
+            # Keep for next step; update both data and options after name selection
+            self._data[DATA_UCRS] = ucr_ids
+            return await self.async_step_reconfigure_vehicle_name_selection()
 
         cluster_names = self._divera_client.get_all_cluster_names()
         ucr_ids = self._config_entry.data.get(DATA_UCRS)
@@ -199,6 +196,57 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         return self.async_show_form(
             step_id=CONF_FLOW_NAME_RECONFIGURE,
             data_schema=cluster_schema,
+            errors=errors,
+        )
+
+    async def async_step_reconfigure_vehicle_name_selection(
+        self, user_input: dict[str, Any] | None = None
+    ):
+        """Additional reconfigure step to select vehicle name mode.
+
+        Allows adjusting the vehicle name selection via "Reconfigure".
+        """
+        errors: dict[str, str] = {}
+
+        current_mode = self._config_entry.options.get(
+            CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
+        )
+
+        if user_input is not None and not errors:
+            vehicle_name_mode = user_input.get(
+                CONF_VEHICLE_NAME_MODE, current_mode
+            )
+            # Apply both data and options updates, then reload and abort
+            await self.hass.config_entries.async_update_entry(
+                self._config_entry,
+                data={
+                    **self._config_entry.data,
+                    DATA_UCRS: self._data.get(DATA_UCRS, self._config_entry.data.get(DATA_UCRS)),
+                },
+                options={
+                    **self._config_entry.options,
+                    CONF_VEHICLE_NAME_MODE: vehicle_name_mode,
+                },
+            )
+            self.hass.async_create_task(
+                self.hass.config_entries.async_reload(self._config_entry.entry_id)
+            )
+            return self.async_abort(reason="reconfigure_successful")
+
+        vehicle_schema = Schema(
+            {
+                Required(CONF_VEHICLE_NAME_MODE, default=current_mode): SelectSelector(
+                    SelectSelectorConfig(
+                        options=VEHICLE_NAME_MODES,
+                        multiple=False,
+                        translation_key="vehicle_name_mode",
+                    )
+                ),
+            }
+        )
+        return self.async_show_form(
+            step_id="reconfigure_vehicle_name_selection",
+            data_schema=vehicle_schema,
             errors=errors,
         )
 
