@@ -8,6 +8,7 @@ from typing import Any
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.entity import EntityCategory
 
 from . import DiveraConfigEntry
 from .coordinator import DiveraCoordinator
@@ -85,6 +86,10 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
         self._vehicle_display_name: str | None = None
         super().__init__(coordinator, description)
         self._update_vehicle_display_name()
+        # Mark location sensor as diagnostic and disabled by default to avoid duplication
+        if description.translation_key == "vehicle_location":
+            self._attr_entity_category = EntityCategory.DIAGNOSTIC
+            self._attr_entity_registry_enabled_default = False
 
     def _update_vehicle_display_name(self):
         client = self.coordinator.data
