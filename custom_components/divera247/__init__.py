@@ -187,6 +187,26 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     :return: True if unload was successful
     """
     unload_ok = all(
+            # Update entry title to include cluster(s) and user full name
+            try:
+                await divera_client.pull_data()
+                try:
+                    fullname = divera_client.get_full_name()
+                except Exception:
+                    fullname = ""
+                try:
+                    cluster_names = divera_client.get_cluster_names_from_ucrs(ucr_ids)
+                    cluster_part = ", ".join(cluster_names) if cluster_names else ""
+                except Exception:
+                    cluster_part = ""
+                new_title = (
+                    f"{cluster_part} - {fullname}" if cluster_part and fullname else fullname or cluster_part or entry.title
+                )
+                if new_title and new_title != entry.title:
+                    hass.config_entries.async_update_entry(entry, title=new_title)
+                    LOGGER.debug("Updated config entry title to '%s'", new_title)
+            except DiveraError:
+                LOGGER.debug("Skipped title update due to data fetch error")
         await asyncio.gather(
             *[
                 hass.config_entries.async_forward_entry_unload(entry, component)
