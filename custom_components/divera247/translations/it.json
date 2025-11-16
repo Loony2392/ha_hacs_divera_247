@@ -8,7 +8,8 @@
                 "data": {
                     "accesskey": "🔑 Chiave di accesso",
                     "base_url": "🌐 Indirizzo server (DIVERA 24/7)",
-                    "scan_interval": "⏱️ Intervallo di aggiornamento (secondi)"
+                    "scan_interval": "⏱️ Intervallo di aggiornamento (secondi)",
+                    "vehicle_name_mode": "🚗 Origine del nome del veicolo"
                 }
             },
             "user_cluster_relation": {

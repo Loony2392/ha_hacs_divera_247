@@ -1,0 +1,1180 @@
+2025-11-14 16:39:30.416 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration divera247 which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2025-11-14 16:39:40.896 WARNING (MainThread) [asyncio] Executing <Task pending name='setup config as dependency of frontend' coro=<async_setup_component() running at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py:158> cb=[gather.<locals>._done_callback() at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py:754] created at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/util/async_.py:50> took 0.254 seconds
+2025-11-14 16:40:18.038 ERROR (MainThread) [homeassistant.setup] Setup failed for 'analytics': Unable to import component: No module named 'psutil_home_assistant'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/__init__.py", line 13, in <module>
+    from .analytics import Analytics
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/analytics.py", line 16, in <module>
+    from homeassistant.components.energy import (
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/__init__.py", line 10, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/websocket_api.py", line 15, in <module>
+    from homeassistant.components import recorder, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/__init__.py", line 28, in <module>
+    from . import entity_registry, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/entity_registry.py", line 8, in <module>
+    from .core import Recorder
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/core.py", line 16, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/__init__.py", line 13, in <module>
+    from .analytics import Analytics
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/analytics.py", line 16, in <module>
+    from homeassistant.components.energy import (
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/__init__.py", line 10, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/websocket_api.py", line 15, in <module>
+    from homeassistant.components import recorder, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/__init__.py", line 28, in <module>
+    from . import entity_registry, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/entity_registry.py", line 8, in <module>
+    from .core import Recorder
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/core.py", line 16, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+2025-11-14 16:40:20.146 WARNING (MainThread) [asyncio] Executing <Task pending name='setup image_upload as dependency of person' coro=<async_setup_component() running at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py:158> wait_for=<Task pending name='Storage load image' coro=<Store._async_load() running at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/helpers/storage.py:147> cb=[set.remove(), Task.task_wakeup()] created at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/util/async_.py:50> cb=[gather.<locals>._done_callback() at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/tasks.py:754] created at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/util/async_.py:50> took 0.235 seconds
+2025-11-14 16:40:20.157 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'onboarding'. Setup failed for dependencies: ['analytics']
+2025-11-14 16:40:20.157 ERROR (MainThread) [homeassistant.setup] Setup failed for 'onboarding': (DependencyError(...), 'Could not setup dependencies: analytics')
+2025-11-14 16:40:21.689 ERROR (MainThread) [homeassistant.setup] Setup failed for 'file_upload': Unable to import component: No module named 'janus'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 894, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/file_upload/__init__.py", line 13, in <module>
+    import janus
+ModuleNotFoundError: No module named 'janus'
+2025-11-14 16:40:21.695 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'frontend'. Setup failed for dependencies: ['file_upload', 'onboarding']
+2025-11-14 16:40:21.695 ERROR (MainThread) [homeassistant.setup] Setup failed for 'frontend': (DependencyError(...), 'Could not setup dependencies: file_upload, onboarding')
+2025-11-14 16:40:21.699 ERROR (MainThread) [homeassistant.setup] Setup failed for 'recorder': Unable to import component: No module named 'psutil_home_assistant'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 894, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/__init__.py", line 28, in <module>
+    from . import entity_registry, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/entity_registry.py", line 8, in <module>
+    from .core import Recorder
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/core.py", line 16, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+2025-11-14 16:40:24.301 ERROR (MainThread) [homeassistant.setup] Setup failed for 'usb': Unable to import component: No module named 'serial'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/usb/__init__.py", line 12, in <module>
+    from serial.tools.list_ports import comports
+ModuleNotFoundError: No module named 'serial'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/usb/__init__.py", line 12, in <module>
+    from serial.tools.list_ports import comports
+ModuleNotFoundError: No module named 'serial'
+2025-11-14 16:40:24.306 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'bluetooth'. Setup failed for dependencies: ['usb']
+2025-11-14 16:40:24.306 ERROR (MainThread) [homeassistant.setup] Setup failed for 'bluetooth': (DependencyError(...), 'Could not setup dependencies: usb')
+2025-11-14 16:40:50.115 ERROR (MainThread) [homeassistant.setup] Setup failed for 'dhcp': Unable to import component: No module named 'aiodhcpwatcher'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/dhcp/__init__.py", line 16, in <module>
+    import aiodhcpwatcher
+ModuleNotFoundError: No module named 'aiodhcpwatcher'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/dhcp/__init__.py", line 16, in <module>
+    import aiodhcpwatcher
+ModuleNotFoundError: No module named 'aiodhcpwatcher'
+2025-11-14 16:42:20.051 ERROR (MainThread) [homeassistant.setup] Setup failed for 'zeroconf': Unable to import component: No module named 'zeroconf'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/zeroconf/__init__.py", line 16, in <module>
+    from zeroconf import (
+ModuleNotFoundError: No module named 'zeroconf'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/zeroconf/__init__.py", line 16, in <module>
+    from zeroconf import (
+ModuleNotFoundError: No module named 'zeroconf'
+2025-11-14 16:42:26.367 ERROR (MainThread) [homeassistant.setup] Setup failed for 'ssdp': Unable to import component: No module named 'async_upnp_client'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/ssdp/__init__.py", line 17, in <module>
+    from async_upnp_client.aiohttp import AiohttpSessionRequester
+ModuleNotFoundError: No module named 'async_upnp_client'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/ssdp/__init__.py", line 17, in <module>
+    from async_upnp_client.aiohttp import AiohttpSessionRequester
+ModuleNotFoundError: No module named 'async_upnp_client'
+2025-11-14 16:42:44.696 ERROR (ImportExecutor_0) [homeassistant.loader] Unexpected exception importing component homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:42:44.753 ERROR (MainThread) [homeassistant.loader] Unexpected exception importing component homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:42:44.758 ERROR (MainThread) [homeassistant.setup] Setup failed for 'cloud': Unable to import component: Exception importing homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+2025-11-14 16:42:44.978 ERROR (MainThread) [homeassistant.setup] Setup failed for 'conversation': Unable to import component: No module named 'hassil'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 894, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/conversation/__init__.py", line 12, in <module>
+    from hassil.recognize import (
+ModuleNotFoundError: No module named 'hassil'
+2025-11-14 16:42:45.034 ERROR (MainThread) [homeassistant.setup] Setup failed for 'ffmpeg': Unable to import component: No module named 'haffmpeg'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 894, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/ffmpeg/__init__.py", line 8, in <module>
+    from haffmpeg.core import HAFFmpeg
+ModuleNotFoundError: No module named 'haffmpeg'
+2025-11-14 16:42:45.078 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'my'. Setup failed for dependencies: ['frontend']
+2025-11-14 16:42:45.078 ERROR (MainThread) [homeassistant.setup] Setup failed for 'my': (DependencyError(...), 'Could not setup dependencies: frontend')
+2025-11-14 16:42:45.079 ERROR (MainThread) [homeassistant.setup] Setup failed for 'hardware': Unable to import component: No module named 'psutil_home_assistant'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/hardware/__init__.py", line 8, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/hardware/websocket_api.py", line 9, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/hardware/__init__.py", line 8, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/hardware/websocket_api.py", line 9, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+2025-11-14 16:42:45.087 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'logbook'. Setup failed for dependencies: ['frontend', 'recorder']
+2025-11-14 16:42:45.087 ERROR (MainThread) [homeassistant.setup] Setup failed for 'logbook': (DependencyError(...), 'Could not setup dependencies: frontend, recorder')
+2025-11-14 16:42:45.088 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'history'. Setup failed for dependencies: ['recorder']
+2025-11-14 16:42:45.088 ERROR (MainThread) [homeassistant.setup] Setup failed for 'history': (DependencyError(...), 'Could not setup dependencies: recorder')
+2025-11-14 16:42:45.089 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'map'. Setup failed for dependencies: ['frontend']
+2025-11-14 16:42:45.089 ERROR (MainThread) [homeassistant.setup] Setup failed for 'map': (DependencyError(...), 'Could not setup dependencies: frontend')
+2025-11-14 16:42:45.090 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'tts'. Setup failed for dependencies: ['ffmpeg']
+2025-11-14 16:42:45.090 ERROR (MainThread) [homeassistant.setup] Setup failed for 'tts': (DependencyError(...), 'Could not setup dependencies: ffmpeg')
+2025-11-14 16:42:45.119 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'assist_pipeline'. Setup failed for dependencies: ['conversation', 'tts']
+2025-11-14 16:42:45.119 ERROR (MainThread) [homeassistant.setup] Setup failed for 'assist_pipeline': (DependencyError(...), 'Could not setup dependencies: conversation, tts')
+2025-11-14 16:42:45.120 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'energy'. Setup failed for dependencies: ['history', 'recorder']
+2025-11-14 16:42:45.120 ERROR (MainThread) [homeassistant.setup] Setup failed for 'energy': (DependencyError(...), 'Could not setup dependencies: history, recorder')
+2025-11-14 16:42:49.515 ERROR (MainThread) [homeassistant.setup] Error during setup of component stream
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 390, in _async_setup_component
+    result = await task
+             ^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/stream/__init__.py", line 216, in async_setup
+    update_pyav_logging()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/stream/__init__.py", line 202, in update_pyav_logging
+    set_pyav_logging(logging.getLogger(__name__).isEnabledFor(logging.DEBUG))
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/stream/__init__.py", line 197, in set_pyav_logging
+    import av  # pylint: disable=import-outside-toplevel
+    ^^^^^^^^^
+ModuleNotFoundError: No module named 'av'
+2025-11-14 16:42:49.522 WARNING (MainThread) [asyncio] Executing <Task finished name='setup component stream' coro=<async_setup_component() done, defined at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py:134> result=False created at /Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/util/async_.py:50> took 0.282 seconds
+2025-11-14 16:42:51.003 ERROR (MainThread) [homeassistant.setup] Setup failed for 'backup': Unable to import component: No module named 'securetar'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/__init__.py", line 8, in <module>
+    from .http import async_register_http_views
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/http.py", line 14, in <module>
+    from .manager import BackupManager
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/manager.py", line 15, in <module>
+    from securetar import SecureTarFile, atomic_contents_add
+ModuleNotFoundError: No module named 'securetar'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/__init__.py", line 8, in <module>
+    from .http import async_register_http_views
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/http.py", line 14, in <module>
+    from .manager import BackupManager
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/backup/manager.py", line 15, in <module>
+    from securetar import SecureTarFile, atomic_contents_add
+ModuleNotFoundError: No module named 'securetar'
+2025-11-14 16:42:52.293 ERROR (ImportExecutor_0) [homeassistant.loader] Unexpected exception importing component homeassistant.components.mobile_app
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/mobile_app/__init__.py", line 5, in <module>
+    from homeassistant.components import cloud, notify as hass_notify
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:42:52.301 ERROR (MainThread) [homeassistant.loader] Unexpected exception importing component homeassistant.components.mobile_app
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/mobile_app/__init__.py", line 5, in <module>
+    from homeassistant.components import cloud, notify as hass_notify
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.mobile_app
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/mobile_app/__init__.py", line 5, in <module>
+    from homeassistant.components import cloud, notify as hass_notify
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:42:52.303 ERROR (MainThread) [homeassistant.setup] Setup failed for 'mobile_app': Unable to import component: Exception importing homeassistant.components.mobile_app
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/mobile_app/__init__.py", line 5, in <module>
+    from homeassistant.components import cloud, notify as hass_notify
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.mobile_app
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/mobile_app/__init__.py", line 5, in <module>
+    from homeassistant.components import cloud, notify as hass_notify
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.mobile_app
+2025-11-14 16:42:52.306 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'default_config'. Setup failed for dependencies: ['assist_pipeline', 'bluetooth', 'cloud', 'conversation', 'dhcp', 'energy', 'history', 'logbook', 'map', 'mobile_app', 'my', 'ssdp', 'stream', 'usb', 'zeroconf']
+2025-11-14 16:42:52.306 ERROR (MainThread) [homeassistant.setup] Setup failed for 'default_config': (DependencyError(...), 'Could not setup dependencies: assist_pipeline, bluetooth, cloud, conversation, dhcp, energy, history, logbook, map, mobile_app, my, ssdp, stream, usb, zeroconf')
+2025-11-14 16:42:52.307 WARNING (MainThread) [homeassistant.bootstrap] Support for the running Python version 3.11.4 is deprecated and will be removed in Home Assistant 2024.4; Please upgrade Python to 3.12
+2025-11-14 16:42:52.307 WARNING (MainThread) [homeassistant.bootstrap] Detected that frontend did not load. Activating recovery mode
+2025-11-14 16:43:02.690 ERROR (MainThread) [homeassistant.setup] Setup failed for 'file_upload': Unable to import component: No module named 'janus'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 894, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/file_upload/__init__.py", line 13, in <module>
+    import janus
+ModuleNotFoundError: No module named 'janus'
+2025-11-14 16:43:02.717 ERROR (MainThread) [homeassistant.setup] Setup failed for 'analytics': Unable to import component: No module named 'psutil_home_assistant'
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/__init__.py", line 13, in <module>
+    from .analytics import Analytics
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/analytics.py", line 16, in <module>
+    from homeassistant.components.energy import (
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/__init__.py", line 10, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/websocket_api.py", line 15, in <module>
+    from homeassistant.components import recorder, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/__init__.py", line 28, in <module>
+    from . import entity_registry, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/entity_registry.py", line 8, in <module>
+    from .core import Recorder
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/core.py", line 16, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/__init__.py", line 13, in <module>
+    from .analytics import Analytics
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/analytics/analytics.py", line 16, in <module>
+    from homeassistant.components.energy import (
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/__init__.py", line 10, in <module>
+    from . import websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/energy/websocket_api.py", line 15, in <module>
+    from homeassistant.components import recorder, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/__init__.py", line 28, in <module>
+    from . import entity_registry, websocket_api
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/entity_registry.py", line 8, in <module>
+    from .core import Recorder
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/recorder/core.py", line 16, in <module>
+    import psutil_home_assistant as ha_psutil
+ModuleNotFoundError: No module named 'psutil_home_assistant'
+2025-11-14 16:43:02.722 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'onboarding'. Setup failed for dependencies: ['analytics']
+2025-11-14 16:43:02.722 ERROR (MainThread) [homeassistant.setup] Setup failed for 'onboarding': (DependencyError(...), 'Could not setup dependencies: analytics')
+2025-11-14 16:43:02.723 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'frontend'. Setup failed for dependencies: ['file_upload', 'onboarding']
+2025-11-14 16:43:02.723 ERROR (MainThread) [homeassistant.setup] Setup failed for 'frontend': (DependencyError(...), 'Could not setup dependencies: file_upload, onboarding')
+2025-11-14 16:43:02.742 ERROR (ImportExecutor_0) [homeassistant.loader] Unexpected exception importing component homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:43:02.750 ERROR (MainThread) [homeassistant.loader] Unexpected exception importing component homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+2025-11-14 16:43:02.755 ERROR (MainThread) [homeassistant.setup] Setup failed for 'cloud': Unable to import component: Exception importing homeassistant.components.cloud
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 886, in async_get_component
+    comp = await self.hass.async_add_import_executor_job(self.get_component)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 921, in get_component
+    ComponentProtocol, importlib.import_module(self.pkg_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1204, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 940, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/components/cloud/__init__.py", line 10, in <module>
+    from hass_nabucasa import Cloud
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/__init__.py", line 29, in <module>
+    from .remote import RemoteUI
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/remote.py", line 21, in <module>
+    from .acme import AcmeClientError, AcmeHandler
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/hass_nabucasa/acme.py", line 13, in <module>
+    from acme import challenges, client, crypto_util, errors, messages
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/challenges.py", line 24, in <module>
+    from acme import crypto_util
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/acme/crypto_util.py", line 435, in <module>
+    def dump_pyopenssl_chain(chain: Union[List[jose.ComparableX509], List[crypto.X509]],
+                                               ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'josepy' has no attribute 'ComparableX509'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/setup.py", line 296, in _async_setup_component
+    component = await integration.async_get_component()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 892, in async_get_component
+    comp = self.get_component()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/loader.py", line 932, in get_component
+    raise ImportError(f"Exception importing {self.pkg_path}") from err
+ImportError: Exception importing homeassistant.components.cloud
+2025-11-14 16:43:02.760 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'recovery_mode'. Setup failed for dependencies: ['frontend', 'cloud']
+2025-11-14 16:43:02.761 ERROR (MainThread) [homeassistant.setup] Setup failed for 'recovery_mode': (DependencyError(...), 'Could not setup dependencies: frontend, cloud')
+2025-11-14 16:43:02.761 WARNING (MainThread) [homeassistant.bootstrap] Support for the running Python version 3.11.4 is deprecated and will be removed in Home Assistant 2024.4; Please upgrade Python to 3.12
+2025-11-14 16:54:44.709 ERROR (MainThread) [root] Uncaught exception
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.11/bin/hass", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/__main__.py", line 215, in main
+    check_threads()
+  File "/Library/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/homeassistant/__main__.py", line 160, in check_threads
+    sys.stderr.write(f"Found {nthreads} non-daemonic threads.\n")
+OSError: [Errno 5] Input/output error

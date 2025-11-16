@@ -28,6 +28,12 @@ class DiveraVehicleTrackerEntity(DiveraEntity, TrackerEntity):
     def __init__(self, coordinator: DiveraCoordinator, vehicle_id: str, name_mode: str) -> None:
         self._vehicle_id = vehicle_id
         self._name_mode = name_mode or VEHICLE_NAME_MODE_AUTO
+        # Pre-compute display name for device grouping before base init creates device
+        self._vehicle_display_name: str | None = None
+        try:
+            self._vehicle_display_name = self._compute_display_name(coordinator.data)
+        except Exception:
+            self._vehicle_display_name = None
         super().__init__(
             coordinator,
             DiveraEntityDescription(
@@ -38,6 +44,25 @@ class DiveraVehicleTrackerEntity(DiveraEntity, TrackerEntity):
         self._latitude: float | None = None
         self._longitude: float | None = None
         self._assign_name()
+
+    def _compute_display_name(self, client: DiveraClient | None) -> str | None:
+        """Compute the preferred display name using the configured name mode."""
+        mode = self._name_mode
+        name: str | None = None
+        if client is not None:
+            try:
+                attrs = client.get_vehicle_attributes(self._vehicle_id)
+                if mode == VEHICLE_NAME_MODE_SHORT:
+                    name = attrs.get("shortname")
+                elif mode == VEHICLE_NAME_MODE_NAME:
+                    name = attrs.get("name")
+                elif mode == VEHICLE_NAME_MODE_FULL:
+                    name = attrs.get("fullname")
+                else:
+                    name = attrs.get("shortname") or attrs.get("name") or attrs.get("fullname")
+            except Exception:
+                name = None
+        return name
 
     # TrackerEntity properties
     @property
@@ -54,27 +79,10 @@ class DiveraVehicleTrackerEntity(DiveraEntity, TrackerEntity):
 
     def _assign_name(self) -> None:
         client = self.coordinator.data
-        mode = self._name_mode
-        name: str = self._vehicle_id
-        if client is not None:
-            try:
-                attrs = client.get_vehicle_attributes(self._vehicle_id)
-                if mode == VEHICLE_NAME_MODE_SHORT:
-                    name = attrs.get("shortname") or name
-                elif mode == VEHICLE_NAME_MODE_NAME:
-                    name = attrs.get("name") or name
-                elif mode == VEHICLE_NAME_MODE_FULL:
-                    name = attrs.get("fullname") or name
-                else:  # auto
-                    name = (
-                        attrs.get("shortname")
-                        or attrs.get("name")
-                        or attrs.get("fullname")
-                        or name
-                    )
-            except Exception:
-                pass
-        self._attr_name = name
+        display = self._compute_display_name(client)
+        # Save for device_info and assign current entity name
+        self._vehicle_display_name = display or str(self._vehicle_id)
+        self._attr_name = self._vehicle_display_name
 
     def _divera_update(self) -> None:
         client: DiveraClient | None = self.coordinator.data

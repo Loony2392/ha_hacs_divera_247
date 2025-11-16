@@ -1,0 +1,1524 @@
+{
+  "language": "ru",
+  "intents": {
+    "HassTurnOff": {
+      "data": [
+        {
+          "sentences": [
+            "<turn_off> <name>"
+          ]
+        },
+        {
+          "sentences": [
+            "<close> <name>",
+            "<close> <name> <area>"
+          ],
+          "response": "cover"
+        },
+        {
+          "sentences": [
+            "<turn_off> [весь] свет <area>",
+            "<turn_off> <area> [весь] свет",
+            "<turn_off> <area> <name>",
+            "<turn_off> <name> <area>"
+          ],
+          "slots": {
+            "domain": "light"
+          },
+          "response": "lights_area"
+        },
+        {
+          "sentences": [
+            "<turn_off> весь свет",
+            "<turn_off> [весь] свет здесь",
+            "<turn_off> здесь [весь] свет"
+          ],
+          "response": "lights_area",
+          "slots": {
+            "domain": "light"
+          },
+          "requires_context": {
+            "area": {
+              "slot": true
+            }
+          }
+        },
+        {
+          "sentences": [
+            "<close> [дверь] гаража",
+            "<close> гаражную дверь"
+          ],
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          },
+          "response": "cover_device_class"
+        },
+        {
+          "sentences": [
+            "<close> (штор(ы|у)|занавеск(и|у)|жалюзи|окн(о|а)) <area>"
+          ],
+          "slots": {
+            "device_class": [
+              "window",
+              "blind",
+              "curtain",
+              "shutter"
+            ],
+            "domain": "cover"
+          },
+          "response": "cover_area"
+        },
+        {
+          "sentences": [
+            "<turn_off> [все] вентилятор[ы] <area>",
+            "<turn_off> <area> [все] вентилятор[ы]"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        }
+      ]
+    },
+    "HassGetWeather": {
+      "data": [
+        {
+          "sentences": [
+            "[Какая] погода"
+          ]
+        },
+        {
+          "sentences": [
+            "[Какая] погода в <name>"
+          ],
+          "requires_context": {
+            "domain": "weather"
+          }
+        }
+      ]
+    },
+    "HassTurnOn": {
+      "data": [
+        {
+          "sentences": [
+            "<turn_on> [весь] свет <area>",
+            "<turn_on> <area> [весь] свет"
+          ],
+          "slots": {
+            "domain": "light"
+          },
+          "response": "lights_area"
+        },
+        {
+          "sentences": [
+            "<turn_on> свет [здесь]",
+            "<turn_on> [здесь] свет"
+          ],
+          "response": "lights_area",
+          "slots": {
+            "domain": "light"
+          },
+          "requires_context": {
+            "area": {
+              "slot": true
+            }
+          }
+        },
+        {
+          "sentences": [
+            "<turn_on> [все] вентилятор[ы] <area>",
+            "<turn_on> <area> [все] вентилятор[ы]"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        },
+        {
+          "sentences": [
+            "[активируй|<turn_on>] [скрипт ]<name>"
+          ],
+          "requires_context": {
+            "domain": "script"
+          },
+          "slots": {
+            "domain": "script"
+          },
+          "response": "script"
+        },
+        {
+          "sentences": [
+            "<turn_on> <name>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "binary_sensor",
+              "cover",
+              "scene",
+              "script",
+              "sensor"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<open> <name>"
+          ],
+          "response": "cover"
+        },
+        {
+          "sentences": [
+            "<open> <name> <area>"
+          ],
+          "response": "cover_area"
+        },
+        {
+          "sentences": [
+            "<open> [дверь] гараж[а]",
+            "<open> гаражную дверь"
+          ],
+          "response": "cover_device_class",
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<open> (штор(ы|у)|занавеск(и|у)|жалюзи) <area>"
+          ],
+          "response": "cover_area",
+          "slots": {
+            "device_class": [
+              "blind",
+              "curtain",
+              "shutter"
+            ],
+            "domain": "cover"
+          }
+        }
+      ]
+    },
+    "HassMediaUnpause": {
+      "data": [
+        {
+          "sentences": [
+            "(Возобнови|продолж(и|ай))[ воспроизведение] [на ]<name>"
+          ],
+          "requires_context": {
+            "domain": "media_player"
+          }
+        }
+      ]
+    },
+    "HassShoppingListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "добав(ить|ь) <item> в [мой] список покупок",
+            "нужно купить <item> "
+          ],
+          "response": "item_added",
+          "expansion_rules": {
+            "item": "{shopping_list_item:item}"
+          }
+        }
+      ]
+    },
+    "HassNevermind": {
+      "data": [
+        {
+          "sentences": [
+            "Отмена",
+            "Проехали",
+            "Забудь",
+            "Забей",
+            "Неважно",
+            "Отбой"
+          ]
+        }
+      ]
+    },
+    "HassGetState": {
+      "data": [
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "apparent_power"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "apparent_power"
+          },
+          "expansion_rules": {
+            "class": "полн(ая|ой) мощност(ь|и)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "aqi"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "aqi"
+          },
+          "expansion_rules": {
+            "class": "(AQI[ index]|[индекс[а]] качеств(а|о) воздуха)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "atmospheric_pressure"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "atmospheric_pressure"
+          },
+          "expansion_rules": {
+            "class": "(атмосферно(е|го) давлени(е|я) [воздуха]|давлени(е|я) воздуха)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "battery"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "battery"
+          },
+          "expansion_rules": {
+            "class": "заряд[а] (батареи|батарейки)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "carbon_dioxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "carbon_dioxide"
+          },
+          "expansion_rules": {
+            "class": "(углекислого газа|CO2|диоксида углерода)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "carbon_monoxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "carbon_monoxide"
+          },
+          "expansion_rules": {
+            "class": "(угарного газа|CO|монооксида углерода)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "current"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "current"
+          },
+          "expansion_rules": {
+            "class": "сил(а|ы) тока"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "data_rate"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "data_rate"
+          },
+          "expansion_rules": {
+            "class": "скорост(ь|и) (приема|закачки|скачивания|отдачи)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "data_size"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "data_size"
+          },
+          "expansion_rules": {
+            "class": "(размер[а] [данных]|количество данных)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "date"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "date"
+          },
+          "expansion_rules": {
+            "class": "дата"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "distance"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "distance"
+          },
+          "expansion_rules": {
+            "class": "(удаленность|далеко|дистанция[ до])"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "duration"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "duration"
+          },
+          "expansion_rules": {
+            "class": "(продолжительность|долго|длится)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "energy"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "energy"
+          },
+          "expansion_rules": {
+            "class": "[количество ]энергии [получа(ет|ют)|производ(ит|ят)|потребля(ет|ют)]"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "energy_storage"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "energy_storage"
+          },
+          "expansion_rules": {
+            "class": "([хранится|запасено] [электро]энергии|[электро]энергии (хранится|запасено|в наличии))"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "frequency"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "frequency"
+          },
+          "expansion_rules": {
+            "class": "частот(а|ы)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "gas"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "gas"
+          },
+          "expansion_rules": {
+            "class": "(количество|потреблени(е|я)|объем) [потребленного|использованного] газа|газа использовано"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "humidity"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "humidity"
+          },
+          "expansion_rules": {
+            "class": "[относительная] влажност(ь|и) воздуха"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "illuminance"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "illuminance"
+          },
+          "expansion_rules": {
+            "class": "(освещенности|освещения)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "irradiance"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "irradiance"
+          },
+          "expansion_rules": {
+            "class": "[мощность] (облученности|излучения)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "moisture"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "moisture"
+          },
+          "expansion_rules": {
+            "class": "[относительн(ая|ой)] влажност(ь|и)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "monetary"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "monetary"
+          },
+          "expansion_rules": {
+            "class": "цен(а|ы)|стоимост(ь|и)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "nitrogen_dioxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "nitrogen_dioxide"
+          },
+          "expansion_rules": {
+            "class": "(диоксида азота|NO2)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "nitrogen_monoxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "nitrogen_monoxide"
+          },
+          "expansion_rules": {
+            "class": "(мон[о]оксида азота|NO)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "nitrous_oxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "nitrous_oxide"
+          },
+          "expansion_rules": {
+            "class": "(оксида азота|N2O)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "ozone"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "ozone"
+          },
+          "expansion_rules": {
+            "class": "(озона|O3)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "pm1"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "pm1"
+          },
+          "expansion_rules": {
+            "class": "[частиц] (PM1|PM 1)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "pm25"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "pm25"
+          },
+          "expansion_rules": {
+            "class": "[частиц] (PM25|PM2.5|PM 2.5)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "pm10"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "pm10"
+          },
+          "expansion_rules": {
+            "class": "[частиц] (PM10|PM 10)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "power_factor"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "power_factor"
+          },
+          "expansion_rules": {
+            "class": "коэффициент[а] мощности"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "power"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "power"
+          },
+          "expansion_rules": {
+            "class": "мощност(ь|и)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "precipitation"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "precipitation"
+          },
+          "expansion_rules": {
+            "class": "[количество] осадков"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "precipitation_intensity"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "precipitation_intensity"
+          },
+          "expansion_rules": {
+            "class": "интенсивность осадков"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "pressure"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "pressure"
+          },
+          "expansion_rules": {
+            "class": "давление[ воздуха]"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "reactive_power"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "reactive_power"
+          },
+          "expansion_rules": {
+            "class": "реактивн(ая|ой) мощност(ь|и)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "signal_strength"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "signal_strength"
+          },
+          "expansion_rules": {
+            "class": "(сил(а|ы)|мощност(ь|и)|качество) сигнала"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "sound_pressure"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "sound_pressure"
+          },
+          "expansion_rules": {
+            "class": "(звукового|акустического) давления"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "speed"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "speed"
+          },
+          "expansion_rules": {
+            "class": "скорост(ь|и) [движения]"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "sulphur_dioxide"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "sulphur_dioxide"
+          },
+          "expansion_rules": {
+            "class": "(оксида|диоксида) серы|SO2|сернистого газа"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>",
+            "<what_is> [у ]<name> <class> [<area>]"
+          ],
+          "response": "sensor_value_temperature",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "temperature"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "temperature"
+          },
+          "expansion_rules": {
+            "class": "температур(а|ы)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "volatile_organic_compounds"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "volatile_organic_compounds"
+          },
+          "expansion_rules": {
+            "class": "[частиц ](VOC|летучих органических соединений)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "volatile_organic_compounds_parts"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "volatile_organic_compounds_parts"
+          },
+          "expansion_rules": {
+            "class": "(доля|количество) [частиц ](VOC|летучих органических соединений)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "voltage"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "voltage"
+          },
+          "expansion_rules": {
+            "class": "[падени(е|я)] напряжени(е|я)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "volume"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "volume"
+          },
+          "expansion_rules": {
+            "class": "объем[а][ жидкости] [прокачивает|качает]"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "volume_storage"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "volume_storage"
+          },
+          "expansion_rules": {
+            "class": "[полное ][количество ][запасенного ]объема|объем [жидкости ]запасен"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "water"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "water"
+          },
+          "expansion_rules": {
+            "class": "потреблени(е|я) воды"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "weight"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "weight"
+          },
+          "expansion_rules": {
+            "class": "(вес|масса)"
+          }
+        },
+        {
+          "sentences": [
+            "<what_is_the_class_of_name>"
+          ],
+          "response": "sensor_value",
+          "requires_context": {
+            "domain": "sensor",
+            "device_class": "wind_speed"
+          },
+          "slots": {
+            "domain": "sensor",
+            "device_class": "wind_speed"
+          },
+          "expansion_rules": {
+            "class": "(сил(а|ы)|скорост(ь|и)) ветра"
+          }
+        },
+        {
+          "sentences": [
+            "Что с[о] <name> [<area>]",
+            "Как(ое|ово|ая|ой) [состояние] [у] <name> [<area>]"
+          ],
+          "response": "one",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<name> [<area>] {on_off_states:state}",
+            "{on_off_states:state} [ли] <name> [<area>]"
+          ],
+          "response": "one_yesno",
+          "excludes_context": {
+            "domain": [
+              "cover"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "[Есть] [ли] [как(ой|ое|ие)-нибудь] {on_off_states:state} {on_off_domains:domain} [<area>]",
+            "[Есть] [ли] [<area>] [как(ой|ое|ие)-нибудь] {on_off_states:state} {on_off_domains:domain}"
+          ],
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "(Все|весь) [ли] {on_off_domains:domain} {on_off_states:state} [<area>]",
+            "{on_off_states:state} [ли] (все|весь) {on_off_domains:domain} [<area>]"
+          ],
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "(Какие|которые) {on_off_domains:domain} {on_off_states:state} [<area>]",
+            "(Какие|которые) {on_off_domains:domain} [<area>] {on_off_states:state}"
+          ],
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "Сколько {on_off_domains:domain} {on_off_states:state} [<area>]",
+            "Сколько {on_off_domains:domain} [<area>] {on_off_states:state}",
+            "Сколько {on_off_states:state} {on_off_domains:domain} [<area>]"
+          ],
+          "response": "how_many"
+        },
+        {
+          "sentences": [
+            "{cover_states:state} [ли] <name> [<area>]"
+          ],
+          "response": "one_yesno",
+          "requires_context": {
+            "domain": "cover"
+          },
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "Есть [ли] {cover_states:state} {cover_classes:device_class} [<area>]"
+          ],
+          "response": "any",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "Все [ли] {cover_classes:device_class} [<area>] {cover_states:state}"
+          ],
+          "response": "all",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(Какие|которые) {cover_classes:device_class} {cover_states:state} [<area>]"
+          ],
+          "response": "which",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "Сколько {cover_classes:device_class} {cover_states:state} [<area>]"
+          ],
+          "response": "how_many",
+          "slots": {
+            "domain": "cover"
+          }
+        }
+      ]
+    },
+    "HassLightSet": {
+      "data": [
+        {
+          "sentences": [
+            "<set> [яркость|яркость света] <name> [на|до] <brightness>"
+          ],
+          "response": "brightness"
+        },
+        {
+          "sentences": [
+            "<set> яркость [света] <area> [на|до] <brightness>",
+            "<set> [на|до] <brightness> яркость <area>"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "brightness_area"
+        },
+        {
+          "sentences": [
+            "<set> [цвет] <name> [на] {color}",
+            "<set> {color} [цвет] [у|для] <name>",
+            "<set> <name> {color} [цвет[а]]"
+          ],
+          "response": "color"
+        },
+        {
+          "sentences": [
+            "<set> [цвет] (<area>|[всего] света <area>|[все[х]] светильник(и|ов) <area>) [на] {color} [цвета]",
+            "<set> {color} цвет (<area>|[всего] света <area>|[всех] светильников <area>)",
+            "<set> {color} (<area>|[весь] свет <area>|[все] светильники <area>)"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "color_area"
+        }
+      ]
+    },
+    "HassMediaNext": {
+      "data": [
+        {
+          "sentences": [
+            "[переключи[ на]|включи] следующ(ий|ую|ая) [трек|песн(я|ю)] [на ]<name>"
+          ],
+          "requires_context": {
+            "domain": "media_player"
+          }
+        }
+      ]
+    },
+    "HassMediaPause": {
+      "data": [
+        {
+          "sentences": [
+            "(постав(ить|ь) на паузу|[при]останов(ить|и)) <name>",
+            "постав(ить|ь) <name> на паузу",
+            "<name> на паузу"
+          ],
+          "requires_context": {
+            "domain": "media_player"
+          }
+        }
+      ]
+    },
+    "HassClimateGetTemperature": {
+      "data": [
+        {
+          "sentences": [
+            "[Какая|сколько] <temp>",
+            "[Какая|сколько] <temp> <area> [[на] <name>[е|ы|а]]",
+            "[Какая|сколько] <temp> [на] <name>[е|ы|а] [<area>]"
+          ],
+          "excludes_context": {
+            "domain": [
+              "sensor"
+            ]
+          }
+        }
+      ]
+    },
+    "HassListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "Добавь <item> в<my_list>"
+          ],
+          "response": "item_added",
+          "requires_context": {
+            "domain": "todo"
+          },
+          "expansion_rules": {
+            "my_list": "[ мой][ список] {name}[ список]",
+            "item": "{shopping_list_item:item}"
+          }
+        }
+      ]
+    },
+    "HassSetVolume": {
+      "data": [
+        {
+          "sentences": [
+            "[<set>] громкость [на ]<name> [на ]<volume>",
+            "[<set>] уровень звука [на ]<name> [на ]<volume>"
+          ],
+          "requires_context": {
+            "domain": "media_player"
+          }
+        }
+      ]
+    }
+  },
+  "responses": {
+    "errors": {
+      "no_intent": "Прошу прощения, обращение не распознано",
+      "no_area": "Нет зоны, названной {{ area }}",
+      "no_domain_in_area": "В зоне {{ area }} нет объектов {{ domain }}",
+      "no_device_class_in_area": "В зоне {{ area }} нет устройств {{ device_class }}",
+      "no_entity": "Нет устройства или сущности, названной {{ entity }}",
+      "handle_error": "Во время обработки намерения произошла непредвиденная ошибка"
+    },
+    "intents": {
+      "HassGetState": {
+        "one": "{{ slots.name | capitalize }} {{ state.state_with_unit }}\n",
+        "one_yesno": "{% if query.matched %}\n  Да\n{% else %}\n  Нет, {{ state.state_with_unit }}\n{% endif %}\n",
+        "any": "{% if query.matched %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    Да, {{ match[:3] | join(\", \") }} и ещё {{ (match | length - 3) }}\n  {%- else -%}\n    Да,\n    {% for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} и {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% else %}\n  Нет\n{% endif %}\n",
+        "all": "{% if not query.unmatched: %}\n  Да\n{% else %}\n  {% set no_match = query.unmatched | map(attribute=\"name\") | sort | list %}\n  {% if no_match | length > 4 %}\n    {{ no_match[:3] | join(\", \") }} и ещё {{ (no_match | length - 3) }} — нет\n  {%- else -%}\n    {% for name in no_match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} и {% endif -%}\n      {{ name }} — нет\n    {%- endfor %}\n  {% endif %}\n{% endif %}\n",
+        "which": "{% if not query.matched %}\n  Ни одного\n{% else: %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    {{ match[:3] | join(\", \") }} и ещё {{ (match | length - 3) }}\n  {% else %}\n    {%- for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} и {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% endif %}\n",
+        "how_many": "{{ query.matched | length }}\n",
+        "sensor_value": "Текущее значение: {{ state.state_with_unit }}\n",
+        "sensor_value_temperature": "Температура {{ state.state_with_unit }}\n"
+      },
+      "HassTurnOff": {
+        "default": "{{ slots.name }} выключен",
+        "lights_area": "Выключен свет в {{ slots.area }}",
+        "fans_area": "Вентиляторы выключены в {{ slots.area }}",
+        "cover": "Закрыто {{ slots.name }}",
+        "cover_area": "Закрыто {{ slots.area }}",
+        "cover_device_class": "Закрыто {{ slots.device_class }}"
+      },
+      "HassShoppingListAddItem": {
+        "item_added": "Добавляю {{ slots.item }}"
+      },
+      "HassTurnOn": {
+        "default": "Включен {{ slots.name }}",
+        "lights_area": "Включен свет в {{ slots.area }}",
+        "fans_area": "Включены вентиляторы в {{ slots.area }}",
+        "cover": "Открыто {{ slots.name }}",
+        "cover_area": "Открыто {{ slots.area }}",
+        "cover_device_class": "Открыто {{ slots.device_class }}",
+        "script": "Выполнено"
+      },
+      "HassMediaPause": {
+        "default": "Пауза"
+      },
+      "HassListAddItem": {
+        "item_added": "Добавил {{ slots.item }}"
+      },
+      "HassGetWeather": {
+        "default": "{% set weather_condition = {\n  'clear': ', ясно',\n  'clear-night': ', ясная ночь',\n  'cloudy': ', облачно',\n  'exceptional': ', экстремальные погодные явления',\n  'fog': ', туман',\n  'hail': ', град',\n  'lightning': ', гроза',\n  'lightning-rainy': ', дождь с грозой',\n  'partlycloudy': ', частичная облачность',\n  'pouring': ', ливень',\n  'rainy': ', дождь',\n  'snowy': ', снег',\n  'snowy-rainy': ', мокрый снег',\n  'sunny': ', солнечно',\n  'windy': ', ветренно',\n  'windy-variant': ', ветренно и облачно'\n} %}\n\n\n{% set temperature = state.attributes.get('temperature') | float %} {% if temperature < 0 %}\n  {% set temperature_string = 'минус ' ~ (temperature * -1) | string | replace('.', ',') %}\n{% else %}\n  {% set temperature_string = temperature | string | replace('.', ',') %}\n{% endif %} {{ temperature_string }} {{ state.attributes.get('temperature_unit') }}{{ weather_condition.get((state.state | string).lower(), state.state | string) }}\n"
+      },
+      "HassLightSet": {
+        "brightness": "Яркость {{ slots.name }} установлена на {{ slots.brightness }}",
+        "brightness_area": "Яркость в {{ slots.area }} установлена на {{ slots.brightness }}",
+        "color": "Цвет {{ slots.name }} установлен на {{ slots.color }}",
+        "color_area": "Цвет в {{ slots.area }} установлен на {{ slots.color }}"
+      },
+      "HassMediaUnpause": {
+        "default": "Возобновлено"
+      },
+      "HassMediaNext": {
+        "default": "Переключено"
+      },
+      "HassClimateGetTemperature": {
+        "default": "{{ state.state }} {% set temp = state.state | float %} {% set last_digit = temp|abs|int % 10 %} {% set last_two_digits = temp|abs|int % 100 %} {% if last_digit == 1 and last_two_digits != 11 %}\n  градус\n{% elif last_digit in [2, 3, 4] and (last_two_digits < 10 or last_two_digits > 20) %}\n  градуса\n{% else %}\n  градусов\n{% endif %}"
+      },
+      "HassSetVolume": {
+        "default": "Громкость задана"
+      }
+    }
+  },
+  "lists": {
+    "color": {
+      "values": [
+        {
+          "in": "белый|белого|белым",
+          "out": "white"
+        },
+        {
+          "in": "черный|черного|чёрный|чёрного|черным|чёрным",
+          "out": "black"
+        },
+        {
+          "in": "красный|красного|красным",
+          "out": "red"
+        },
+        {
+          "in": "оранжевый|оранжевого|оранжевым",
+          "out": "orange"
+        },
+        {
+          "in": "желтый|желтого|жёлтый|жёлтого|желтым|жёлтым",
+          "out": "yellow"
+        },
+        {
+          "in": "зеленый|зелёный|зеленого|зелёного|зеленым|зелёным",
+          "out": "green"
+        },
+        {
+          "in": "синий|синего|синим",
+          "out": "blue"
+        },
+        {
+          "in": "фиолетовый|фиолетового|фиолетовым",
+          "out": "purple"
+        },
+        {
+          "in": "коричневый|коричневого|коричневым",
+          "out": "brown"
+        }
+      ]
+    },
+    "brightness": {
+      "range": {
+        "type": "percentage",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature": {
+      "range": {
+        "type": "temperature",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature_unit": {
+      "values": [
+        {
+          "in": "c|цельсия|по цельсию",
+          "out": "celsius"
+        },
+        {
+          "in": "f|фаренгейта|по фаренгейту",
+          "out": "fahrenheit"
+        }
+      ]
+    },
+    "on_off_states": {
+      "values": [
+        {
+          "in": "включен[н][а|ы[е]|о[й]]",
+          "out": "on"
+        },
+        {
+          "in": "выключен[н][а|ы[е]|о[й]]",
+          "out": "off"
+        }
+      ]
+    },
+    "on_off_domains": {
+      "values": [
+        {
+          "in": "(свет[а]|освещение|ламп[а|ы|ой|ами|у]|светильник(а|у|ом|и|ами))",
+          "out": "light"
+        },
+        {
+          "in": "вентилятор[ы]",
+          "out": "fan"
+        },
+        {
+          "in": "выключател(и|ь|ей|ем|ями)",
+          "out": "switch"
+        }
+      ]
+    },
+    "cover_states": {
+      "values": [
+        {
+          "in": "открыт[а|о|ы|ой|ая|ые|ую]|не[ ]задернут[а|о|ы|ой|ая|ые|ую]|поднят[а|о|ы|ой|ая|ые|ую]",
+          "out": "open"
+        },
+        {
+          "in": "закрыт[а|о|ы|ой|ая|ые|ую]|задернут[а|о|ы|ой|ая|ые|ую]|опущен[а|о|ы|ой|ая|ые|ую]",
+          "out": "closed"
+        },
+        {
+          "in": "открыва(е|ю)тся|поднима(е|ю)тся",
+          "out": "opening"
+        },
+        {
+          "in": "закрыва(е|ю)тся|опуска(е|ю)тся",
+          "out": "closing"
+        }
+      ]
+    },
+    "cover_classes": {
+      "values": [
+        {
+          "in": "навес[а[м[и]]|у|ы|ом]",
+          "out": "awning"
+        },
+        {
+          "in": "жалюзи",
+          "out": "blind"
+        },
+        {
+          "in": "штор[а[м[и]]|у|ы|ой]",
+          "out": "curtain"
+        },
+        {
+          "in": "[приточн(ы(й|е|м[и])|о(й|го|му))][ ]клапан[а[м[и]]|у|ы|ом]|заслонк(а[м[и]]|у|е|и|ой)",
+          "out": "damper"
+        },
+        {
+          "in": "двер(ь[ю]|и|(я|ь)м[и])|калитк(а[м[и]]|у|и|ой)",
+          "out": "door"
+        },
+        {
+          "in": "гараж[а[м[и]]|у|ом|и|н(ая|ую|ой|ы(е|х|м[и]))][ ][двер(ь[ю]|и|(я|ь)м[и])|ворот[а[м[и]]]]",
+          "out": "garage"
+        },
+        {
+          "in": "ворот[а[м[и]]]",
+          "out": "gate"
+        },
+        {
+          "in": "занавес[а[м[и]]|у|ы|ом]",
+          "out": "shade"
+        },
+        {
+          "in": "ставн(я[м[и]]|и)",
+          "out": "shutter"
+        },
+        {
+          "in": "окн(о[м]|а[м[и]])",
+          "out": "window"
+        }
+      ]
+    },
+    "shopping_list_item": {
+      "wildcard": true
+    },
+    "volume": {
+      "range": {
+        "type": "percentage",
+        "from": 0,
+        "to": 100
+      }
+    }
+  },
+  "expansion_rules": {
+    "name": "{name}",
+    "area": "[в|во|на] {area}",
+    "brightness": "{brightness}[%| процент[ов|а]]",
+    "temp": "(температур(а|у)|градус[ов|а])",
+    "temperature": "{temperature}[°|градус[ов|а]] [{temperature_unit}]",
+    "turn_on": "(запусти|включи)[ть]",
+    "turn_off": "(выключи|отключи)[ть]",
+    "set": "(сдела(й|ть)|установи[ть]|постав(ь|ить)|поменя(й|ть)|измени[ть]|выстав(ь|ить)|переключи[ть]|переве(сти|ди)|увелич(ь|ить)|уменьш(и|ить)|подн(ими|ять)|опусти[ть]|прибав(ь|ить)|отн(ими|ять)|повыс(ь|ить)|пониз(ь|ить))",
+    "close": "(закр(ой|ыть)|прикр(ой|ыть)|опусти[ть])",
+    "open": "(откр(ой|ыть)|подн(ими|ять))",
+    "what_is": "какая|како(е|й)|как(ую|ие)|каков[о|a|ы]|[на]сколько|когда|как",
+    "what_is_the_class_of_name": "<what_is> [показани(е|я)|значени(е|я)|уровен(и|ь)|концентраци(я|ю)] <class> [показывает[ся]|отображает[ся]] [у|на|в] [датчик(а|е)|сенсор(а|е)] <name> [<area>]",
+    "volume": "{volume:volume_level}[[ ]%| процентов]"
+  },
+  "skip_words": [
+    "пожалуйста",
+    "можешь",
+    "ска(жи|зать)",
+    "прошу",
+    "узна(й|ть)"
+  ]
+}

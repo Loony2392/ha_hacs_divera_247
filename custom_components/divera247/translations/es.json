@@ -8,7 +8,8 @@
                 "data": {
                     "accesskey": "🔑 Clave de acceso",
                     "base_url": "🌐 Dirección del servidor (DIVERA 24/7)",
-                    "scan_interval": "⏱️ Intervalo de actualización (segundos)"
+                    "scan_interval": "⏱️ Intervalo de actualización (segundos)",
+                    "vehicle_name_mode": "🚗 Origen del nombre del vehículo"
                 }
             },
             "user_cluster_relation": {
@@ -72,11 +73,7 @@
                 "shortname": "🏷️ Nombre corto (ej. 'FtKW')",
                 "name": "🧾 Nombre (ej. 'Heros Halver 21/10')",
                 "fullname": "🪪 Nombre completo (ej. 'Vehículo de comando FtKW')"
-            },
-            "auto": "🔄 Auto (nombre corto → nombre → nombre completo)",
-            "shortname": "🏷️ Nombre corto (p. ej. 'FtKW')",
-            "name": "🧾 Nombre (p. ej. 'Heros Halver 21/10')",
-            "fullname": "🪪 Nombre completo (p. ej. 'Vehículo de mando FtKW')"
+            }
         }
     },
     "exceptions": {
@@ -92,7 +89,11 @@
             "alarm_address": {
                 "name": "Dirección de la última alarma"
             },
-                }
+            "news": {
+                "name": "Últimas noticias"
+            },
+            "vehicle": {
+                "name": "Estado del vehículo"
             },
             "vehicle_location": {
                 "name": "Ubicación"
@@ -107,7 +108,7 @@
                 "name": "Número"
             },
             "status_overview": {
-                "name": "Resumen del estado de los asistentes"
+                "name": "Resumen del estado de los voluntarios"
             },
             "status_active": {
                 "name": "Voluntarios activos"

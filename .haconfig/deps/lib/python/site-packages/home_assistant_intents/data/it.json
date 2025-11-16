@@ -1,0 +1,978 @@
+{
+  "language": "it",
+  "intents": {
+    "HassTurnOff": {
+      "data": [
+        {
+          "sentences": [
+            "<turn_off> [<the>]<name>"
+          ]
+        },
+        {
+          "sentences": [
+            "<turn_off> [tutte] [l(a|e)] (luc(e|i)) [(<of>|<in>)] <area>",
+            "<turn_off> [<in>] <area> [tutte] [l(a|e)] (luc(e|i))"
+          ],
+          "slots": {
+            "domain": "light"
+          }
+        },
+        {
+          "sentences": [
+            "<close> [<the>] {name} [<in> {area}]"
+          ],
+          "response": "cover",
+          "requires_context": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<close> <all> [[<the>] casa]"
+          ],
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "cover_all"
+        },
+        {
+          "sentences": [
+            "<close> <all> [<in>|<the>] {area}"
+          ],
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "cover_area"
+        },
+        {
+          "sentences": [
+            "<close> <all> [<the>] {cover_classes:device_class}"
+          ],
+          "response": "cover_device_class",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<close> [<all>] [<the>] {cover_classes:device_class} [<in>|<of>] {area}",
+            "<close> [<in>] {area} [<all>] [<the>] {cover_classes:device_class}"
+          ],
+          "response": "cover_device_class_area",
+          "requires_context": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<close> <the> <garage> [[(in | del)] garage]",
+            "<close> [[<in>] garage] <the> <garage>"
+          ],
+          "response": "cover_garage",
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<turn_off> [(tutt(i|e))] [<the>]<fan> [(<of> | <in>)] <area>",
+            "<turn_off> [<in>] <area> [(tutt(i|e))] [<the>]<fan>"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          }
+        }
+      ]
+    },
+    "HassTurnOn": {
+      "data": [
+        {
+          "sentences": [
+            "<turn_on> [tutte] [l(a|e)] (luc(e|i)) [(<of>|<in>)] <area>",
+            "<turn_on> [<in>] <area> [tutte] [l(a|e)] (luc(e|i))"
+          ],
+          "slots": {
+            "domain": "light"
+          }
+        },
+        {
+          "sentences": [
+            "<turn_on> [(tutt(i|e))] [<the>]<fan> [(<of> | <in>)] <area>",
+            "<turn_on> [<in>] <area> [(tutt(i|e))] [<the>]<fan>"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          }
+        },
+        {
+          "sentences": [
+            "<turn_on> [la] ([scena] <name>)"
+          ],
+          "requires_context": {
+            "domain": "scene"
+          },
+          "slots": {
+            "domain": "scene"
+          },
+          "response": "scene"
+        },
+        {
+          "sentences": [
+            "<turn_on> [la] [scena] <name> [(<of>|<in>)] <area>"
+          ],
+          "requires_context": {
+            "domain": "scene"
+          },
+          "slots": {
+            "domain": "scene"
+          },
+          "response": "scene"
+        },
+        {
+          "sentences": [
+            "<turn_on> [<the>]<name>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "scene"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<open> [<the>] {name} [[<in> | <of>] {area}]"
+          ],
+          "response": "cover",
+          "requires_context": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<open> [<all>] [<in> | <the>] {area}"
+          ],
+          "response": "cover_area",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<open> <all> [<the>] {cover_classes:device_class}"
+          ],
+          "response": "cover_device_class",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<open> [<all>][<the>] {cover_classes:device_class} [[<in> | <of>] {area}]",
+            "<open> [[<in>] {area}] [<all>] [<the>] {cover_classes:device_class}"
+          ],
+          "response": "cover_device_class_area",
+          "requires_context": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<open> <the> <garage> [[(in | del)] garage]",
+            "<open> [[<in>] garage] <the> <garage>"
+          ],
+          "response": "cover_garage",
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          }
+        }
+      ]
+    },
+    "HassShoppingListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "aggiungi <item>[ alla <my_list>]",
+            "metti <item> nella <my_list>"
+          ],
+          "response": "item_added",
+          "expansion_rules": {
+            "my_list": "[mia ]lista[ della spesa]",
+            "item": "{shopping_list_item:item}"
+          }
+        }
+      ]
+    },
+    "HassLightSet": {
+      "data": [
+        {
+          "sentences": [
+            "[<set>] [la] [luminosità] [<of>] <name> [(a|al)] [valore] <brightness>",
+            "[<set>] <name> [la] luminosità [(a|al)] [valore] <brightness>",
+            "[<set>] [(a|al)] [valore] <brightness> [la] luminosità [<of>] <name>"
+          ],
+          "response": "brightness"
+        },
+        {
+          "sentences": [
+            "[<set>] [la] luminosità [(<of>|<the>|<in>)] <area> [(a|al)] [valore] <brightness>",
+            "[<set>] [<in>] <area> [la] luminosità [(a|al)] [valore] <brightness>",
+            "[<set>] [(a|al)] [valore] <brightness> [la] luminosità [(<of>|<the>|<in>)] <area>"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "brightness_area"
+        },
+        {
+          "sentences": [
+            "<set> [<the>] <name> [(a|al|su|in)] [colore] {color}",
+            "<set> [(il)] [colore] [<of>] <name> [(a|al|su|in)] {color}",
+            "<set> [il] [colore] {color} [<to>] <name>",
+            "<set> [(a|al|su|in)] [colore] {color} [<the>] <name>",
+            "<set> [(a|al|su|in)] {color} [<the>] [colore] [<of>] <name>"
+          ],
+          "response": "color"
+        }
+      ]
+    },
+    "HassClimateGetTemperature": {
+      "data": [
+        {
+          "sentences": [
+            "[<what_is>] [la] temperatura [c'è] [(<in> | <of> | <the>)] [<area>]",
+            "[quanto] [(è | c'è | fa | ci sta)] (caldo | freddo) [(<in> | <the>)] [<area>]",
+            "quanto (caldo | freddo) [(è | c'è | fa | ci sta)] [(<in> | <the>) <area>]",
+            "quanti gradi [(ci sono | fanno | ci stanno)] [(<in> | <the>) <area>]"
+          ]
+        }
+      ]
+    },
+    "HassGetState": {
+      "data": [
+        {
+          "sentences": [
+            "<what_is> [lo stato <of>|stato ha[nno]] [<the>] <name> [(<in>|of) <area>]"
+          ],
+          "response": "one"
+        },
+        {
+          "sentences": [
+            "[Lo stato <of>] [<the>] <name> è {on_off_states:state} [<in> <area>]"
+          ],
+          "response": "one_yesno",
+          "excludes_context": {
+            "domain": [
+              "cover"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "(C'è una|Ci sono delle) {on_off_domains:domain} [<of> <area>] {on_off_states:state} [<in> <area>]"
+          ],
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "[tutte] <the> {on_off_domains:domain} [<of> <area>] sono [tutt(i|e)] {on_off_states:state} [<in> <area>]"
+          ],
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "(Qual(i|e)|Che) {on_off_domains:domain} [<of> <area>] (è|sono) {on_off_states:state} [<in> <area>]"
+          ],
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "Quant(i|e) {on_off_domains:domain} [<of> <area>] (è|sono) {on_off_states:state} [<in> <area>]"
+          ],
+          "response": "how_many"
+        },
+        {
+          "sentences": [
+            "[<the>] <name> è {cover_states:state} [<in> <area>]",
+            "è {cover_states:state} <name> [<in> <area>]"
+          ],
+          "response": "one_yesno",
+          "requires_context": {
+            "domain": "cover"
+          },
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(C'è una|Ci sono delle) {cover_classes:device_class} {cover_states:state} [<in> <area>]"
+          ],
+          "response": "any",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<the> {cover_classes:device_class} [<of> <area>] sono [tutt(i|e)] {cover_states:state} [<in> <area>]",
+            "[tutt(i|e)] [<the>] {cover_classes:device_class} [(<of>|<in>) <area>] sono {cover_states:state} [<in> <area>]"
+          ],
+          "response": "all",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(Qual(i|e)|Che) {cover_classes:device_class} [<of> <area>] (è|sono) {cover_states:state} [<in> <area>]"
+          ],
+          "response": "which",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "Quant(i|e) {cover_classes:device_class} [<of> <area>] (è|sono) {cover_states:state} [<in> <area>]"
+          ],
+          "response": "how_many",
+          "slots": {
+            "domain": "cover"
+          }
+        }
+      ]
+    }
+  },
+  "responses": {
+    "errors": {
+      "no_intent": "Mi dispiace, non ho capito",
+      "handle_error": "Si è verificato un errore inatteso durante l'elaborazione",
+      "no_area": "Non conosco nessuna area chiamata {{ area }}",
+      "no_domain": "Mi dispiace, non conosco nessun dispositivo appartenente al dominio {{ domain }}",
+      "no_domain_in_area": "Mi dispiace, nell'area {{ area }} non conosco nessun dispositivo appartenente al dominio {{ domain }}",
+      "no_device_class": "Mi dispiace, non conosco nessun dispositivo appartenente alla classe {{ device_class }}",
+      "no_device_class_in_area": "Mi dispiace, nell'area {{ area }} non conosco nessun dispositivo appartenente alla classe {{ device_class }}",
+      "no_entity": "Mi dispiace, non sconosco nessun dispositivo chiamato {{ entity }}",
+      "no_entity_in_area": "Mi dispiace, nell'area {{ area }} non sconosco nessun dispositivo chiamato {{ entity }}",
+      "no_entity_exposed": "Mi dispiace, il dispositivo {{ entity }} non è stato esposto",
+      "no_entity_in_area_exposed": "Mi dispiace, il dispositivo {{ entity }} nell'area {{ area }} non è stato esposto",
+      "no_domain_exposed": "Mi dispiace, il dominio {{ domain }} non è stato esposto",
+      "no_domain_in_area_exposed": "Mi dispiace, nell'area {{ area }} il dominio {{ domain }} non è stato esposto",
+      "no_device_class_exposed": "Mi dispiace, nessun dispositivo appartenente alla classe {{ device_class }} è stato esposto",
+      "no_device_class_in_area_exposed": "Mi dispiace, nell'area {{ area }} nessun dispositivo appartenente alla classe {{ device_class }} è stato esposto",
+      "duplicate_entities": "Mi dispiace, esistono più dispositivi chiamati {{ entity }}",
+      "duplicate_entities_in_area": "Mi dispiace, nell'area {{ area }} esistono più dispositivi chiamati {{ entity }}"
+    },
+    "intents": {
+      "HassGetState": {
+        "one": "{{ slots.name | capitalize }} è {{ state.state_with_unit }}\n",
+        "one_yesno": "{% if query.matched %}\n  Sì\n{% else %}\n  No, è {{ state.state_with_unit }}\n{% endif %}\n",
+        "any": "{% if query.matched %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length == 4 %}\n    Sì, {{ match[:3] | join(\", \") }} ed un altro\n  {% elif match | length > 4 %}\n    Sì, {{ match[:3] | join(\", \") }} ed altri {{ (match | length - 3) }}\n  {%- else -%}\n    Sì,\n    {% for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% else %}\n  No\n{% endif %}\n",
+        "all": "{% if not query.unmatched: %}\n  Sì\n{% else %}\n  {% set no_match = query.unmatched | map(attribute=\"name\") | sort | list %}\n  {% if no_match | length == 4 %}\n    No, {{ no_match[:3] | join(\", \") }} ed un altro no\n  {% elif no_match | length > 4 %}\n    No, {{ no_match[:3] | join(\", \") }} ed altri {{ (no_match | length - 3) }}\n  {%- else -%}\n    No,\n    {% for name in no_match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor %} no\n  {% endif %}\n{% endif %}\n",
+        "which": "{% if not query.matched %}\n  Nessuno\n{% else: %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length == 4 %}\n    {{ match[:3] | join(\", \") }} ed un altro\n  {% elif match | length > 4 %}\n    {{ match[:3] | join(\", \") }} ed altri {{ (match | length - 3) }}\n  {% else %}\n    {%- for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% endif %}\n",
+        "how_many": "{{ query.matched | length }}\n"
+      },
+      "HassTurnOff": {
+        "default": "Ho spento {{ slots.name }}",
+        "lights_area": "Ho spento le luci in {{ slots.area }}",
+        "fans_area": "Ho spento la ventilazione in {{ slots.area }}",
+        "cover": "Ho chiuso {{ slots.name }}",
+        "cover_all": "Ho chiuso tutto",
+        "cover_area": "Ho chiuso tutto in {{ slots.area }}",
+        "cover_device_class": "Ho chiuso tutte le {{slots.device_class}}",
+        "cover_device_class_area": "Ho chiuso le {{slots.device_class}} in {{slots.area}}",
+        "cover_garage": "Ho chiuso il garage",
+        "scene": "Ho disattivato {{ slots.name }}",
+        "script": "Ho arrestato {{ slots.name }}"
+      },
+      "HassShoppingListAddItem": {
+        "item_added": "{{ slots.item }} aggiunto alla lista della spesa"
+      },
+      "HassTurnOn": {
+        "default": "Ho acceso {{ slots.name }}",
+        "lights_area": "Ho acceso le luci in {{ slots.area }}",
+        "fans_area": "Ho acceso la ventilazione in {{ slots.area }}",
+        "cover": "Ho aperto {{ slots.name }}",
+        "cover_area": "Ho aperto tutto in {{ slots.area }}",
+        "cover_device_class": "Ho aperto tutte le {{slots.device_class}}",
+        "cover_device_class_area": "Ho aperto le {{slots.device_class}} in {{slots.area}}",
+        "cover_garage": "Ho aperto il garage",
+        "scene": "Ho attivato la scena {{ slots.name }}",
+        "script": "Ho avviato {{ slots.name }}"
+      },
+      "HassLightSet": {
+        "brightness": "Ho impostato la luminosita di {{ slots.name }} al {{ slots.brightness }} percento",
+        "brightness_area": "Ho impostato la luminosità in {{ slots.area }} al {{ slots.brightness }} percento",
+        "color": "Ho impostato il colore di {{ slots.name }} in {{ slots.color }}",
+        "color_area": "Ho impostato il colore in {{ slots.area }} su {{ slots.color }}"
+      },
+      "HassClimateGetTemperature": {
+        "default": "Ci sono {{ state.state }} gradi"
+      }
+    }
+  },
+  "lists": {
+    "color": {
+      "values": [
+        {
+          "in": "bianco",
+          "out": "white"
+        },
+        {
+          "in": "nero",
+          "out": "black"
+        },
+        {
+          "in": "rosso",
+          "out": "red"
+        },
+        {
+          "in": "arancione",
+          "out": "orange"
+        },
+        {
+          "in": "giallo",
+          "out": "yellow"
+        },
+        {
+          "in": "verde",
+          "out": "green"
+        },
+        {
+          "in": "blu",
+          "out": "blue"
+        },
+        {
+          "in": "viola",
+          "out": "purple"
+        },
+        {
+          "in": "marrone",
+          "out": "brown"
+        },
+        {
+          "in": "rosa",
+          "out": "pink"
+        },
+        {
+          "in": "turchese",
+          "out": "turquoise"
+        }
+      ]
+    },
+    "brightness": {
+      "range": {
+        "type": "percentage",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature": {
+      "range": {
+        "type": "temperature",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature_unit": {
+      "values": [
+        "(celsius | centigradi)",
+        {
+          "in": "c",
+          "out": "celsius"
+        },
+        "fahrenheit",
+        {
+          "in": "f",
+          "out": "fahrenheit"
+        }
+      ]
+    },
+    "brightness_level": {
+      "values": [
+        {
+          "in": "massimo",
+          "out": 100
+        },
+        {
+          "in": "minimo",
+          "out": 1
+        }
+      ]
+    },
+    "on_off_states": {
+      "values": [
+        {
+          "in": "(acces|attiv)(o|i|a|e)",
+          "out": "on"
+        },
+        {
+          "in": "(spent|disattiv[at])(o|i|a|e)",
+          "out": "off"
+        }
+      ]
+    },
+    "on_off_domains": {
+      "values": [
+        {
+          "in": "luc(e|i)",
+          "out": "light"
+        },
+        {
+          "in": "(ventol(a|e)|ventilator(e|i)|ventilazione|climatizzator(e|i)|condizionator(e|i))",
+          "out": "fan"
+        },
+        {
+          "in": "(interruttor(e|i)|pres(a|e))",
+          "out": "switch"
+        }
+      ]
+    },
+    "cover_states": {
+      "values": [
+        {
+          "in": "apert(a|o|e|i)",
+          "out": "open"
+        },
+        {
+          "in": "chius(a|o|e|i)",
+          "out": "closed"
+        },
+        {
+          "in": "in apertura",
+          "out": "opening"
+        },
+        {
+          "in": "in chiusura",
+          "out": "closing"
+        }
+      ]
+    },
+    "cover_classes": {
+      "values": [
+        {
+          "in": "tend(a|e) da sole",
+          "out": "awning"
+        },
+        {
+          "in": "(persian(a|e)|oscurant(e|i))",
+          "out": "blind"
+        },
+        {
+          "in": "tend(a|e)",
+          "out": "curtain"
+        },
+        {
+          "in": "port(a|e)",
+          "out": "door"
+        },
+        {
+          "in": "<garage>",
+          "out": "garage"
+        },
+        {
+          "in": "cancell(o|i)",
+          "out": "gate"
+        },
+        {
+          "in": "venezian(a|e)",
+          "out": "shade"
+        },
+        {
+          "in": "tapparell(a|e)",
+          "out": "shutter"
+        },
+        {
+          "in": "finestr(a|e)",
+          "out": "window"
+        }
+      ]
+    },
+    "lock_states": {
+      "values": [
+        {
+          "in": "chius(o|a|e|i)",
+          "out": "locked"
+        },
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "unlocked"
+        }
+      ]
+    },
+    "shopping_list_item": {
+      "wildcard": true
+    },
+    "bs_battery_states": {
+      "values": [
+        {
+          "in": "bass(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "normale",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_battery_charging_states": {
+      "values": [
+        {
+          "in": "[in] carica",
+          "out": "on"
+        },
+        {
+          "in": "non in carica",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_carbon_monoxide_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "non rilevat(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_cold_states": {
+      "values": [
+        {
+          "in": "freddo",
+          "out": "on"
+        },
+        {
+          "in": "normale",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_connectivity_states": {
+      "values": [
+        {
+          "in": "connesso",
+          "out": "on"
+        },
+        {
+          "in": "(disconnesso|non connesso)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_door_states": {
+      "values": [
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "chius(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_garage_door_states": {
+      "values": [
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "chus(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_gas_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "non rilevat(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_heat_states": {
+      "values": [
+        {
+          "in": "cald(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "normale",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_light_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at]|acces)(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "no luce",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_lock_states": {
+      "values": [
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "chius(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_moisture_states": {
+      "values": [
+        {
+          "in": "umid(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "secc(o|a|e|hi)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_motion_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "liber(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_occupancy_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "(liber|sgombr)(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_opening_states": {
+      "values": [
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "chius(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_plug_states": {
+      "values": [
+        {
+          "in": "(attaccat|collegat)(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "(staccat|non attaccat|scollegat|non collegat)(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_power_states": {
+      "values": [
+        {
+          "in": "(attaccat|collegat)(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "(staccat|non attaccat|scollegat|non collegat)(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_presence_states": {
+      "values": [
+        {
+          "in": "([a ] casa|present(e|i))",
+          "out": "on"
+        },
+        {
+          "in": "(fuori casa|non present(e|i))",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_problem_states": {
+      "values": [
+        {
+          "in": "rilevat(o|i)",
+          "out": "on"
+        },
+        {
+          "in": "ok",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_running_states": {
+      "values": [
+        {
+          "in": "(funziona[nte]|gira|va)",
+          "out": "on"
+        },
+        {
+          "in": "non (funziona[nte]|gira|va)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_safety_states": {
+      "values": [
+        {
+          "in": "non sicuro",
+          "out": "on"
+        },
+        {
+          "in": "sicuro",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_smoke_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "liber(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_sound_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at])(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "liber(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_tamper_states": {
+      "values": [
+        {
+          "in": "(rilevat|attiv[at]|manomess|alterat)(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "liber(o|a|e|i)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_update_states": {
+      "values": [
+        {
+          "in": "aggiornamento disponibile",
+          "out": "on"
+        },
+        {
+          "in": "aggornato",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_vibration_states": {
+      "values": [
+        {
+          "in": "(rilevat(a|a|e|i)|[in ]vibrazione)",
+          "out": "on"
+        },
+        {
+          "in": "(liber(a|a|e|i)|non [in ]vibrazione)",
+          "out": "off"
+        }
+      ]
+    },
+    "bs_window_states": {
+      "values": [
+        {
+          "in": "apert(o|a|e|i)",
+          "out": "on"
+        },
+        {
+          "in": "chius(o|a|e|i)",
+          "out": "closed"
+        }
+      ]
+    }
+  },
+  "expansion_rules": {
+    "the": "(l(o|a|e) | i[l] | gli | l'| in | ne(l|llo|lla|lle|ll'|gli) | a[(l|llo|lla|lle|ll'|gli)])",
+    "in": "(in | ne(i|gli|l[l'|lo|la|le]))",
+    "of": "(de[i|gli|l[lo|la|le]]|di)",
+    "to": "a[l[lo|la|le] | gli]",
+    "name": "{name}",
+    "area": "{area}",
+    "what_is": "(qual[e] è | quant(o |')è | com(e |')è | che)",
+    "brightness": "{brightness}[%| percento]",
+    "turn_on": "(accend(i|ere) | attiv(a|are))",
+    "turn_off": "((spegn|speng)(i|ere) | disattiv(a|are))",
+    "open": "(apr(i|ire) | alz(a|are))",
+    "close": "(chiud(i|ere) | abbass(a|are))",
+    "set": "(impost(a|are) | cambi(a|are) | mett(i|ere) | modific(a|are))",
+    "temperature": "{temperature}[°| gradi] [{temperature_unit}]",
+    "cover": "(tend(a|e)[ da sole]|serrand(a|e)|tapparell(a|e)|persian(a|e)|port(a|e)|saracinesc(a|he)|venezian(a|e)|cancell(o|i)|finestr(a|e)|oscurant(e|i))",
+    "climate": "(clima|climatizzator(e|i)|condizionator(e|i)|aria condizionata)",
+    "fan": "(ventol(a|e) | ventilator(e|i) | ventilazione | climatizzator(e|i) | condizionator(e|i))",
+    "all": "(tutt(o|e|i|a) [quant(i|e)] | ogni)",
+    "garage": "(serrand(a|e) | port(a|e) [basculant(e|i)|de(l|i) garage] | saracinesc(a|he))"
+  },
+  "skip_words": [
+    "grazie",
+    "per favore",
+    "per piacere",
+    "potresti",
+    "mi potresti",
+    "ci potresti",
+    "puoi",
+    "mi puoi",
+    "ci puoi",
+    "potreste",
+    "mi potreste",
+    "ci potreste",
+    "dimmi",
+    "dirmi",
+    "dicci",
+    "dire",
+    "mi dici",
+    "ci dici",
+    "mi dica",
+    "ci dica"
+  ]
+}

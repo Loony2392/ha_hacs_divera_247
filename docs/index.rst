@@ -3,17 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Divera 24/7's documentation!
-========================================
+DIVERA 24/7 für Home Assistant – Docs
+=====================================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Inhalte
 
+   quickstart
+   troubleshooting
    modules
 
-Indices and tables
-==================
+Indizes und Tabellen
+====================
 
 * :ref:`genindex`
 * :ref:`modindex`

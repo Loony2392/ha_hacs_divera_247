@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: unicode-rbnf
+Version: 1.0.0
+Summary: Rule-based number formatting using Unicode CLDR data
+Home-page: http://github.com/rhasspy/unicode
+Author: Michael Hansen
+Author-email: mike@rhasspy.org
+License: MIT
+Keywords: rbnf unicode number format
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+License-File: LICENSE.md
+

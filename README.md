@@ -9,17 +9,22 @@ Diese Integration bindet DIVERA 24/7 in Home Assistant ein: Alarme, Fahrzeugdate
 ## Features ⚡
 
 - 🚨 Abruf von Alarm- und Notrufereignissen.  
-  Retrieve alarm and emergency events.
+   Retrieve alarm and emergency events.
 
-- 🚗 Fahrzeuge: Status, Standort (Diagnose, optional), Rufname (OPTA), ISSI, Nummer; Fahrzeuge erscheinen auf der HA-Karte.
+- 🚗 Fahrzeuge: Status, Standort (Diagnose, optional), Rufname (OPTA), ISSI, Nummer; Fahrzeuge erscheinen auf der HA-Karte.  
+   Vehicles: status, location (diagnostic, optional), call sign (OPTA), ISSI, number; vehicles appear on the HA map.
 
-- 🧑‍🤝‍🧑 Benutzerdaten: aktueller Benutzerstatus, Statusübersicht (Zählung aktiv/inaktiv/im Dienst).
+- 🧑‍🤝‍🧑 Benutzerdaten: aktueller Benutzerstatus, Statusübersicht (Zählung aktiv/inaktiv/im Dienst).  
+   User data: current user status and overview counters (active/inactive/on duty).
 
-- 📅 Kalenderereignisse; letzte News.
+- 📅 Kalenderereignisse; letzte News.  
+   Calendar events; latest news.
 
-- 🛠️ Mehrere Einheiten (Cluster) auswählbar; Reconfigure änderbar.
+- 🛠️ Mehrere Einheiten (Cluster) auswählbar; Reconfigure änderbar.  
+   Multiple units (clusters) selectable; reconfigure later.
 
-- 🧰 Services: Probealarm auslösen; Benutzerstatus per Name setzen.
+- 🧰 Services: Probealarm auslösen; Benutzerstatus per Name setzen.  
+   Services: trigger probe alarm; set user status by name.
 
 ## Voraussetzungen 📋
 

@@ -1,0 +1,10 @@
+Metadata-Version: 2.1
+Name: webrtc-noise-gain
+Version: 1.2.3
+Summary: Noise suppression and automatic gain with webrtc
+Home-page: https://github.com/rhasspy/webrtc-noise-gain
+Author: Michael Hansen
+Author-email: mike@rhasspy.org
+Requires-Python: >=3.7
+License-File: LICENSE.md
+

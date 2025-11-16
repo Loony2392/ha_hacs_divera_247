@@ -1,0 +1,634 @@
+{
+  "language": "pt",
+  "intents": {
+    "HassTurnOff": {
+      "data": [
+        {
+          "sentences": [
+            "<desliga> [a[s]|o[s]] [luz[es]|interruptor[es]] [do|da] <nome>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "binary_sensor",
+              "cover",
+              "lock",
+              "scene",
+              "script",
+              "sensor"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<desliga> [(todas | todos)] [(o | os | a | as)] (luz | luzes | candeeiro | candeeiros) <na_zona>"
+          ],
+          "slots": {
+            "domain": "light"
+          }
+        },
+        {
+          "sentences": [
+            "<fecha> [(o | a)] [(porta | portão) da] garagem"
+          ],
+          "response": "cover",
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<fecha> [as | os] [(cortinas | cortinados | estores | persianas)] <na_zona>"
+          ],
+          "response": "cover",
+          "slots": {
+            "device_class": [
+              "blind",
+              "curtain",
+              "shutter"
+            ],
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(desliga | desligue | desligar) [todas] as ventoinhas <na_zona>"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        }
+      ]
+    },
+    "HassGetWeather": {
+      "data": [
+        {
+          "sentences": [
+            "como está o tempo"
+          ]
+        },
+        {
+          "sentences": [
+            "como está o tempo (em|no) <nome>"
+          ],
+          "requires_context": {
+            "domain": "weather"
+          }
+        }
+      ]
+    },
+    "HassTurnOn": {
+      "data": [
+        {
+          "sentences": [
+            "<liga> [(todas | todos)] [(o | os | a | as)] (luz | luzes | candeeiro | candeeiros) <na_zona>"
+          ],
+          "slots": {
+            "domain": "light"
+          }
+        },
+        {
+          "sentences": [
+            "(liga | ligue | ligar) [todas] as ventoinhas <na_zona>"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        },
+        {
+          "sentences": [
+            "<liga> [a[s]|o[s]] [luz[es]|interruptor[es]] [do|da] <nome>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "binary_sensor",
+              "cover",
+              "lock",
+              "scene",
+              "script",
+              "sensor"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<abre>  [(o|a)] [(porta|portão) da] garagem"
+          ],
+          "response": "cover",
+          "slots": {
+            "device_class": "garage",
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "<abre>  [as|os] [(cortinas | cortinados | estores | persianas)] <na_zona>"
+          ],
+          "response": "cover",
+          "slots": {
+            "device_class": [
+              "blind",
+              "curtain",
+              "shutter"
+            ],
+            "domain": "cover"
+          }
+        }
+      ]
+    },
+    "HassShoppingListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "<verbos> <item> (na|à|a) <lista>"
+          ],
+          "response": "item_added",
+          "expansion_rules": {
+            "lista": "[minha ]lista[ de compras]",
+            "verbos": "(<adicionar>|<colocar>|<juntar>|<por>)",
+            "item": "{shopping_list_item:item}"
+          }
+        }
+      ]
+    },
+    "HassNevermind": {
+      "data": [
+        {
+          "sentences": [
+            "esquece",
+            "deixa lá",
+            "cancela[r]",
+            "nada"
+          ]
+        }
+      ]
+    },
+    "HassLightSet": {
+      "data": [
+        {
+          "sentences": [
+            "<muda> o brilho (do|da) <nome> (a | para) <brilho>",
+            "<muda> <nome> (a | para) <brilho>",
+            "<muda> o brilho (do | da) <nome> <na_zona> (a|para) <brilho>",
+            "<muda> <nome> <na_zona> (a | para) <brilho>"
+          ],
+          "response": "brightness"
+        },
+        {
+          "sentences": [
+            "<muda> o brilho <na_zona> (a | para) <brilho>",
+            "<muda> <zona> (a | para) <brilho>",
+            "<muda> [todas] as luzes (a | para) <brilho>",
+            "<muda> [todas] as luzes <na_zona> (a | para) <brilho>",
+            "<muda> [o brilho (de todas as | das) | as] luzes (a | para) <brilho>",
+            "<muda> [o brilho (de todas as | das) | as] luzes <na_zona> (a | para) <brilho>"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "brightness"
+        },
+        {
+          "sentences": [
+            "<muda> [a cor [(do | da)]] <nome> (a | para | em) {color}",
+            "<muda> <nome> {color}",
+            "<muda> [a cor [(do | da)]] <nome> <na_zona> (a | para | em) {color}",
+            "(põe | ponha | muda | altera) <nome> <na_zona> {color}"
+          ],
+          "response": "color"
+        },
+        {
+          "sentences": [
+            "<muda> a cor <na_zona> (a | para | em) {color}",
+            "<muda> <zona> [a | para | em] {color}",
+            "<muda> [a cor (de todas as | das) | as] luzes (a | para | em) {color}",
+            "<muda> [a cor (de todas as | das) | as] luzes <na_zona> (a | para | em) {color}"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "color"
+        }
+      ]
+    },
+    "HassClimateGetTemperature": {
+      "data": [
+        {
+          "sentences": [
+            "<qual> [a] temperatura [(do|da) {name}]",
+            "<qual> a temperatura <na_zona>",
+            "a que temperatura está <zona>"
+          ]
+        }
+      ]
+    },
+    "HassGetState": {
+      "data": [
+        {
+          "sentences": [
+            "<qual> [o estado] [do|da] <nome> [<na_zona>]"
+          ],
+          "response": "one",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<nome> está {on_off_states:state} [<na_zona>]"
+          ],
+          "response": "one_yesno",
+          "excludes_context": {
+            "domain": [
+              "cover"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "<esta> <algum> {on_off_domains:domain} {on_off_states:state} [<na_zona>]"
+          ],
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "(todos|todas) [os|as] {on_off_domains:domain} estão {on_off_states:state} [<na_zona>]"
+          ],
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "<qual> {on_off_domains:domain} (está|estão) {on_off_states:state} [<na_zona>]"
+          ],
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "(quantos|quantas) {on_off_domains:domain} (está|estão) {on_off_states:state} [<na_zona>]"
+          ],
+          "response": "how_many"
+        },
+        {
+          "sentences": [
+            "está <nome> {cover_states:state} [<na_zona>]"
+          ],
+          "response": "one_yesno",
+          "requires_context": {
+            "domain": "cover"
+          },
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(está|estão) (alguma|algumas) {cover_classes:device_class} {cover_states:state} [<na_zona>]"
+          ],
+          "response": "any",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "estão todas [as] {cover_classes:device_class} {cover_states:state} [<na_zona>]"
+          ],
+          "response": "all",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "(quais|qual|que) {cover_classes:device_class} (está|estão) {cover_states:state} [<na_zona>]"
+          ],
+          "response": "which",
+          "slots": {
+            "domain": "cover"
+          }
+        },
+        {
+          "sentences": [
+            "quantas {cover_classes:device_class} estão {cover_states:state} [<na_zona>]"
+          ],
+          "response": "how_many",
+          "slots": {
+            "domain": "cover"
+          }
+        }
+      ]
+    },
+    "HassListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "<verbos> <item> (na|à|a) <lista>"
+          ],
+          "response": "item_added",
+          "requires_context": {
+            "domain": "todo"
+          },
+          "expansion_rules": {
+            "lista": "[minha ]lista [de ]{name}",
+            "item": "{shopping_list_item:item}",
+            "verbos": "(<adicionar>|<colocar>|<juntar>|<por>)"
+          }
+        }
+      ]
+    }
+  },
+  "responses": {
+    "errors": {
+      "no_intent": "Desculpe, não percebi o pedido.",
+      "no_area": "Não existe nenhuma área com o nome {{ area }}.",
+      "no_domain_in_area": "{{ area }} não contém {{ domain }}.",
+      "no_device_class_in_area": "{{ area }} não contém {{ device_class }}.",
+      "no_entity": "Não existe nenhum dispositivo ou entidade com o nome {{ entity }}.",
+      "handle_error": "Ocorreu um erro inesperado ao processar o pedido."
+    },
+    "intents": {
+      "HassGetState": {
+        "one": "{{ state.state_with_unit }}\n",
+        "one_yesno": "{% if query.matched %}\n  Sim\n{% else %}\n  Não, {{ state.state_with_unit }}\n{% endif %}\n",
+        "any": "{% if query.matched %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    Sim, {{ match[:3] | join(\", \") }} e {{ (match | length - 3) }} mais\n  {%- else -%}\n    Sim,\n    {% for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% else %}\n  Não\n{% endif %}\n",
+        "all": "{% if not query.unmatched: %}\n  Sim\n{% else %}\n  {% set no_match = query.unmatched | map(attribute=\"name\") | sort | list %}\n  {% if no_match | length > 4 %}\n    Não, {{ no_match[:3] | join(\", \") }} e {{ (no_match | length - 3) }} mais não\n  {%- else -%}\n    Não,\n    {% for name in no_match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor %} não\n  {% endif %}\n{% endif %}\n",
+        "which": "{% if not query.matched %}\n  (Nenhuma|Nenhum)\n{% else: %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    {{ match[:3] | join(\", \") }} e {{ (match | length - 3) }} mais\n  {% else %}\n    {%- for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} e {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% endif %}\n",
+        "how_many": "{{ query.matched | length }}\n"
+      },
+      "HassTurnOff": {
+        "default": "Desligado",
+        "lights_area": "Luzes desligadas",
+        "fans_area": "Ventoinhas desligadas",
+        "cover": "Fechado",
+        "light_all": "Todas as luzes desligadas",
+        "fan_all": "Todas as ventoinhas desligadas",
+        "cover_device_class": "Fechado {{ slots.device_class }}"
+      },
+      "HassShoppingListAddItem": {
+        "item_added": "Adicionei {{ slots.item }}"
+      },
+      "HassTurnOn": {
+        "default": "Ligado",
+        "lights_area": "Luzes ligados",
+        "fans_area": "Ventoinhas ligadas",
+        "cover": "Aberto",
+        "cover_device_class": "{{ slots.device_class }} aberto",
+        "scene": "Ativado",
+        "script": "Iniciado"
+      },
+      "HassListAddItem": {
+        "item_added": "Adicionei {{ slots.item }}"
+      },
+      "HassGetWeather": {
+        "default": "{% set weather_condition = {\n  'clear': 'Céu limpo',\n  'clear-night': 'Céu limpo',\n  'cloudy': 'Céu nublado',\n  'exceptional': 'Condições excepcionalmente adversas',\n  'fog': 'Nevoeiro',\n  'hail': 'Granizo',\n  'lightning': 'Trovoada',\n  'lightning-rainy': 'Chuva e trovoada',\n  'partlycloudy': 'Céu parcialmente nublado',\n  'pouring': 'Chuva forte',\n  'rainy': 'Chuva',\n  'snowy': 'Neve',\n  'snowy-rainy': 'Chuva e neve',\n  'sunny': 'Sol',\n  'windy': 'Vento',\n  'windy-variant': 'Vento e céu nublado'\n} %}\n {{ weather_condition.get((state.state | string).lower(), \"\") }}, com temperatura de {{ state.attributes.get('temperature') }} {{ state.attributes.get('temperature_unit') }}\n"
+      },
+      "HassLightSet": {
+        "brightness": "Brilho definido",
+        "color": "Cor definida"
+      },
+      "HassClimateGetTemperature": {
+        "default": "{{ state_attr(state.entity_id, 'current_temperature') }}"
+      }
+    }
+  },
+  "lists": {
+    "color": {
+      "values": [
+        {
+          "in": "branco",
+          "out": "white"
+        },
+        {
+          "in": "branca",
+          "out": "white"
+        },
+        {
+          "in": "preto",
+          "out": "black"
+        },
+        {
+          "in": "preta",
+          "out": "black"
+        },
+        {
+          "in": "vermelho",
+          "out": "red"
+        },
+        {
+          "in": "vermelha",
+          "out": "red"
+        },
+        {
+          "in": "laranja",
+          "out": "orange"
+        },
+        {
+          "in": "amarelo",
+          "out": "yellow"
+        },
+        {
+          "in": "amarela",
+          "out": "yellow"
+        },
+        {
+          "in": "verde",
+          "out": "green"
+        },
+        {
+          "in": "azul",
+          "out": "blue"
+        },
+        {
+          "in": "roxo",
+          "out": "purple"
+        },
+        {
+          "in": "roxa",
+          "out": "purple"
+        },
+        {
+          "in": "castanho",
+          "out": "brown"
+        },
+        {
+          "in": "castanha",
+          "out": "brown"
+        }
+      ]
+    },
+    "brightness": {
+      "range": {
+        "type": "percentage",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature": {
+      "range": {
+        "type": "temperature",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature_unit": {
+      "values": [
+        {
+          "in": "(celsius|c|centígrados)",
+          "out": "celsius"
+        },
+        "fahrenheit",
+        {
+          "in": "f",
+          "out": "fahrenheit"
+        }
+      ]
+    },
+    "brightness_level": {
+      "values": [
+        {
+          "in": "(max | maximum | highest)",
+          "out": 100
+        },
+        {
+          "in": "( minimum | lowest)",
+          "out": 1
+        }
+      ]
+    },
+    "on_off_states": {
+      "values": [
+        {
+          "in": "(ligado|ligada|ligados|ligadas)",
+          "out": "on"
+        },
+        {
+          "in": "(desligado|desligada|desligado|desligadas)",
+          "out": "off"
+        }
+      ]
+    },
+    "on_off_domains": {
+      "values": [
+        {
+          "in": "(luz|luzes|lampada|lampadas)",
+          "out": "light"
+        },
+        {
+          "in": "(ventoinha|ventoinhas)",
+          "out": "fan"
+        },
+        {
+          "in": "(interruptor|interruptores|tomada|tomadas)",
+          "out": "switch"
+        }
+      ]
+    },
+    "cover_states": {
+      "values": [
+        {
+          "in": "(aberto|aberta|abertas)",
+          "out": "open"
+        },
+        {
+          "in": "(fechado|fechada|fechadas)",
+          "out": "closed"
+        },
+        {
+          "in": "a abrir",
+          "out": "opening"
+        },
+        {
+          "in": "a fechar",
+          "out": "closing"
+        }
+      ]
+    },
+    "cover_classes": {
+      "values": [
+        {
+          "in": "(toldo[s]|tolde[s])",
+          "out": "awning"
+        },
+        {
+          "in": "persiana[s]",
+          "out": "blind"
+        },
+        {
+          "in": "cortina[s]",
+          "out": "curtain"
+        },
+        {
+          "in": "porta[s]",
+          "out": "door"
+        },
+        {
+          "in": "(porta[s] da garagem|portão|portões)",
+          "out": "garage"
+        },
+        {
+          "in": "(portão|portões)",
+          "out": "gate"
+        },
+        {
+          "in": "(toldo[s]|tolde[s])",
+          "out": "shade"
+        },
+        {
+          "in": "persiana[s]",
+          "out": "shutter"
+        },
+        {
+          "in": "janela[s]",
+          "out": "window"
+        }
+      ]
+    },
+    "lock_states": {
+      "values": [
+        {
+          "in": "(trancad[a[s]|o[s]])",
+          "out": "locked"
+        },
+        {
+          "in": "(destrancad[a[s]|o[s]])",
+          "out": "unlocked"
+        }
+      ]
+    },
+    "shopping_list_item": {
+      "wildcard": true
+    }
+  },
+  "expansion_rules": {
+    "abre": "(abra|abre|abrir)",
+    "adicionar": "adicione|adiciona[r]",
+    "algum": "(algum|alguma|alguns|algumas)",
+    "brilho": "{brightness}[%| porcento]",
+    "colocar": "coloque|coloca[r]",
+    "desliga": "(desliga|desligue|apaga|apague|desligar|apagar)",
+    "esta": "(está|estão|existe|existem)",
+    "fecha": "(fecha|feche|fechar)",
+    "juntar": "(junte|junta[r])",
+    "liga": "(liga[r]|ligue|acende[r]|acenda|ativa[r]|ative)",
+    "muda": "(põe|ponha|muda|altera|coloca|deixa|pôr|mudar|alterar|colocar|deixar)",
+    "na_zona": "(no|na|da|do) {area}",
+    "nome": "[(o|os|a|as)] {name}",
+    "por": "pôr|põe|ponha",
+    "qual": "(que|qual|qual é|quais)",
+    "temperatura": "{temperature}[°| graus] [{temperature_unit}]",
+    "zona": "[(o|os|a|as)] {area}"
+  },
+  "skip_words": [
+    "por favor",
+    "se faz favor",
+    "pode",
+    "podes"
+  ]
+}

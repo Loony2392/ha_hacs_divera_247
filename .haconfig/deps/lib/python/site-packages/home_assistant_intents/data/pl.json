@@ -1,0 +1,1024 @@
+{
+  "language": "pl",
+  "intents": {
+    "HassTurnOff": {
+      "data": [
+        {
+          "sentences": [
+            "(<turn_off>|<turn_off_light>) <name>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "binary_sensor",
+              "cover",
+              "lock",
+              "scene",
+              "script",
+              "sensor"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "(<turn_off>|<turn_off_light>) [<all>] [światła|światło] <area>",
+            "(<turn_off>|<turn_off_light>) <area> [<all>] [światła|światło]"
+          ],
+          "slots": {
+            "domain": "light"
+          },
+          "response": "lights_area"
+        },
+        {
+          "sentences": [
+            "(<turn_off>|<turn_off_light>) [<all>] światła"
+          ],
+          "slots": {
+            "domain": "light",
+            "name": "all"
+          },
+          "response": "light_all"
+        },
+        {
+          "sentences": [
+            "(<close>|<close_blind>) <name>"
+          ],
+          "requires_context": {
+            "domain": "cover"
+          },
+          "response": "cover"
+        },
+        {
+          "sentences": [
+            "(<close>|<close_blind>) <name> <area>"
+          ],
+          "requires_context": {
+            "domain": "cover"
+          },
+          "response": "cover_area_blind"
+        },
+        {
+          "sentences": [
+            "<close> garaż",
+            "<close> (drzwi|bramę) (garażowe|garażową| od garażu)",
+            "(drzwi|bramę) (garażowe|garażową|od garażu) <close>"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "garage"
+          },
+          "response": "cover_garage"
+        },
+        {
+          "sentences": [
+            "(<close>|<close_blind>) [<all>] rolety"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": [
+              "curtain",
+              "shutter",
+              "curtain"
+            ]
+          },
+          "response": "cover_blind"
+        },
+        {
+          "sentences": [
+            "(<close>|<close_blind>) [<all>] rolety <area>",
+            "(<close>|<close_blind>) <area> [<all>] rolety"
+          ],
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "cover_area_blinds"
+        },
+        {
+          "sentences": [
+            "<turn_off> (wentylator|wiatrak) <area>",
+            "<turn_off> <area> (wentylator|wiatrak)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fan_area"
+        },
+        {
+          "sentences": [
+            "<turn_off> [<all>] (wentylatory|wiatraki) <area>",
+            "<turn_off> <area> [<all>] (wentylatory|wiatraki)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        },
+        {
+          "sentences": [
+            "<turn_off> <all> (wentylatory|wiatraki)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_all"
+        },
+        {
+          "sentences": [
+            "<unlock> <name> [<area>]"
+          ],
+          "requires_context": {
+            "domain": "lock"
+          },
+          "response": "lock_unlock_door"
+        },
+        {
+          "sentences": [
+            "<open> <name> [<area>]"
+          ],
+          "requires_context": {
+            "domain": "lock"
+          },
+          "response": "lock_open_door"
+        },
+        {
+          "sentences": [
+            "<unlock> [<all>] drzwi <area>",
+            "<unlock> <area> [<all>] drzwi",
+            "<area> <unlock> [<all>] drzwi"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_unlock_door"
+        },
+        {
+          "sentences": [
+            "<unlock> [<all>] zamki <area>",
+            "<unlock> <area> [<all>] zamki",
+            "<area> <unlock> [<all>] zamki"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_unlock_lock"
+        },
+        {
+          "sentences": [
+            "<open> [<all>] drzwi <area>",
+            "<open> <area> [<all>] drzwi",
+            "<area> <open> [<all>] drzwi"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_open_door"
+        },
+        {
+          "sentences": [
+            "<open> [<all>] zamki <area>",
+            "<open> <area> [<all>] zamki",
+            "<area> <open> [<all>] zamki"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_open_lock"
+        }
+      ]
+    },
+    "HassGetWeather": {
+      "data": [
+        {
+          "sentences": [
+            "<what_is> pogoda"
+          ]
+        },
+        {
+          "sentences": [
+            "<what_is> pogoda (w|dla|we) <name>"
+          ],
+          "requires_context": {
+            "domain": "weather"
+          }
+        }
+      ]
+    },
+    "HassTurnOn": {
+      "data": [
+        {
+          "sentences": [
+            "(<turn_on>|<turn_on_light>) [<all>] [światła|światło] <area>",
+            "(<turn_on>|<turn_on_light>) <area> [<all>] [światła|światło]"
+          ],
+          "slots": {
+            "domain": "light"
+          },
+          "response": "lights_area"
+        },
+        {
+          "sentences": [
+            "(<turn_on>|<turn_on_light>) <all> światła"
+          ],
+          "slots": {
+            "domain": "light",
+            "name": "all"
+          },
+          "response": "light_all"
+        },
+        {
+          "sentences": [
+            "<turn_on> (wentylator|wiatrak) <area>",
+            "<turn_on> <area> (wentylator|wiatrak)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fan_area"
+        },
+        {
+          "sentences": [
+            "<turn_on> [<all>] (wentylatory|wiatraki) <area>",
+            "<turn_on> <area> [<all>] (wentylatory|wiatraki)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_area"
+        },
+        {
+          "sentences": [
+            "<turn_on> <all> (wentylatory|wiatraki)"
+          ],
+          "slots": {
+            "domain": "fan",
+            "name": "all"
+          },
+          "response": "fans_all"
+        },
+        {
+          "sentences": [
+            "[<activate>|<turn_on>] [skrypt] <name>"
+          ],
+          "requires_context": {
+            "domain": "script"
+          },
+          "slots": {
+            "domain": "script"
+          },
+          "response": "script"
+        },
+        {
+          "sentences": [
+            "(<activate>|<turn_on>) [scenę] <name>",
+            "scena <name>"
+          ],
+          "requires_context": {
+            "domain": "scene"
+          },
+          "slots": {
+            "domain": "scene"
+          },
+          "response": "scene"
+        },
+        {
+          "sentences": [
+            "<lock> <name> [<area>]"
+          ],
+          "requires_context": {
+            "domain": "lock"
+          },
+          "response": "lock_lock_door"
+        },
+        {
+          "sentences": [
+            "<close> <name> [<area>]"
+          ],
+          "requires_context": {
+            "domain": "lock"
+          },
+          "response": "lock_close_door"
+        },
+        {
+          "sentences": [
+            "<lock> [<all>] drzwi <area>",
+            "<lock> <area> [<all>] drzwi"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_lock_door"
+        },
+        {
+          "sentences": [
+            "<lock> [<all>] zamki <area>",
+            "<lock> <area> [<all>] zamki"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_lock_lock"
+        },
+        {
+          "sentences": [
+            "<close> [<all>] drzwi <area>",
+            "<close> <area> [<all>] drzwi"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_close_door"
+        },
+        {
+          "sentences": [
+            "<close> [<all>] zamki <area>",
+            "<close> <area> [<all>] zamki"
+          ],
+          "slots": {
+            "domain": "lock",
+            "name": "all"
+          },
+          "response": "lock_close_lock"
+        },
+        {
+          "sentences": [
+            "(<turn_on>|<turn_on_light>) <name>"
+          ],
+          "excludes_context": {
+            "domain": [
+              "binary_sensor",
+              "cover",
+              "lock",
+              "scene",
+              "script",
+              "sensor"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "(<open>|<open_blind>) <name>"
+          ],
+          "requires_context": {
+            "domain": "cover"
+          },
+          "response": "cover"
+        },
+        {
+          "sentences": [
+            "(<open>|<open_blind>) <name> <area>"
+          ],
+          "requires_context": {
+            "domain": "cover"
+          },
+          "response": "cover_area_blind"
+        },
+        {
+          "sentences": [
+            "<open> garaż",
+            "<open> (drzwi|bramę) (garażowe|garażową| od garażu)",
+            "(Drzwi|Bramę) (garażowe|garażową| od garażu) <open>"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "garage"
+          },
+          "response": "cover_garage"
+        },
+        {
+          "sentences": [
+            "(<open>|<open_blind>) [<all>] rolety"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "curtain"
+          },
+          "response": "cover_blind"
+        },
+        {
+          "sentences": [
+            "(<open>|<open_blind>) [<all>] rolety <area>",
+            "(<open>|<open_blind>) <area> [<all>] rolety"
+          ],
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "cover_area_blinds"
+        }
+      ]
+    },
+    "HassShoppingListAddItem": {
+      "data": [
+        {
+          "sentences": [
+            "dodaj <item> do <my_list>",
+            "wrzuć <item> do <my_list>"
+          ],
+          "response": "item_added",
+          "expansion_rules": {
+            "my_list": "[mojej] listy [zakupów]",
+            "item": "{shopping_list_item:item}"
+          }
+        }
+      ]
+    },
+    "HassNevermind": {
+      "data": [
+        {
+          "sentences": [
+            "nieważne",
+            "anuluj"
+          ]
+        }
+      ]
+    },
+    "HassLightSet": {
+      "data": [
+        {
+          "sentences": [
+            "<set> [jasność] <name> na <brightness>"
+          ],
+          "response": "brightness"
+        },
+        {
+          "sentences": [
+            "<set> [jasność] <area> na <brightness>"
+          ],
+          "slots": {
+            "name": "all"
+          },
+          "response": "brightness_area"
+        },
+        {
+          "sentences": [
+            "<set> [kolor] <name> na {color}"
+          ],
+          "response": "color"
+        },
+        {
+          "sentences": [
+            "<set> [wszystkie kolory|kolory] <area> na {color}"
+          ],
+          "response": "color_area"
+        }
+      ]
+    },
+    "HassClimateGetTemperature": {
+      "data": [
+        {
+          "sentences": [
+            "(<what_is>|<how_many_is>) <temp> [<area>]",
+            "czy jest (ciepło|gorąco|zimno|chłodno) [<area>]",
+            "jak [bardzo] (wysoka|niska) [jest] <temp> [<area>]",
+            "jak [bardzo] (ciepło|gorąco|zimno|chłodno) [jest] [<area>]"
+          ]
+        }
+      ]
+    },
+    "HassGetState": {
+      "data": [
+        {
+          "sentences": [
+            "czy <name> są {lock_states:state} [<area>]"
+          ],
+          "requires_context": {
+            "domain": "lock"
+          },
+          "slots": {
+            "domain": "lock"
+          },
+          "response": "one_yesno"
+        },
+        {
+          "sentences": [
+            "czy są [jakieś|któreś|jakiekolwiek|którekolwiek] (drzwi|zamki) {lock_states:state} [<area>]",
+            "czy są [jakieś|któreś|jakiekolwiek|którekolwiek] {lock_states:state} (drzwi|zamki) [<area>]"
+          ],
+          "slots": {
+            "domain": "lock"
+          },
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "czy <all> (drzwi|zamki) są {lock_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "lock"
+          },
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "które (drzwi|zamki) są {lock_states:state} [<area>]",
+            "który zamek jest {lock_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "lock"
+          },
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "ile (drzwi|zamków) jest {lock_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "lock"
+          },
+          "response": "how_many"
+        },
+        {
+          "sentences": [
+            "jak(i|a|ie) (jest|są) <name> [<area>]"
+          ],
+          "response": "one",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "jak(i) jest stan <name> [<area>]",
+            "stan <name> [<area>]"
+          ],
+          "response": "one_state",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "jak(i) jest status <name> [<area>]",
+            "status <name> [<area>]"
+          ],
+          "response": "one_status",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "jak(a) jest wartość <name> [<area>]",
+            "wartość <name> [<area>]"
+          ],
+          "response": "one_value",
+          "excludes_context": {
+            "domain": [
+              "scene",
+              "script"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "czy [stan|status|wartość] <name> jest {on_off_states:state} [<area>]",
+            "czy [stan|status|wartość] <name> [<area>] jest {on_off_states:state}"
+          ],
+          "response": "one_yesno",
+          "excludes_context": {
+            "domain": [
+              "cover"
+            ]
+          }
+        },
+        {
+          "sentences": [
+            "(czy jest|czy są) [jakiś|jakieś] {on_off_domains:domain} {on_off_states:state} [<area>]",
+            "(czy jest|czy są) [<area>] [jakiś|jakieś] {on_off_domains:domain} {on_off_states:state}",
+            "czy [<area>] (jest|są) [jakiś|jakieś] {on_off_states:state} {on_off_domains:domain}"
+          ],
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "czy <all> {on_off_domains:domain} (jest|są) {on_off_states:state} [<area>]",
+            "czy [<area>] <all> {on_off_domains:domain} (jest|są) {on_off_states:state}"
+          ],
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "któr(y|e|a) {on_off_domains:domain} (jest|są) {on_off_states:state} [<area>]"
+          ],
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "ile {on_off_domains:domain} (jest|są) {on_off_states:state} [<area>]",
+            "<how_many_is> {on_off_states:state} {on_off_domains:domain} [<area>]"
+          ],
+          "response": "how_many"
+        },
+        {
+          "sentences": [
+            "czy <name> jest {cover_states:state} [<area>]",
+            "czy [<area>] <name> jest {cover_states:state}",
+            "czy jest {cover_states:state} <name> [<area>]"
+          ],
+          "requires_context": {
+            "domain": "cover"
+          },
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "one_yesno_cover"
+        },
+        {
+          "sentences": [
+            "czy jest [jakaś] {cover_states:state} (roleta|żaluzja) [<area>]",
+            "czy [<area>] jest [jakaś] {cover_states:state} (roleta|żaluzja)",
+            "czy [<area>] jest {cover_states:state} [jakaś] (roleta|żaluzja)",
+            "czy są [jakieś|któreś|jaiekolwiek|którekowliek] (rolety|żaluzje) {cover_states:state} [<area>]",
+            "czy są [jakieś|któreś|jaiekolwiek|którekowliek] {cover_states:state} (rolety|żaluzje) [<area>]"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": [
+              "blind",
+              "shade",
+              "shutter"
+            ]
+          },
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "czy jest [jakaś] {cover_states:state} zasłona [<area>]",
+            "czy [<area>] jest [jakaś] {cover_states:state} zasłona",
+            "czy [<area>] jest {cover_states:state} [jakaś] zasłona",
+            "czy są [jakieś|któreś|jaiekolwiek|którekowliek] zasłony {cover_states:state} [<area>]",
+            "czy są [jakieś|któreś|jaiekolwiek|którekowliek] {cover_states:state} zasłony [<area>]"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "curtain"
+          },
+          "response": "any"
+        },
+        {
+          "sentences": [
+            "czy <all> (rolety|żaluzje) są {cover_states:state} [<area>]",
+            "czy <all> (rolety|żaluzje) [<area>] są {cover_states:state}"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": [
+              "blind",
+              "shade",
+              "shutter"
+            ]
+          },
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "czy <all> zasłony są {cover_states:state} [<area>]",
+            "czy <all> zasłony [<area>] są {cover_states:state}"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "curtain"
+          },
+          "response": "all"
+        },
+        {
+          "sentences": [
+            "(które|jakie) zasłony są {cover_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": "curtain"
+          },
+          "response": "which"
+        },
+        {
+          "sentences": [
+            "(które|jakie) (rolety|żaluzje) są {cover_states:state} [<area>]",
+            "(które|jakie) {cover_classes:device_class} są {cover_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "cover",
+            "device_class": [
+              "blind",
+              "shade",
+              "shutter"
+            ]
+          },
+          "response": "which_cover"
+        },
+        {
+          "sentences": [
+            "ile (rolet|żaluzji|zasłon) jest {cover_states:state} [<area>]",
+            "ile {cover_classes:device_class} jest {cover_states:state} [<area>]"
+          ],
+          "slots": {
+            "domain": "cover"
+          },
+          "response": "how_many"
+        }
+      ]
+    }
+  },
+  "responses": {
+    "errors": {
+      "no_intent": "Wybacz, niestety nie mogę tego zrozumieć",
+      "no_area": "Brak obszaru nazwanego {{ area }}",
+      "no_domain_in_area": "W obszarze {{ area }} nie ma {{ domain }}",
+      "no_device_class_in_area": "Obszar {{ area }} nie zawiera {{ device_class }}",
+      "no_entity": "Brak urządzenia lub encji nazwanej {{ entity }}",
+      "handle_error": "Podczas przetwarzania zapytania wystąpił nieoczekiwany błąd"
+    },
+    "intents": {
+      "HassGetState": {
+        "one": "{{ slots.name | capitalize }} jest {{ state.state_with_unit }}\n",
+        "one_state": "Stan {{ slots.name | capitalize }} to {{ state.state_with_unit }}\n",
+        "one_status": "Status {{ slots.name | capitalize }} to {{ state.state_with_unit }}\n",
+        "one_value": "Wartość {{ slots.name | capitalize }} to {{ state.state_with_unit }}\n",
+        "one_yesno": "{% if query.matched: %}\nTak\n{% else: %}\nNie, {{ slots.name }} jest {{ state.state_with_unit }}\n{% endif %}\n",
+        "one_yesno_cover": "{% if query.matched: %}\nTak\n{% else: %}\nNie, {{ slots.name }} jest {{ 'otwarta' if state.state_with_unit == 'open' else 'zamknięta' }}\n{% endif %}\n",
+        "any": "{% if query.matched %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    Tak, {{ match[:3] | join(\", \") }} oraz {{ (match | length - 3) }} więcej\n  {%- else -%}\n    Tak,\n    {% for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} i {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% else %}\n  Nie\n{% endif %}\n",
+        "all": "{% if not query.unmatched: %}\n  Tak\n{% else %}\n  {% set no_match = query.unmatched | map(attribute=\"name\") | sort | list %}\n  {% if no_match | length > 4 %}\n    Nie, {{ no_match[:3] | join(\", \") }} oraz {{ (no_match | length - 3) }} nie ma już więcej\n  {%- else -%}\n    Nie,\n    {% for name in no_match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} i {% endif -%}\n      {{ name }}\n    {%- endfor %} nie {% if state.attributes.device_class == \"curtain\" and no_match|length|int|abs == 1 -%}jest\n      {%- elif state.attributes.device_class == \"lock\" and no_match|length|int|abs == 1 -%}jest\n      {%- elif state.attributes.device_class == \"door\" and no_match|length|int|abs == 1 -%}są\n      {%- else -%}{{ 'są' if no_match|length|int|abs == 1 else 'są' if no_match|length|int | abs in [2,3,4] else 'są' if (no_match|length|string)[-1] | int | abs in [2,3,4] else 'jest' }}\n      {%- endif -%}\n  {% endif %}\n{% endif %}\n",
+        "which_cover": "{% if not query.matched %}\n  Żadne\n{% else: %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    {{ match[:3] | join(\", \") }} oraz {{ (match | length - 3) }} inne\n  {% else %}\n    {%- for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} i {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% endif %}\n",
+        "which": "{% if not query.matched %}\n  Żaden\n{% else: %}\n  {% set match = query.matched | map(attribute=\"name\") | sort | list %}\n  {% if match | length > 4 %}\n    {{ match[:3] | join(\", \") }} oraz {{ (match | length - 3) }} inne\n  {% else %}\n    {%- for name in match -%}\n      {% if not loop.first and not loop.last %}, {% elif loop.last and not loop.first %} i {% endif -%}\n      {{ name }}\n    {%- endfor -%}\n  {% endif %}\n{% endif %}\n",
+        "how_many": "{{ query.matched | length }}\n"
+      },
+      "HassTurnOff": {
+        "default": "Wyłączono {{ slots.name }}",
+        "lights_area": "Wyłączono światło w {{ slots.area }}",
+        "light_all": "Wyłączono wszystkie światła",
+        "fan_area": "Wyłączono wentylator w {{ slots.area }}",
+        "fans_area": "Wyłączono wentylatory w {{ slots.area }}",
+        "fans_all": "Wyłączono wszystkie wentylatory",
+        "cover": "Zamknięto {{ slots.name }}",
+        "cover_garage": "Zamknięto garaż",
+        "cover_blind": "Zamknięto rolety",
+        "cover_area_garage": "Zamknięto garaż w {{ slots.area }}",
+        "cover_area_blind": "Zamknięto roletę w {{ slots.area }}",
+        "cover_area_blinds": "Zamknięto rolety w {{ slots.area }}",
+        "lock_open_door": "Otwarto {{ slots.name if slots.name != 'all' else 'wszystkie drzwi' }}",
+        "lock_open_lock": "Otwarto {{ slots.name if slots.name != 'all' else 'wszystkie zamki' }}",
+        "lock_unlock_door": "Odblokowano {{ slots.name if slots.name != 'all' else 'wszystkie drzwi' }}",
+        "lock_unlock_lock": "Odblokowano {{ slots.name if slots.name != 'all' else 'wszystkie zamki' }}"
+      },
+      "HassShoppingListAddItem": {
+        "item_added": "Dodano {{ slots.item }}"
+      },
+      "HassTurnOn": {
+        "default": "Włączono {{ slots.name }}",
+        "lights_area": "Włączono światło w {{ slots.area }}",
+        "light_all": "Włączono wszystkie światła",
+        "fan_area": "Włączono wentylator w {{ slots.area }}",
+        "fans_area": "Włączono wentylatory w {{ slots.area }}",
+        "fans_all": "Włączono wszystkie wentylatory",
+        "cover": "Otwarto {{ slots.name }}",
+        "cover_garage": "Otwarto garaż",
+        "cover_blind": "Otwarto rolety",
+        "cover_area_garage": "Otwarto garaż w {{ slots.area }}",
+        "cover_area_blind": "Otwarto roletę w {{ slots.area }}",
+        "cover_area_blinds": "Otwarto rolety w {{ slots.area }}",
+        "scene": "Aktywowano scenę {{ slots.name }}",
+        "script": "Uruchomiono skrypt {{ slots.name }}",
+        "lock_close_door": "Zamknięto {{ slots.name if slots.name != 'all' else 'wszystkie drzwi' }}",
+        "lock_close_lock": "Zamknięto {{ slots.name if slots.name != 'all' else 'wszystkie zamki' }}",
+        "lock_lock_door": "Zablokowano {{ slots.name if slots.name != 'all' else 'wszystkie drzwi' }}",
+        "lock_lock_lock": "Zablokowano {{ slots.name if slots.name != 'all' else 'wszystkie zamki' }}"
+      },
+      "HassGetWeather": {
+        "default": "{% set weather_condition = {\n  'clear': 'bez zachmurzenia',\n  'clear-night': 'bez zachmurzenia',\n  'cloudy': 'i pochmurnie',\n  'exceptional': 'i wyjątkowo',\n  'fog': 'z mgłą',\n  'hail': 'z gradem',\n  'lightning': 'z piorunami',\n  'lightning-rainy': 'z deszczem i piorunami',\n  'partlycloudy': 'z częściowym zachmurzeniem',\n  'pouring': 'i leje deszcz',\n  'rainy': 'i pada deszcz',\n  'snowy': 'i pada śnieg',\n  'snowy-rainy': 'z deszczem i śniegiem',\n  'sunny': 'i słonecznie',\n  'windy': 'i wietrznie',\n  'windy-variant': 'i wietrznie z zachmurzeniem'\n} %} {{ state.attributes.get('temperature') }} {{ state.attributes.get('temperature_unit') }} {{ weather_condition.get((state.state | string).lower(), \"\") }}\n"
+      },
+      "HassLightSet": {
+        "brightness": "Ustawiono jasność {{ slots.name }} na {{ slots.brightness }}",
+        "brightness_area": "Ustawiono jasność w {{ slots.area }} na {{ slots.brightness }}",
+        "color": "Ustawiono kolor {{ slots.name }} na {{ slots.color }}",
+        "color_area": "Ustawiono kolor w {{ slots.area }} na {{ slots.color }}"
+      },
+      "HassClimateGetTemperature": {
+        "default": "Temperatura wynosi {{ state.state }} {{ 'stopień' if state.state | int | abs == 1 else 'stopnie' if state.state | int | abs in [2,3,4] else 'stopnie' if (state.state|string)[-1] | int | abs in [2,3,4] else 'stopni' }}"
+      }
+    }
+  },
+  "lists": {
+    "color": {
+      "values": [
+        {
+          "in": "biel|biał(y|o|e)",
+          "out": "white"
+        },
+        {
+          "in": "czerń|czarn(y|o|e)",
+          "out": "black"
+        },
+        {
+          "in": "czerwień|czerwon(y|o|e)",
+          "out": "red"
+        },
+        {
+          "in": "pomarańcz|pomarańczow(y|o|e)",
+          "out": "orange"
+        },
+        {
+          "in": "żółt(y|o|e)",
+          "out": "yellow"
+        },
+        {
+          "in": "zieleń|zielon(y|o|e)",
+          "out": "green"
+        },
+        {
+          "in": "niebiesk(i|o|ie)",
+          "out": "blue"
+        },
+        {
+          "in": "fiolet|fioletow(y|o|e)",
+          "out": "purple"
+        },
+        {
+          "in": "brąz|brązow(y|o|e)",
+          "out": "brown"
+        }
+      ]
+    },
+    "brightness": {
+      "range": {
+        "type": "percentage",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature": {
+      "range": {
+        "type": "temperature",
+        "from": 0,
+        "to": 100
+      }
+    },
+    "temperature_unit": {
+      "values": [
+        {
+          "in": "c|celsjusza",
+          "out": "celsius"
+        },
+        {
+          "in": "f|fahrenheita",
+          "out": "fahrenheit"
+        }
+      ]
+    },
+    "brightness_level": {
+      "values": [
+        {
+          "in": "(maksymalny | najjaśniej | maksa | maksymalnie)",
+          "out": 100
+        },
+        {
+          "in": "(minimalnie | najciemniej | minimum)",
+          "out": 1
+        }
+      ]
+    },
+    "on_off_states": {
+      "values": [
+        {
+          "in": "włącz[ony|one|ona|onych]",
+          "out": "on"
+        },
+        {
+          "in": "wyłącz[ony|one|ona|onych]",
+          "out": "off"
+        }
+      ]
+    },
+    "on_off_domains": {
+      "values": [
+        {
+          "in": "świat(ło|ła|eł)|lamp(a|y)",
+          "out": "light"
+        },
+        {
+          "in": "wentylator[y|ów]|wiatrak[i|ów]",
+          "out": "fan"
+        },
+        {
+          "in": "przełącznik[i|ów]|kontakt[y|ów]",
+          "out": "switch"
+        }
+      ]
+    },
+    "cover_states": {
+      "values": [
+        {
+          "in": "(otw(órz|arta|arte|artych)|odsunięt(e|ych)|odsłonięt(e|ych))",
+          "out": "open"
+        },
+        {
+          "in": "(zamkni(j|ęta|ęte|ętych)|zasunięt(e|ych)|zasłonięt(e|ych))",
+          "out": "closed"
+        },
+        {
+          "in": "otwieranie",
+          "out": "opening"
+        },
+        {
+          "in": "zamykanie",
+          "out": "closing"
+        }
+      ]
+    },
+    "cover_classes": {
+      "values": [
+        {
+          "in": "(drzwi garażowe|drzwi w garażu)",
+          "out": "garage"
+        },
+        {
+          "in": "bram(a|y)",
+          "out": "gate"
+        },
+        {
+          "in": "zasłon(a|y)",
+          "out": "curtain"
+        },
+        {
+          "in": "markiz(a|y)",
+          "out": "awning"
+        },
+        {
+          "in": "rolet(a|y)",
+          "out": "blind"
+        },
+        {
+          "in": "rolet(a|y)",
+          "out": "shade"
+        },
+        {
+          "in": "żaluzj(a|e)",
+          "out": "shutter"
+        }
+      ]
+    },
+    "lock_states": {
+      "values": [
+        {
+          "in": "zablokowan(e|y|ych)|zamknięt(y|e|ych)",
+          "out": "locked"
+        },
+        {
+          "in": "odblokowan(e|y|ych)|otwart(e|y|ych)",
+          "out": "unlocked"
+        }
+      ]
+    },
+    "shopping_list_item": {
+      "wildcard": true
+    }
+  },
+  "expansion_rules": {
+    "name": "{name}",
+    "set": "(ustaw|zmień|przestaw|nastaw)",
+    "area": "[w|na] {area}",
+    "what_is": "Jak[a|i] jest",
+    "all": "(wszystkie|każde)",
+    "how_many_is": "Ile jest",
+    "activate": "(aktywuj|uaktywnij|rozpocznij|zacznij|uruchom)",
+    "lock": "zablokuj",
+    "unlock": "odblokuj",
+    "turn_on": "(włącz|uruchom)",
+    "turn_off": "(wyłącz|zatrzymaj)",
+    "turn_on_light": "(zapal|oświeć|zaświeć)",
+    "turn_off_light": "zgaś",
+    "open": "otwórz",
+    "open_blind": "(odsłoń|podnieś)",
+    "open_curtain": "(odsunięte|odsłonięte)",
+    "close": "(zamknij|przymknij)",
+    "close_blind": "(zasłoń|opuść)",
+    "close_curtain": "(zasunięte|zasłonięte)",
+    "brightness": "{brightness}[%| procent]",
+    "temp": "temperatur(a|ę|y)|stopni|zimno|gorąco",
+    "temperature": "{temperature}[°| stopni] [{temperature_unit}]"
+  },
+  "skip_words": [
+    "Proszę",
+    "Poproszę",
+    "możesz",
+    "czy możesz"
+  ]
+}

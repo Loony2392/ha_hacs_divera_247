@@ -136,11 +136,13 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
                 configuration_url=config_url,
                 via_device=(DOMAIN, str(self._ucr_id)),
             )
-        return DeviceInfo(
-            identifiers=base_identifiers,
-            manufacturer=DIVERA_GMBH,
-            name=f"{self._cluster_name}{org_name}",
-            model=f"Divera {cluster_version}",
-            sw_version=__version__,
-            configuration_url=config_url,
-        )
+            # Prefer cluster name (e.g., "THW OV Halver"); fallback to organization
+            device_display_name = self._cluster_name or org_name
+            return DeviceInfo(
+                identifiers=base_identifiers,
+                manufacturer=DIVERA_GMBH,
+                name=device_display_name,
+                model=f"Divera {cluster_version}",
+                sw_version=__version__,
+                configuration_url=config_url,
+            )

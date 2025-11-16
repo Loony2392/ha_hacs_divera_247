@@ -8,7 +8,8 @@
                 "data": {
                     "accesskey": "🔑 Klucz dostępu",
                     "base_url": "🌐 Adres serwera (DIVERA 24/7)",
-                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)"
+                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)",
+                    "vehicle_name_mode": "🚗 Źródło nazwy pojazdu"
                 }
             },
             "user_cluster_relation": {
@@ -72,11 +73,7 @@
                   "shortname": "🏷️ Skrót (np. 'FtKW')",
                   "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
                   "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
-            },
-              "auto": "🔄 Auto (skrót → nazwa → pełna nazwa)",
-              "shortname": "🏷️ Skrót (np. 'FtKW')",
-              "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
-              "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+            }
         }
     },
     "exceptions": {
@@ -92,7 +89,11 @@
             "alarm_address": {
                 "name": "Adres ostatniego alarmu"
             },
-                }
+            "news": {
+                "name": "Najnowsze wiadomości"
+            },
+            "vehicle": {
+                "name": "Status pojazdu"
             },
             "vehicle_location": {
                 "name": "Lokalizacja"
@@ -106,18 +107,18 @@
             "vehicle_number": {
                 "name": "Numer"
             },
-                "status_overview": {
-                    "name": "Przegląd statusu wolontariuszy"
-                },
-                "status_active": {
-                    "name": "Aktywni wolontariusze"
-                },
-                "status_inactive": {
-                    "name": "Nieaktywni wolontariusze"
-                },
-                "status_on_duty": {
-                    "name": "Wolontariusze na służbie"
-                }
+            "status_overview": {
+                "name": "Przegląd statusu wolontariuszy"
+            },
+            "status_active": {
+                "name": "Aktywni wolontariusze"
+            },
+            "status_inactive": {
+                "name": "Nieaktywni wolontariusze"
+            },
+            "status_on_duty": {
+                "name": "Wolontariusze na służbie"
+            }
         },
         "binary_sensor": {
             "active_alarm": {
