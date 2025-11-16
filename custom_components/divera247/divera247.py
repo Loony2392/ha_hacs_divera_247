@@ -72,6 +72,29 @@ class DiveraClient:
             async with self.__session.get(url=url, params=params) as response:
                 response.raise_for_status()
                 self.__data = await response.json()
+                # Debug preview of monitor/statusplan structures
+                if LOGGER.isEnabledFor(10):  # DEBUG level
+                    try:
+                        data_root = self.__data.get("data", {})
+                        monitor = data_root.get("monitor") or data_root.get("localmonitor")
+                        statusplan = data_root.get("statusplan")
+                        LOGGER.debug(
+                            "Divera data top-level keys: %s", list(data_root.keys())
+                        )
+                        if statusplan:
+                            LOGGER.debug(
+                                "statusplan sample: %s",
+                                str(statusplan)[:500],
+                            )
+                        if monitor:
+                            LOGGER.debug(
+                                "monitor sample: %s",
+                                str(monitor)[:500],
+                            )
+                    except Exception as exc:  # pragma: no cover (best effort logging)
+                        LOGGER.debug(
+                            "Failed to log monitor/statusplan preview: %s", exc
+                        )
         except ClientResponseError as exc:
             # TODO Exception Tests
             url = remove_params_from_url(exc.request_info.url)
@@ -80,8 +103,10 @@ class DiveraClient:
                 raise DiveraAuthError from None
             raise DiveraConnectionError from None
         except ClientError as exc:
-            url = remove_params_from_url(exc.request_info.url)
-            LOGGER.error(f"An error occurred while requesting {url!r}.")
+            request_info = getattr(exc, "request_info", None)
+            raw_url = getattr(request_info, "url", None)
+            url = remove_params_from_url(raw_url) if raw_url else "unknown"
+            LOGGER.error(f"An error occurred while requesting {url!r}: {exc}")
             raise DiveraConnectionError from None
 
     def get_base_url(self) -> str:
@@ -726,11 +751,15 @@ class DiveraClient:
                 url=url, params=params, json=state
             ) as response:
                 response.raise_for_status()
-        except (ClientError, ClientResponseError) as exc:
-            url = remove_params_from_url(exc.request.url)
-            LOGGER.error(f"An error occurred while requesting {url!r}.")
-            if isinstance(exc, ClientResponseError) and exc.status == UNAUTHORIZED:
+        except ClientResponseError as exc:
+            url_clean = remove_params_from_url(exc.request_info.url)
+            LOGGER.error(f"Error response {exc.status} while requesting {url_clean!r}.")
+            if exc.status == UNAUTHORIZED:
                 raise DiveraAuthError from None
+            raise DiveraConnectionError from None
+        except ClientError as exc:
+            url_clean = remove_params_from_url(exc.request_info.url)
+            LOGGER.error(f"An error occurred while requesting {url_clean!r}.")
             raise DiveraConnectionError from None
 
     def get_cluster_version(self) -> str:
@@ -747,16 +776,70 @@ class DiveraClient:
         Note:
             The version_id is extracted from the 'data' dictionary attribute of the instance.
         """
-        version = self.__data["data"]["cluster"]["version_id"]
-        match version:
-            case 1:
-                return VERSION_FREE
-            case 2:
-                return VERSION_ALARM
-            case 3:
-                return VERSION_PRO
-            case _:
-                return VERSION_UNKNOWN
+        try:
+            version = self.__data["data"]["cluster"]["version_id"]
+            match version:
+                case 1:
+                    return VERSION_FREE
+                case 2:
+                    return VERSION_ALARM
+                case 3:
+                    return VERSION_PRO
+                case _:
+                    return VERSION_UNKNOWN
+        except Exception:
+            return VERSION_UNKNOWN
+
+    def get_ucr_id(self) -> int | None:
+        """Return configured UCR id even if data not loaded yet."""
+        return self.__ucr_id
+
+    def get_helpers(self) -> list[dict]:
+        """Return helper list extracted from raw data if available.
+
+        Falls back to empty list when structure is absent or not yet loaded.
+        """
+        if self.__data is None:
+            return []
+        try:
+            # Attempt common keys that might store helpers
+            data_root = self.__data.get("data", {})
+            helpers = data_root.get("helpers") or data_root.get("helper")
+            if helpers is None:
+                return []
+            if isinstance(helpers, list):
+                return helpers
+            if isinstance(helpers, dict):
+                return list(helpers.values())
+            return []
+        except Exception:
+            return []
+
+    def get_statusplan_raw(self):
+        """Return raw statusplan section (future status / forecast) if present.
+
+        Returns empty dict when not available or data not loaded yet.
+        """
+        if self.__data is None:
+            return {}
+        try:
+            return self.__data.get("data", {}).get("statusplan", {}) or {}
+        except Exception:
+            return {}
+
+    def get_monitor_raw(self):
+        """Return raw monitor/localmonitor section if present.
+
+        Some installations might expose either 'monitor' or 'localmonitor'.
+        Returns empty dict when not available.
+        """
+        if self.__data is None:
+            return {}
+        try:
+            data_root = self.__data.get("data", {})
+            return data_root.get("monitor") or data_root.get("localmonitor") or {}
+        except Exception:
+            return {}
 
     async def set_user_state_by_name(self, option: str):
         """

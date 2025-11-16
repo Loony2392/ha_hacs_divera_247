@@ -55,10 +55,20 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         super().__init__(coordinator)
         self.entity_description = description
 
-        self._ucr_id = self.coordinator.data.get_active_ucr()
-        self._cluster_name = self.coordinator.data.get_cluster_name_from_ucr(
-            self._ucr_id
-        )
+        client = self.coordinator.data
+        if client is not None:
+            try:
+                self._ucr_id = client.get_active_ucr()
+            except Exception:
+                self._ucr_id = client.get_ucr_id()
+            try:
+                self._cluster_name = client.get_cluster_name_from_ucr(self._ucr_id)
+            except Exception:
+                self._cluster_name = "unknown"
+        else:
+            # Data not loaded yet; use configured ucr id if possible
+            self._ucr_id = self.coordinator.divera_client.get_ucr_id()
+            self._cluster_name = "unknown"
 
         self._attr_unique_id = "_".join(
             [
@@ -96,8 +106,11 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         Returns:
             DeviceInfo: Device information object.
         """
+        from . import __version__
+        
         config_url = DIVERA_BASE_URL
-        version = self.coordinator.data.get_cluster_version()
+        client = self.coordinator.data
+        cluster_version = client.get_cluster_version() if client else "unknown"
         return DeviceInfo(
             identifiers={
                 (
@@ -107,6 +120,7 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
             },
             manufacturer=DIVERA_GMBH,
             name=self._cluster_name,
-            model=version,
+            model=f"Divera {cluster_version}",
+            sw_version=__version__,
             configuration_url=config_url,
         )

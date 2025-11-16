@@ -1,10 +1,17 @@
 """Divera 24/7 Component."""
 
 import asyncio
+import json
+from pathlib import Path
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+
+# Load version from manifest.json
+_manifest = json.loads((Path(__file__).parent / "manifest.json").read_text(encoding="utf-8"))
+__version__ = _manifest.get("version", "0.0.0")
 
 from .const import (
     CONF_FLOW_MINOR_VERSION,
@@ -25,6 +32,7 @@ PLATFORMS = [
     Platform.SENSOR,
     Platform.CALENDAR,
     Platform.BINARY_SENSOR,
+    Platform.BUTTON,
 ]
 
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
@@ -38,9 +46,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     :param entry: Config entry for Divera
     :return: True if setup was successful
     """
-    accesskey: str = entry.data.get(DATA_ACCESSKEY)
-    ucr_ids = entry.data.get(DATA_UCRS)
-    base_url = entry.data.get(DATA_BASE_URL, DIVERA_BASE_URL)
+    # Early marker to verify logging pipeline
+    LOGGER.info("Starting Divera 24/7 setup (version=%s, entry_id=%s)", __version__, entry.entry_id)
+
+    accesskey: str | None = entry.data.get(DATA_ACCESSKEY)
+    ucr_ids: list[int] | None = entry.data.get(DATA_UCRS)
+    base_url: str = entry.data.get(DATA_BASE_URL, DIVERA_BASE_URL)
+
+    if not accesskey or not ucr_ids:
+        LOGGER.error(
+            "Setup aborted: missing accesskey (%s) or ucr_ids (%s) in config entry data.",
+            bool(accesskey),
+            bool(ucr_ids),
+        )
+        return False
 
     divera_hass_data = hass.data.setdefault(DOMAIN, {})
     divera_hass_data[entry.entry_id] = {}
@@ -58,12 +77,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
             hass, websession, accesskey, base_url=base_url, ucr_id=ucr_id
         )
         coordinators[ucr_id] = divera_coordinator
-        tasks.append(
-            asyncio.create_task(divera_coordinator.async_config_entry_first_refresh())
-        )
+        tasks.append(divera_coordinator.async_config_entry_first_refresh())
+
+    # Run initial refreshes with error collection
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    errors: list[Exception] = [r for r in results if isinstance(r, Exception)]
+    if errors:
+        for err in errors:
+            LOGGER.error("Initial data refresh failed for Divera: %s", err)
+        # If any coordinator failed we abort setup to prevent partial broken state
+        return False
 
     entry.runtime_data = DiveraRuntimeData(coordinators)
-    await asyncio.wait(tasks)
+
+    LOGGER.debug(
+        "Divera setup completed for %d coordinator(s) (entry_id=%s)",
+        len(coordinators),
+        entry.entry_id,
+    )
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
     # Register the service to trigger a test probe alarm
@@ -87,8 +118,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service
     )
 
-    # Forward the config entry setups for all platforms (select, sensor, calendar, binary_sensor)
+    # Forward platform setups (must be awaited to avoid frame warning in HA >=2025.1)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    LOGGER.debug("Forwarded setups for platforms: %s", PLATFORMS)
     return True
 
 

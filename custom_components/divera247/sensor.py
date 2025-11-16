@@ -33,6 +33,7 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         key="helper_name",
         translation_key="helper_name",
         icon="mdi:account",
+        attribute_fn=lambda divera: {},
         value_fn=lambda divera,
         helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
     ),
@@ -40,6 +41,7 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         key="helper_status",
         translation_key="helper_status",
         icon="mdi:account-check",
+        attribute_fn=lambda divera: {},
         value_fn=lambda divera, helper: helper.get("status", "unknown"),
     ),
 )
@@ -104,18 +106,21 @@ STATUS_SENSORS: tuple[DiveraStatusCountEntityDescription, ...] = (
         key="status_active",
         translation_key="status_active",
         icon="mdi:check-circle",
+        attribute_fn=lambda divera: {},
         status="active",
     ),
     DiveraStatusCountEntityDescription(
         key="status_inactive",
         translation_key="status_inactive",
         icon="mdi:close-circle",
+        attribute_fn=lambda divera: {},
         status="inactive",
     ),
     DiveraStatusCountEntityDescription(
         key="status_on_duty",
         translation_key="status_on_duty",
         icon="mdi:briefcase",
+        attribute_fn=lambda divera: {},
         status="on_duty",
     ),
 )
@@ -153,7 +158,8 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
 
         This method is called to update the state of the entity based on the latest data from the coordinator.
         """
-        helpers = self.coordinator.data.get("helpers", [])
+        client = self.coordinator.data
+        helpers = client.get_helpers() if client else []
         count = sum(1 for helper in helpers if helper.get("status") == self._status)
         self._attr_native_value = count
 
@@ -175,9 +181,11 @@ async def async_setup_entry(
     entities: list[SensorEntity] = []
 
     # Create individual sensors for each helper (name and status)
-    for ucr_id in coordinators:
-        coordinator = coordinators[ucr_id]
-        helpers = coordinator.data.get("helpers", [])
+    for ucr_id, coordinator in coordinators.items():
+        client = coordinator.data
+        if client is None:
+            continue
+        helpers = client.get_helpers()
         for helper in helpers:
             for description in HELPER_SENSORS:
                 entities.append(
