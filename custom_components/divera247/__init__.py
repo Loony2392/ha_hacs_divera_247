@@ -17,6 +17,7 @@ from .const import (
     DATA_UCRS,
     DEFAULT_SCAN_INTERVAL,
     DIVERA_BASE_URL,
+    DIVERA_GMBH,
     DOMAIN,
     LOGGER,
 )
@@ -46,11 +47,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     :param entry: Config entry for Divera
     :return: True if setup was successful
     """
-    # Lazy-load version now (avoids file I/O at import time)
+    # Lazy-load version using async file read to avoid blocking I/O
     try:
-        manifest_path = Path(__file__).parent / "manifest.json"
         import json
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest_path = Path(__file__).parent / "manifest.json"
+        
+        def _load_manifest():
+            return json.loads(manifest_path.read_text(encoding="utf-8"))
+        
+        manifest = await hass.async_add_executor_job(_load_manifest)
         globals()["__version__"] = manifest.get("version", "0.0.0")
     except Exception:  # pragma: no cover - non-critical
         globals()["__version__"] = "0.0.0"
@@ -103,6 +108,34 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
             LOGGER.error("Initial data refresh failed for Divera: %s", err)
         # If any coordinator failed we abort setup to prevent partial broken state
         return False
+
+    # Register hub devices BEFORE loading platforms to ensure via_device references work
+    from homeassistant.helpers import device_registry as dr
+    device_registry = dr.async_get(hass)
+    for ucr_id in ucr_ids:
+        coordinator = coordinators[ucr_id]
+        client = coordinator.data
+        cluster_name = "Divera 24/7"
+        cluster_version = "unknown"
+        if client:
+            try:
+                cluster_name = client.get_cluster_name_from_ucr(ucr_id) or "Divera 24/7"
+            except Exception:
+                pass
+            try:
+                cluster_version = client.get_cluster_version()
+            except Exception:
+                pass
+        
+        device_registry.async_get_or_create(
+            config_entry_id=entry.entry_id,
+            identifiers={(DOMAIN, str(ucr_id))},
+            manufacturer=DIVERA_GMBH,
+            name=cluster_name,
+            model=f"Divera {cluster_version}",
+            sw_version=__version__,
+            configuration_url=DIVERA_BASE_URL,
+        )
 
     entry.runtime_data = DiveraRuntimeData(coordinators)
 
