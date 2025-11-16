@@ -7,6 +7,7 @@ from typing import Any
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.entity import EntityCategory
 
@@ -20,6 +21,8 @@ from .const import (
     VEHICLE_NAME_MODE_NAME,
     VEHICLE_NAME_MODE_FULL,
     DOMAIN,
+    DIVERA_BASE_URL,
+    DIVERA_GMBH,
 )
 from .entity import DiveraEntity, DiveraEntityDescription
 
@@ -84,6 +87,11 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
         self._name_mode = description.name_mode or VEHICLE_NAME_MODE_AUTO
         # Store a separate display name for the device, not the entity name
         self._vehicle_display_name: str | None = None
+        # Pre-compute display name if data is already available to avoid 'Vehicle <id>' fallback
+        try:
+            self._vehicle_display_name = self._compute_display_name(coordinator.data)
+        except Exception:
+            self._vehicle_display_name = None
         super().__init__(coordinator, description)
         self._update_vehicle_display_name()
         # Mark location sensor as diagnostic and disabled by default to avoid duplication
@@ -91,30 +99,29 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
             self._attr_entity_category = EntityCategory.DIAGNOSTIC
             self._attr_entity_registry_enabled_default = False
 
-    def _update_vehicle_display_name(self):
-        client = self.coordinator.data
+    def _compute_display_name(self, client: DiveraClient | None) -> str | None:
         mode = self._name_mode
-        name: str = self._vehicle_id
+        name: str | None = None
         if client is not None:
             try:
                 attrs = client.get_vehicle_attributes(self._vehicle_id)
                 if mode == VEHICLE_NAME_MODE_SHORT:
-                    name = attrs.get("shortname") or name
+                    name = attrs.get("shortname")
                 elif mode == VEHICLE_NAME_MODE_NAME:
-                    name = attrs.get("name") or name
+                    name = attrs.get("name")
                 elif mode == VEHICLE_NAME_MODE_FULL:
-                    name = attrs.get("fullname") or name
+                    name = attrs.get("fullname")
                 else:  # auto
-                    name = (
-                        attrs.get("shortname")
-                        or attrs.get("name")
-                        or attrs.get("fullname")
-                        or name
-                    )
+                    name = attrs.get("shortname") or attrs.get("name") or attrs.get("fullname")
             except Exception:
-                pass
-        # Save for device_info usage
-        self._vehicle_display_name = name
+                name = None
+        return name
+
+    def _update_vehicle_display_name(self):
+        client = self.coordinator.data
+        name = self._compute_display_name(client)
+        # Save for device_info usage; fall back to id string if computation failed
+        self._vehicle_display_name = name or self._vehicle_id
 
     def _divera_update(self) -> None:  # noqa: D401
         client = self.coordinator.data
@@ -140,6 +147,27 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
                 )
         except Exception:
             self._attr_extra_state_attributes = {}
+
+    @property
+    def device_info(self) -> DeviceInfo:  # type: ignore[override]
+        # Ensure we have a display name; compute from current data if missing
+        if not self._vehicle_display_name or self._vehicle_display_name == self._vehicle_id:
+            try:
+                self._vehicle_display_name = self._compute_display_name(self.coordinator.data) or self._vehicle_id
+            except Exception:
+                self._vehicle_display_name = self._vehicle_id
+        from . import __version__
+        client = self.coordinator.data
+        cluster_version = client.get_cluster_version() if client else "unknown"
+        return DeviceInfo(
+            identifiers={(DOMAIN, f"{self._ucr_id}_vehicle_{self._vehicle_id}")},
+            manufacturer=DIVERA_GMBH,
+            name=self._vehicle_display_name,
+            model=f"Divera Vehicle {cluster_version}",
+            sw_version=__version__,
+            configuration_url=DIVERA_BASE_URL,
+            via_device=(DOMAIN, str(self._ucr_id)),
+        )
 
 
 class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
