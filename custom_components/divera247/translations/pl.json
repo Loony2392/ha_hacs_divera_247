@@ -96,19 +96,19 @@
                 "name": "Najnowsze wiadomości"
             },
             "vehicle": {
-                "name": "Status pojazdu {vehicle_name}"
+                "name": "Status pojazdu"
             },
             "vehicle_location": {
-                "name": "Lokalizacja {vehicle_name}"
+                "name": "Lokalizacja"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Znak wywoławczy"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Numer {vehicle_name}"
+                "name": "Numer"
             },
                 "status_overview": {
                     "name": "Przegląd statusu wolontariuszy"

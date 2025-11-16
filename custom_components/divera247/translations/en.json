@@ -96,19 +96,19 @@
                 "name": "Latest news"
             },
             "vehicle": {
-                "name": "Vehicle Status {vehicle_name}"
+                "name": "Vehicle status"
             },
             "vehicle_location": {
-                "name": "Location {vehicle_name}"
+                "name": "Location"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Call sign"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Number {vehicle_name}"
+                "name": "Number"
             },
             "status_overview": {
                 "name": "Helper status overview"

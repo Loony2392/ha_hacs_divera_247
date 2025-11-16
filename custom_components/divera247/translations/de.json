@@ -105,10 +105,10 @@
                 "name": "Rufname"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Nummer {vehicle_name}"
+                "name": "Nummer"
             },
             "status_overview": {
                 "name": "Helfer Status Übersicht"

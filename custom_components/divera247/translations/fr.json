@@ -96,19 +96,19 @@
                 "name": "Dernières nouvelles"
             },
             "vehicle": {
-                "name": "État du véhicule {vehicle_name}"
+                "name": "État du véhicule"
             },
             "vehicle_location": {
-                "name": "Emplacement {vehicle_name}"
+                "name": "Emplacement"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Indicatif"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Numéro {vehicle_name}"
+                "name": "Numéro"
             },
                 "status_overview": {
                     "name": "Aperçu du statut des bénévoles"

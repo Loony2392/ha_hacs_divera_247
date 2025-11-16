@@ -96,19 +96,19 @@
                 "name": "Ultime notizie"
             },
             "vehicle": {
-                "name": "Stato veicolo {vehicle_name}"
+                "name": "Stato veicolo"
             },
             "vehicle_location": {
-                "name": "Posizione {vehicle_name}"
+                "name": "Posizione"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Nominativo"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Numero {vehicle_name}"
+                "name": "Numero"
             },
             "status_overview": {
                 "name": "Panoramica dello stato degli assistenti"

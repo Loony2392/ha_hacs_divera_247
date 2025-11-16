@@ -96,19 +96,19 @@
                 "name": "Laatste nieuws"
             },
             "vehicle": {
-                "name": "Voertuigstatus {vehicle_name}"
+                "name": "Voertuigstatus"
             },
             "vehicle_location": {
-                "name": "Locatie {vehicle_name}"
+                "name": "Locatie"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Roepletters"
             },
             "vehicle_issi": {
-                "name": "ISSI {vehicle_name}"
+                "name": "ISSI"
             },
             "vehicle_number": {
-                "name": "Nummer {vehicle_name}"
+                "name": "Nummer"
             },
             "status_overview": {
                 "name": "Overzicht helperstatus"
