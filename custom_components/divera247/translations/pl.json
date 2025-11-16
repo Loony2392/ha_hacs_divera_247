@@ -3,12 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "Konfiguracja DIVERA 24/7",
+                "title": "🚀 Konfiguracja DIVERA 24/7",
                 "description": "Wprowadź swój klucz dostępu, aby połączyć się z serwerami DIVERA 24/7 i pobrać dane. Klucz dostępu znajdziesz na swoim koncie użytkownika w 'Ustawieniach' w sekcji 'Debug'. Więcej informacji na: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Klucz dostępu",
-                    "base_url": "Adres serwera DIVERA 24/7 (zazwyczaj bez zmian)",
-                    "scan_interval": "Interwał aktualizacji (sekundy)"
+                    "accesskey": "🔑 Klucz dostępu",
+                    "base_url": "🌐 Adres serwera (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)"
                 }
             },
             "user_cluster_relation": {
@@ -56,11 +56,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "Opcje DIVERA 24/7",
+                "title": "⚙️ Opcje DIVERA 24/7",
                 "description": "Interwał aktualizacji musi wynosić od 10 do 300 sekund. Wybór zbyt krótkiego interwału może powodować problemy. Wybór nazwy pojazdu określa, które pole nazwy jest używane dla czujników pojazdów.",
                 "data": {
-                    "scan_interval": "Interwał aktualizacji (sekundy)",
-                    "vehicle_name_mode": "Źródło nazwy pojazdu"
+                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)",
+                    "vehicle_name_mode": "🚗 Źródło nazwy pojazdu"
                 }
             }
         }
@@ -68,15 +68,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                 "auto": "Auto (skrót → nazwa → pełna nazwa)",
-                 "shortname": "Skrót (np. 'FtKW')",
-                 "name": "Nazwa (np. 'Heros Halver 21/10')",
-                 "fullname": "Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+                  "auto": "🔄 Auto (skrót → nazwa → pełna nazwa)",
+                  "shortname": "🏷️ Skrót (np. 'FtKW')",
+                  "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
+                  "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
             },
-            "auto": "Auto (skrót → nazwa → pełna nazwa)",
-            "shortname": "Skrót (np. 'FtKW')",
-            "name": "Nazwa (np. 'Heros Halver 21/10')",
-            "fullname": "Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+              "auto": "🔄 Auto (skrót → nazwa → pełna nazwa)",
+              "shortname": "🏷️ Skrót (np. 'FtKW')",
+              "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
+              "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
         }
     },
     "exceptions": {
@@ -110,9 +110,18 @@
             "vehicle_number": {
                 "name": "Numer {vehicle_name}"
             },
-            "status_overview": {
-                "name": "Przegląd statusu asystentów"
-            }
+                "status_overview": {
+                    "name": "Przegląd statusu wolontariuszy"
+                },
+                "status_active": {
+                    "name": "Aktywni wolontariusze"
+                },
+                "status_inactive": {
+                    "name": "Nieaktywni wolontariusze"
+                },
+                "status_on_duty": {
+                    "name": "Wolontariusze na służbie"
+                }
         },
         "binary_sensor": {
             "active_alarm": {

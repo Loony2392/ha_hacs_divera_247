@@ -3,12 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "DIVERA 24/7 Configuratie",
+                "title": "🚀 DIVERA 24/7 Configuratie",
                 "description": "Voer je toegangssleutel in om verbinding te maken met de DIVERA 24/7-servers en gegevens op te halen. Je vindt de toegangssleutel in je gebruikersaccount onder 'Instellingen' in het gedeelte 'Debug'. Voor meer informatie, bezoek: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Toegangssleutel",
-                    "base_url": "Het serveradres van DIVERA 24/7 (meestal ongewijzigd)",
-                    "scan_interval": "Update-interval (seconden)"
+                    "accesskey": "🔑 Toegangssleutel",
+                    "base_url": "🌐 Serveradres (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update-interval (seconden)"
                 }
             },
             "user_cluster_relation": {
@@ -56,11 +56,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "DIVERA 24/7 Opties",
+                "title": "⚙️ DIVERA 24/7 Opties",
                 "description": "Het update-interval moet tussen 10 en 300 seconden liggen. Een te kort interval kan problemen veroorzaken. De voertuignaam selectie bepaalt welk naamveld wordt gebruikt voor voertuigsensoren.",
                 "data": {
-                    "scan_interval": "Update-interval (seconden)",
-                    "vehicle_name_mode": "Bron van voertuignaam"
+                    "scan_interval": "⏱️ Update-interval (seconden)",
+                    "vehicle_name_mode": "🚗 Bron van voertuignaam"
                 }
             }
         }
@@ -68,15 +68,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                "auto": "Auto (korte naam → naam → volledige naam)",
-                "shortname": "Korte naam (bijv. 'FtKW')",
-                "name": "Naam (bijv. 'Heros Halver 21/10')",
-                "fullname": "Volledige naam (bijv. 'Commandovoertuig FtKW')"
+                "auto": "🔄 Auto (korte naam → naam → volledige naam)",
+                "shortname": "🏷️ Korte naam (bijv. 'FtKW')",
+                "name": "🧾 Naam (bijv. 'Heros Halver 21/10')",
+                "fullname": "🪪 Volledige naam (bijv. 'Commandovoertuig FtKW')"
             },
-            "auto": "Auto (korte naam → naam → volledige naam)",
-            "shortname": "Korte naam (bijv. 'FtKW')",
-            "name": "Naam (bijv. 'Heros Halver 21/10')",
-            "fullname": "Volledige naam (bijv. 'Commandovoertuig FtKW')"
+            "auto": "🔄 Auto (korte naam → naam → volledige naam)",
+            "shortname": "🏷️ Korte naam (bijv. 'FtKW')",
+            "name": "🧾 Naam (bijv. 'Heros Halver 21/10')",
+            "fullname": "🪪 Volledige naam (bijv. 'Commandovoertuig FtKW')"
         }
     },
     "exceptions": {
@@ -112,6 +112,15 @@
             },
             "status_overview": {
                 "name": "Overzicht helperstatus"
+            },
+            "status_active": {
+                "name": "Actieve helpers"
+            },
+            "status_inactive": {
+                "name": "Inactieve helpers"
+            },
+            "status_on_duty": {
+                "name": "Helpers in dienst"
             }
         },
         "binary_sensor": {

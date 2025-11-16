@@ -112,6 +112,15 @@
             },
             "status_overview": {
                 "name": "Helfer Status Übersicht"
+            },
+            "status_active": {
+                "name": "Aktive Helfer"
+            },
+            "status_inactive": {
+                "name": "Inaktive Helfer"
+            },
+            "status_on_duty": {
+                "name": "Helfer im Dienst"
             }
         },
         "binary_sensor": {

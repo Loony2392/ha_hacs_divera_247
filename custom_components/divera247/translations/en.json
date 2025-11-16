@@ -3,12 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "DIVERA 24/7 Setup",
+                "title": "🚀 DIVERA 24/7 Setup",
                 "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Access key",
-                    "base_url": "The server address of DIVERA 24/7 (usually left unchanged)",
-                    "scan_interval": "Update Interval (seconds)"
+                    "accesskey": "🔑 Access key",
+                    "base_url": "🌐 Server address (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update interval (seconds)"
                 }
             },
             "user_cluster_relation": {
@@ -56,11 +56,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "DIVERA 24/7 Options",
+                "title": "⚙️ DIVERA 24/7 Options",
                 "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval can cause problems. The vehicle name selection determines which name field is used for vehicle sensors.",
                 "data": {
-                    "scan_interval": "Update Interval (seconds)",
-                    "vehicle_name_mode": "Vehicle name source"
+                    "scan_interval": "⏱️ Update interval (seconds)",
+                    "vehicle_name_mode": "🚗 Vehicle name source"
                 }
             }
         }
@@ -68,15 +68,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                "auto": "Auto (shortname → name → fullname)",
-                "shortname": "Shortname (e.g. 'FtKW')",
-                "name": "Name (e.g. 'Heros Halver 21/10')",
-                "fullname": "Full name (e.g. 'Command Vehicle FtKW')"
+                "auto": "🔄 Auto (shortname → name → fullname)",
+                "shortname": "🏷️ Shortname (e.g. 'FtKW')",
+                "name": "🧾 Name (e.g. 'Heros Halver 21/10')",
+                "fullname": "🪪 Full name (e.g. 'Command Vehicle FtKW')"
             },
-            "auto": "Auto (shortname → name → fullname)",
-            "shortname": "Shortname (e.g. 'FtKW')",
-            "name": "Name (e.g. 'Heros Halver 21/10')",
-            "fullname": "Full name (e.g. 'Command Vehicle FtKW')"
+            "auto": "🔄 Auto (shortname → name → fullname)",
+            "shortname": "🏷️ Shortname (e.g. 'FtKW')",
+            "name": "🧾 Name (e.g. 'Heros Halver 21/10')",
+            "fullname": "🪪 Full name (e.g. 'Command Vehicle FtKW')"
         }
     },
     "exceptions": {
@@ -112,6 +112,15 @@
             },
             "status_overview": {
                 "name": "Helper status overview"
+            },
+            "status_active": {
+                "name": "Active helpers"
+            },
+            "status_inactive": {
+                "name": "Inactive helpers"
+            },
+            "status_on_duty": {
+                "name": "Helpers on duty"
             }
         },
         "binary_sensor": {

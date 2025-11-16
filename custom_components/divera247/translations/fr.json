@@ -3,12 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "Configuration DIVERA 24/7",
+                "title": "🚀 Configuration DIVERA 24/7",
                 "description": "Veuillez entrer votre clé d'accès pour vous connecter aux serveurs DIVERA 24/7 et récupérer les données. Vous pouvez trouver la clé d'accès dans votre compte utilisateur sous 'Paramètres' dans la section 'Debug'. Pour plus d'informations, visitez: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Clé d'accès",
-                    "base_url": "L'adresse du serveur DIVERA 24/7 (généralement inchangée)",
-                    "scan_interval": "Intervalle de mise à jour (secondes)"
+                    "accesskey": "🔑 Clé d'accès",
+                    "base_url": "🌐 Adresse du serveur (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Intervalle de mise à jour (secondes)"
                 }
             },
             "user_cluster_relation": {
@@ -56,11 +56,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "Options DIVERA 24/7",
+                "title": "⚙️ Options DIVERA 24/7",
                 "description": "L'intervalle de mise à jour doit être compris entre 10 et 300 secondes. Choisir un intervalle trop court peut causer des problèmes. La sélection du nom de véhicule détermine le champ de nom utilisé pour les capteurs de véhicule.",
                 "data": {
-                    "scan_interval": "Intervalle de mise à jour (secondes)",
-                    "vehicle_name_mode": "Source du nom du véhicule"
+                    "scan_interval": "⏱️ Intervalle de mise à jour (secondes)",
+                    "vehicle_name_mode": "🚗 Source du nom du véhicule"
                 }
             }
         }
@@ -68,15 +68,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                "auto": "Auto (nom court → nom → nom complet)",
-                "shortname": "Nom court (p.ex. 'FtKW')",
-                "name": "Nom (p.ex. 'Heros Halver 21/10')",
-                "fullname": "Nom complet (p.ex. 'Véhicule de commandement FtKW')"
+                "auto": "🔄 Auto (nom court → nom → nom complet)",
+                "shortname": "🏷️ Nom court (p.ex. 'FtKW')",
+                "name": "🧾 Nom (p.ex. 'Heros Halver 21/10')",
+                "fullname": "🪪 Nom complet (p.ex. 'Véhicule de commandement FtKW')"
             },
-            "auto": "Auto (nom court → nom → nom complet)",
-            "shortname": "Nom court (p.ex. 'FtKW')",
-            "name": "Nom (p.ex. 'Heros Halver 21/10')",
-            "fullname": "Nom complet (p.ex. 'Véhicule de commandement FtKW')"
+            "auto": "🔄 Auto (nom court → nom → nom complet)",
+            "shortname": "🏷️ Nom court (p.ex. 'FtKW')",
+            "name": "🧾 Nom (p.ex. 'Heros Halver 21/10')",
+            "fullname": "🪪 Nom complet (p.ex. 'Véhicule de commandement FtKW')"
         }
     },
     "exceptions": {
@@ -110,9 +110,18 @@
             "vehicle_number": {
                 "name": "Numéro {vehicle_name}"
             },
-            "status_overview": {
-                "name": "Aperçu du statut des assistants"
-            }
+                "status_overview": {
+                    "name": "Aperçu du statut des bénévoles"
+                },
+                "status_active": {
+                    "name": "Bénévoles actifs"
+                },
+                "status_inactive": {
+                    "name": "Bénévoles inactifs"
+                },
+                "status_on_duty": {
+                    "name": "Bénévoles en service"
+                }
         },
         "binary_sensor": {
             "active_alarm": {
