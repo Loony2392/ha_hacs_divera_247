@@ -1,0 +1,61 @@
+name: Bug Report
+description: Melde einen Fehler mit der DIVERA 24/7 Integration
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke dass du einen Bug reportest! Bitte fülle alle Felder vollständig aus.
+
+  - type: input
+    id: ha_version
+    attributes:
+      label: Home Assistant Version
+      placeholder: "2024.12.0"
+    validations:
+      required: true
+
+  - type: input
+    id: integration_version
+    attributes:
+      label: DIVERA 24/7 Integration Version
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problembeschreibung
+      description: Beschreibe das Problem das du erlebst
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduktionsschritte
+      value: |
+        1. Schritt 1
+        2. Schritt 2
+        3. Schritt 3
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Debug Logs
+      description: Paste hier deine Debug Logs (mit Debug Logging aktiviert)
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: system_health
+    attributes:
+      label: System Health Details
+      description: Kopiere die System Health Daten hier rein
+    validations:
+      required: true
