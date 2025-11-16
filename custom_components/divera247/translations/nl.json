@@ -24,7 +24,7 @@
             },
             "vehicle_name_selection": {
                 "title": "Voertuignaam selectie",
-                "description": "Kies welk naamveld te gebruiken voor voertuigsensoren. Je kunt dit later wijzigen in de integratie-opties.",
+                "description": "Kies welk naamveld te gebruiken voor voertuigsensoren. Je kunt dit later wijzigen in de integratie-opties.\n\nVoorbeeld voertuig:\n• Korte naam: 'FtKW'\n• Naam: 'Heros Halver 21/10'\n• Volledige naam: 'Commandovoertuig FtKW'",
                 "data": {
                     "vehicle_name_mode": "Bron van voertuignaam"
                 }

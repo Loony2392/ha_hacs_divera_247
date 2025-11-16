@@ -24,7 +24,7 @@
             },
             "vehicle_name_selection": {
                 "title": "Selección de nombre de vehículo",
-                "description": "Elige qué campo de nombre usar para los sensores de vehículos. Puedes cambiarlo más tarde en las opciones de integración.",
+                "description": "Elige qué campo de nombre usar para los sensores de vehículos. Puedes cambiarlo más tarde en las opciones de integración.\n\nEjemplo de vehículo:\n• Nombre corto: 'FtKW'\n• Nombre: 'Heros Halver 21/10'\n• Nombre completo: 'Vehículo de comando FtKW'",
                 "data": {
                     "vehicle_name_mode": "Origen del nombre del vehículo"
                 }

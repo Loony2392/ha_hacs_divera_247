@@ -24,7 +24,7 @@
             },
             "vehicle_name_selection": {
                 "title": "Fahrzeugnamenwahl",
-                "description": "Wählen Sie aus, welches Namensfeld für Fahrzeug-Sensoren verwendet werden soll. Sie können dies später in den Integrationsoptionen ändern.",
+                "description": "Wählen Sie aus, welches Namensfeld für Fahrzeug-Sensoren verwendet werden soll. Sie können dies später in den Integrationsoptionen ändern.\n\nBeispiel Fahrzeug:\n• Kurzname: 'FtKW'\n• Name: 'Heros Halver 21/10'\n• Vollname: 'Führungskraftwagen FtKW'",
                 "data": {
                     "vehicle_name_mode": "Quelle des Fahrzeugnamens"
                 }

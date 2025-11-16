@@ -24,7 +24,7 @@
             },
             "vehicle_name_selection": {
                 "title": "Wybór nazwy pojazdu",
-                "description": "Wybierz, które pole nazwy ma być używane dla czujników pojazdów. Możesz to zmienić później w opcjach integracji.",
+                "description": "Wybierz, które pole nazwy ma być używane dla czujników pojazdów. Możesz to zmienić później w opcjach integracji.\n\nPrzykład pojazdu:\n• Krótka nazwa: 'FtKW'\n• Nazwa: 'Heros Halver 21/10'\n• Pełna nazwa: 'Pojazd dowodzenia FtKW'",
                 "data": {
                     "vehicle_name_mode": "Źródło nazwy pojazdu"
                 }

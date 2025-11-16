@@ -24,7 +24,7 @@
             },
             "vehicle_name_selection": {
                 "title": "Vehicle Name Selection",
-                "description": "Choose which name field to use for vehicle sensors. You can change this later in the integration options.",
+                "description": "Choose which name field to use for vehicle sensors. You can change this later in the integration options.\n\nExample vehicle:\n• Shortname: 'FtKW'\n• Name: 'Heros Halver 21/10'\n• Fullname: 'Command Vehicle FtKW'",
                 "data": {
                     "vehicle_name_mode": "Vehicle name source"
                 }
