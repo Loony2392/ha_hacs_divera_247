@@ -315,7 +315,15 @@ class DiveraOptionsFlowHandler(OptionsFlow):
                             CONF_VEHICLE_NAME_MODE, current_mode
                         ),
                     }
-                    return self.async_create_entry(title="Divera Options", data=new_options)
+                    # Create entry and trigger reload so sensors get recreated with new naming mode
+                    result = self.async_create_entry(
+                        title="Divera Options", data=new_options
+                    )
+                    # Reload integration to apply option changes (add task so flow can finish)
+                    self.hass.async_create_task(
+                        self.hass.config_entries.async_reload(self._entry.entry_id)
+                    )
+                    return result
             except (TypeError, ValueError):
                 errors[CONF_SCAN_INTERVAL] = "invalid_int"
 
