@@ -22,6 +22,13 @@
                 },
                 "description": "Ponownie skonfiguruj wpis dla swojego użytkownika."
             },
+                "reconfigure_vehicle_name_selection": {
+                    "title": "Wybór nazwy pojazdu",
+                    "description": "Wybierz źródło nazwy dla czujników pojazdu.",
+                    "data": {
+                        "vehicle_name_mode": "Źródło nazwy pojazdu"
+                    }
+                },
             "vehicle_name_selection": {
                 "title": "Wybór nazwy pojazdu",
                 "description": "Wybierz, które pole nazwy ma być używane dla czujników pojazdów. Możesz to zmienić później w opcjach integracji.\n\nPrzykład pojazdu:\n• Krótka nazwa: 'FtKW'\n• Nazwa: 'Heros Halver 21/10'\n• Pełna nazwa: 'Pojazd dowodzenia FtKW'",
@@ -60,11 +67,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                "auto": "Auto (krótka nazwa → nazwa → pełna nazwa)",
-                "shortname": "Krótka nazwa (np. 'FtKW')",
-                "name": "Nazwa (np. 'Heros Halver 21/10')",
-                "fullname": "Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
-            }
+                 "auto": "Auto (skrót → nazwa → pełna nazwa)",
+                 "shortname": "Skrót (np. 'FtKW')",
+                 "name": "Nazwa (np. 'Heros Halver 21/10')",
+                 "fullname": "Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+            },
+            "auto": "Auto (skrót → nazwa → pełna nazwa)",
+            "shortname": "Skrót (np. 'FtKW')",
+            "name": "Nazwa (np. 'Heros Halver 21/10')",
+            "fullname": "Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
         }
     },
     "exceptions": {

@@ -29,6 +29,13 @@
                     "vehicle_name_mode": "Bron van voertuignaam"
                 }
             }
+                "reconfigure_vehicle_name_selection": {
+                    "title": "Voertuignaam selectie",
+                    "description": "Kies de naambron voor voertuigsensoren.",
+                    "data": {
+                        "vehicle_name_mode": "Naambron voertuig"
+                    }
+                },
         },
         "error": {
             "cannot_connect": "Verbindingsfout.",
@@ -65,6 +72,11 @@
                 "name": "Naam (bijv. 'Heros Halver 21/10')",
                 "fullname": "Volledige naam (bijv. 'Commandovoertuig FtKW')"
             }
+            },
+            "auto": "Auto (korte naam → naam → volledige naam)",
+            "shortname": "Korte naam (bijv. 'FtKW')",
+            "name": "Naam (bijv. 'Heros Halver 21/10')",
+            "fullname": "Volledige naam (bijv. 'Commandovoertuig FtKW')"
         }
     },
     "exceptions": {

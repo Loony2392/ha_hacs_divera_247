@@ -22,6 +22,13 @@
                 },
                 "description": "Riconfigura la voce per il tuo utente."
             },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Selezione nome veicolo",
+                "description": "Scegli la fonte del nome per i sensori del veicolo.",
+                "data": {
+                    "vehicle_name_mode": "Fonte del nome del veicolo"
+                }
+            },
             "vehicle_name_selection": {
                 "title": "Selezione nome veicolo",
                 "description": "Scegli quale campo nome utilizzare per i sensori dei veicoli. Puoi modificarlo successivamente nelle opzioni di integrazione.\n\nEsempio di veicolo:\n• Nome breve: 'FtKW'\n• Nome: 'Heros Halver 21/10'\n• Nome completo: 'Veicolo di comando FtKW'",
@@ -64,7 +71,11 @@
                 "shortname": "Nome breve (es. 'FtKW')",
                 "name": "Nome (es. 'Heros Halver 21/10')",
                 "fullname": "Nome completo (es. 'Veicolo di comando FtKW')"
-            }
+            },
+            "auto": "Auto (nome breve → nome → nome completo)",
+            "shortname": "Nome breve (es. 'FtKW')",
+            "name": "Nome (es. 'Heros Halver 21/10')",
+            "fullname": "Nome completo (es. 'Veicolo di comando FtKW')"
         }
     },
     "exceptions": {
