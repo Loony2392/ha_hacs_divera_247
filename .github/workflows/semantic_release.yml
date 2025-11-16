@@ -1,36 +1,64 @@
-name: 🚀 Semantic-Release
+name: 🚀 Release
 
 on:
   push:
     branches:
       - main
-      - develop
   workflow_dispatch:
 
 permissions:
-  contents: write # to be able to publish a GitHub release
-  issues: write # to be able to comment on released issues
-  pull-requests: write # to be able to comment on released pull requests
+  contents: write
 
 jobs:
   release:
-    name: 🚀 Semantic-Release
+    name: 🚀 Create Release
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout Code
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v6
+          
+      - name: 📖 Read Version from Manifest
+        id: version
+        run: |
+          VERSION=$(jq -r '.version' custom_components/divera247/manifest.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+          
+      - name: 🏷️ Check if Tag Exists
+        id: tag_check
+        run: |
+          if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 📦 Create ZIP Archive
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          cd custom_components
+          zip -r ../divera247-${{ steps.version.outputs.version }}.zip divera247/
+          cd ..
+          
+      - name: 🚀 Create GitHub Release
+        if: steps.tag_check.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v1
         with:
-          node-version: "lts/*"
-      - name: 📦 Install Dependencies
-        run: npm install
-      - name: 🔧 Prepare Release
-        run: bash scripts/prep_release.sh ${{ github.ref_name }}
-      - name: 🚀 Release
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## 🎉 Release ${{ steps.version.outputs.version }}
+            
+            ### Installation
+            HACS will automatically detect this update. Click "Update" in HACS to install.
+            
+            ### Changes
+            See commit history for details.
+          files: |
+            divera247-${{ steps.version.outputs.version }}.zip
+          draft: false
+          prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          BRANCH_NAME: ${{ github.ref_name }}
-        run: npx semantic-release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
