@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Feature Request
+    url: https://github.com/Loony2392/ha_hacs_divera_247/issues/new?template=feature_request.yml
+    about: Schlage eine neue Idee für die Integration vor
