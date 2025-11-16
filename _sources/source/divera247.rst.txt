@@ -60,6 +60,14 @@ divera247.data module
    :show-inheritance:
    :undoc-members:
 
+divera247.device\_tracker module
+--------------------------------
+
+.. automodule:: divera247.device_tracker
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 divera247.divera247 module
 --------------------------
 
