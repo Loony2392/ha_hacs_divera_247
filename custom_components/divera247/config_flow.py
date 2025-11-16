@@ -92,11 +92,13 @@ class DiveraFlow(FlowHandler):
         """
         api_schema = Schema(
             {
-                Required(CONF_ACCESSKEY, default=""): str,
+                Required(CONF_ACCESSKEY, default=""): TextSelector(
+                    TextSelectorConfig(type=TextSelectorType.PASSWORD)
+                ),
                 Optional(
                     CONF_BASE_URL, description={"suggested_value": DIVERA_BASE_URL}
                 ): TextSelector(TextSelectorConfig(type=TextSelectorType.URL)),
-                Required(CONF_SCAN_INTERVAL, default="60"): str,
+                Required(CONF_SCAN_INTERVAL, default="10"): str,
             },
         )
         return self.async_show_form(
@@ -345,7 +347,26 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
             
             # Store initial vehicle name mode in options
-            title = self._divera_client.get_full_name()
+            # Build a friendly title: "<cluster name> - <full name>"
+            try:
+                fullname = self._divera_client.get_full_name()
+            except Exception:
+                fullname = ""
+            try:
+                if DATA_UCRS in self._data and self._data[DATA_UCRS]:
+                    cluster_names = self._divera_client.get_cluster_names_from_ucrs(
+                        self._data[DATA_UCRS]
+                    )
+                    cluster_part = ", ".join(cluster_names) if cluster_names else ""
+                else:
+                    cluster_part = self._divera_client.get_default_cluster_name()
+            except Exception:
+                cluster_part = ""
+
+            if cluster_part and fullname:
+                title = f"{cluster_part} - {fullname}"
+            else:
+                title = fullname or cluster_part or "DIVERA 24/7"
             return self.async_create_entry(
                 title=title, 
                 data=self._data,

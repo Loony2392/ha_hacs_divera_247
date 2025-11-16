@@ -115,9 +115,8 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         org_name = ""
         if client:
             try:
-                org_name = client.get_organization_name()
-                if org_name:
-                    org_name = f" - {org_name}"
+                raw_org = client.get_organization_name() or ""
+                org_name = f" - {raw_org}" if raw_org else ""
             except Exception:
                 org_name = ""
         
