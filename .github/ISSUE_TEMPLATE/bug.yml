@@ -22,6 +22,22 @@ body:
 
         **Please ensure you fill out all the following steps fully**, otherwise your issue may be closed.
 
+  - type: input
+    attributes:
+      label: "Home Assistant Version / Home Assistant Version"
+      description: |
+        Z.B. 2024.12.0 / E.g. 2024.12.0
+      validations:
+        required: true
+
+  - type: input
+    attributes:
+      label: "DIVERA 24/7 Integration Version / DIVERA 24/7 Integration Version"
+      description: |
+        Du findest die Version unter 'Einstellungen' -> 'Geräte und Dienste' -> 'DIVERA 24/7' -> oben rechts Menü -> 'Details' / Find the version under 'Settings' -> 'Devices & Services' -> 'DIVERA 24/7' -> menu in top right -> 'Details'
+      validations:
+        required: true
+
   - type: textarea
     attributes:
       label: "System Health Details / System Health Details"
@@ -93,4 +109,4 @@ body:
 
         Drag the diagnostics dump file here. More information can be found in the [Home Assistant diagnostics documentation](https://www.home-assistant.io/integrations/diagnostics/).
     validations:
-      required: false
+      required: true
