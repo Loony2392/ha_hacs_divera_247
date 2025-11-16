@@ -30,6 +30,7 @@ PLATFORMS = [
     Platform.CALENDAR,
     Platform.BINARY_SENSOR,
     Platform.BUTTON,
+    Platform.DEVICE_TRACKER,
 ]
 
 type DiveraConfigEntry = ConfigEntry[DiveraRuntimeData]
