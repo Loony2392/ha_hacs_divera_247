@@ -1,7 +1,6 @@
 """Divera 24/7 Component."""
 
 import asyncio
-import json
 from pathlib import Path
 
 from homeassistant.config_entries import ConfigEntry
@@ -9,9 +8,7 @@ from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-# Load version from manifest.json
-_manifest = json.loads((Path(__file__).parent / "manifest.json").read_text(encoding="utf-8"))
-__version__ = _manifest.get("version", "0.0.0")
+__version__ = "0.0.0"  # Lazy-loaded inside async_setup_entry
 
 from .const import (
     CONF_FLOW_MINOR_VERSION,
@@ -46,8 +43,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     :param entry: Config entry for Divera
     :return: True if setup was successful
     """
-    # Early marker to verify logging pipeline
-    LOGGER.info("Starting Divera 24/7 setup (version=%s, entry_id=%s)", __version__, entry.entry_id)
+    # Lazy-load version now (avoids file I/O at import time)
+    try:
+        manifest_path = Path(__file__).parent / "manifest.json"
+        import json
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        globals()["__version__"] = manifest.get("version", "0.0.0")
+    except Exception:  # pragma: no cover - non-critical
+        globals()["__version__"] = "0.0.0"
+
+    LOGGER.info(
+        "Starting Divera 24/7 setup (version=%s, entry_id=%s)", __version__, entry.entry_id
+    )
 
     accesskey: str | None = entry.data.get(DATA_ACCESSKEY)
     ucr_ids: list[int] | None = entry.data.get(DATA_UCRS)
@@ -116,6 +123,34 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     LOGGER.info("🔔 Registering service divera247.trigger_probe_alarm")
     hass.services.async_register(
         DOMAIN, "trigger_probe_alarm", trigger_probe_alarm_service
+    )
+
+    # Service: set user state by name
+    async def set_user_state_service(call):
+        state_name: str | None = call.data.get("state_name")
+        divera_client = hass.data[DOMAIN].get("divera_client")
+        if divera_client is None or state_name is None:
+            LOGGER.error("❌ set_user_state: client or state_name missing")
+            return
+        # Validate available states (case-insensitive)
+        try:
+            valid = divera_client.get_all_state_name()
+        except Exception:
+            LOGGER.error("❌ set_user_state: cannot fetch state list")
+            return
+        match_name = next((s for s in valid if s.lower() == state_name.lower()), None)
+        if match_name is None:
+            LOGGER.error("❌ set_user_state: unknown state '%s' (valid: %s)", state_name, valid)
+            return
+        try:
+            await divera_client.set_user_state_by_name(match_name)
+            LOGGER.info("✅ User state changed to '%s'", match_name)
+        except Exception as exc:  # DiveraError handled inside client
+            LOGGER.error("❌ Failed changing user state to '%s': %s", match_name, exc)
+
+    LOGGER.info("🔔 Registering service divera247.set_user_state")
+    hass.services.async_register(
+        DOMAIN, "set_user_state", set_user_state_service
     )
 
     # Forward platform setups (must be awaited to avoid frame warning in HA >=2025.1)

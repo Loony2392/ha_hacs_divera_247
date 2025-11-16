@@ -18,6 +18,7 @@ from .const import (
     VEHICLE_NAME_MODE_SHORT,
     VEHICLE_NAME_MODE_NAME,
     VEHICLE_NAME_MODE_FULL,
+    DOMAIN,
 )
 from .entity import DiveraEntity, DiveraEntityDescription
 
@@ -244,6 +245,34 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
 
 
 @dataclass(frozen=True, kw_only=True)
+class DiveraStatusOverviewEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description for aggregated status overview sensor."""
+
+    value_fn: Callable[[DiveraClient], Any]
+
+
+class DiveraStatusOverviewSensorEntity(DiveraEntity, SensorEntity):
+    """Aggregated sensor with helper status counts as attributes."""
+
+    entity_description: DiveraStatusOverviewEntityDescription
+
+    def _divera_update(self) -> None:  # noqa: D401
+        client = self.coordinator.data
+        if client is None:
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
+            return
+        helpers = client.get_helpers()
+        counts: dict[str, int] = {}
+        for helper in helpers:
+            status = helper.get("status", "unknown")
+            counts[status] = counts.get(status, 0) + 1
+        # Native value = total helpers; attributes per status
+        self._attr_native_value = len(helpers)
+        self._attr_extra_state_attributes = counts
+
+
+@dataclass(frozen=True, kw_only=True)
 class DiveraAlarmAddressEntityDescription(DiveraEntityDescription, SensorEntityDescription):
     """Description for last alarm address sensor."""
 
@@ -329,6 +358,15 @@ async def async_setup_entry(
         coordinator = coordinators[ucr_id]
         for description in STATUS_SENSORS:
             entities.append(DiveraStatusCountSensorEntity(coordinator, description))
+        # Add single overview sensor
+        overview_desc = DiveraStatusOverviewEntityDescription(
+            key="status_overview",
+            translation_key="status_overview",
+            icon="mdi:clipboard-list",
+            attribute_fn=lambda divera: {},
+            value_fn=lambda divera: len(divera.get_helpers()),
+        )
+        entities.append(DiveraStatusOverviewSensorEntity(coordinator, overview_desc))
 
     # Add last alarm address sensor per coordinator
     for ucr_id, coordinator in coordinators.items():

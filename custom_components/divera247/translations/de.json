@@ -26,24 +26,37 @@
         "error": {
             "cannot_connect": "Fehler bei der Verbindung.",
             "authentication": "Fehler bei der Authentifizierung.",
+            "invalid_accesskey": "Ungültiges Accesskey-Format.",
+            "range_error": "Wert außerhalb des erlaubten Bereichs.",
+            "invalid_int": "Muss eine Zahl sein.",
             "unknown": "Unbekannter Fehler"
         },
         "abort": {
             "already_configured": "Dieser Benutzer ist bereits konfiguriert.",
-            "reconfigure_successful": "Rekonfigurieren erfolgreich.",
+            "reconfigure_successful": "Rekonfiguration erfolgreich.
+",
             "only_one_unit": "Dieser Benutzer hat nur eine Einheit.",
-            "not_supported": "Dieser Accesskey wird nicht unterstüzt. Bitte verwende den Accesskey eines Benutzers."
+            "not_supported": "Dieser Accesskey wird nicht unterstützt. Bitte verwende den Accesskey eines Benutzers."
         }
     },
     "options": {
         "step": {
             "scan_interval": {
                 "title": "DIVERA 24/7 Optionen",
-                "description": "Das Update Interval muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Interval führt evt. zu Problemen.",
+                "description": "Das Update Intervall muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Intervall führt evtl. zu Problemen.",
                 "data": {
-                    "scan_interval": "Update Interval (Sekunden)"
+                    "scan_interval": "Update Intervall (Sekunden)",
+                    "vehicle_name_mode": "Fahrzeug-Namensquelle"
                 }
             }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "auto": "Auto (Kurzname→Name→Vollname)",
+            "shortname": "Kurzname",
+            "name": "Name",
+            "fullname": "Vollständiger Name"
         }
     },
     "exceptions": {
@@ -56,11 +69,17 @@
             "alarm": {
                 "name": "letzter Alarm"
             },
+            "alarm_address": {
+                "name": "Alarm Adresse"
+            },
             "news": {
                 "name": "letzte News"
             },
             "vehicle": {
                 "name": "Fahrzeug Status {vehicle_name}"
+            },
+            "status_overview": {
+                "name": "Helfer Status Übersicht"
             }
         },
         "binary_sensor": {

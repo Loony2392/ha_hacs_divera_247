@@ -111,13 +111,23 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         config_url = DIVERA_BASE_URL
         client = self.coordinator.data
         cluster_version = client.get_cluster_version() if client else "unknown"
+        base_identifiers = {(DOMAIN, str(self._ucr_id))}
+        # Vehicle sensors get their own device grouping (override in subclass via attribute)
+        vid = getattr(self, "_vehicle_id", None)
+        if vid is not None:
+            base_identifiers = {(DOMAIN, f"{self._ucr_id}_vehicle_{vid}")}
+            name = getattr(self, "_attr_name", f"Vehicle {vid}")
+            return DeviceInfo(
+                identifiers=base_identifiers,
+                manufacturer=DIVERA_GMBH,
+                name=name,
+                model=f"Divera Vehicle {cluster_version}",
+                sw_version=__version__,
+                configuration_url=config_url,
+                via_device=(DOMAIN, str(self._ucr_id)),
+            )
         return DeviceInfo(
-            identifiers={
-                (
-                    DOMAIN,
-                    str(self._ucr_id),
-                )
-            },
+            identifiers=base_identifiers,
             manufacturer=DIVERA_GMBH,
             name=self._cluster_name,
             model=f"Divera {cluster_version}",

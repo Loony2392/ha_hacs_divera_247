@@ -1,3 +1,12 @@
 trigger_probe_alarm:
     name: "Trigger Probe Alarm"
     description: "Triggers a test probe alarm in Divera 24/7."
+set_user_state:
+    name: "Set User State"
+    description: "Change the current user status by its name (case-insensitive)."
+    fields:
+        state_name:
+            name: "State Name"
+            description: "Exact status name as shown in Divera (e.g. 'Einsatzbereit')."
+            required: true
+            example: "Einsatzbereit"

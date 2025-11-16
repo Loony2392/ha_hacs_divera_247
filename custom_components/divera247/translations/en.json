@@ -24,8 +24,12 @@
             }
         },
         "error": {
-            "cannot_connect": "Connection error.",
+            "cannot_connect": "Connection error.
+",
             "authentication": "Authentication error.",
+            "invalid_accesskey": "Invalid access key format.",
+            "range_error": "Value out of allowed range.",
+            "invalid_int": "Must be a number.",
             "unknown": "Unknown error"
         },
         "abort": {
@@ -41,9 +45,18 @@
                 "title": "DIVERA 24/7 Options",
                 "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval may cause issues.",
                 "data": {
-                    "scan_interval": "Update Interval (seconds)"
+                    "scan_interval": "Update Interval (seconds)",
+                    "vehicle_name_mode": "Vehicle name source"
                 }
             }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "auto": "Auto (shortname→name→fullname)",
+            "shortname": "Shortname",
+            "name": "Name",
+            "fullname": "Full name"
         }
     },
     "exceptions": {
@@ -56,11 +69,17 @@
             "alarm": {
                 "name": "Last alarm"
             },
+            "alarm_address": {
+                "name": "Last alarm address"
+            },
             "news": {
                 "name": "Latest news"
             },
             "vehicle": {
                 "name": "Vehicle status {vehicle_name}"
+            },
+            "status_overview": {
+                "name": "Helper status overview"
             }
         },
         "binary_sensor": {
