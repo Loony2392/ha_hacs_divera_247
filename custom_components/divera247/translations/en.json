@@ -24,8 +24,7 @@
             }
         },
         "error": {
-            "cannot_connect": "Connection error.
-",
+            "cannot_connect": "Connection error.",
             "authentication": "Authentication error.",
             "invalid_accesskey": "Invalid access key format.",
             "range_error": "Value out of allowed range.",

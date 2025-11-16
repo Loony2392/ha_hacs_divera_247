@@ -33,8 +33,7 @@
         },
         "abort": {
             "already_configured": "Dieser Benutzer ist bereits konfiguriert.",
-            "reconfigure_successful": "Rekonfiguration erfolgreich.
-",
+            "reconfigure_successful": "Rekonfiguration erfolgreich.",
             "only_one_unit": "Dieser Benutzer hat nur eine Einheit.",
             "not_supported": "Dieser Accesskey wird nicht unterstützt. Bitte verwende den Accesskey eines Benutzers."
         }
