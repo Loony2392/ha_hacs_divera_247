@@ -120,15 +120,14 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
             except Exception:
                 org_name = ""
         
-        base_identifiers = {(DOMAIN, str(self._ucr_id))}
-        # Vehicle sensors get their own device grouping (override in subclass via attribute)
+        # Vehicle sensors get their own device grouping
         vid = getattr(self, "_vehicle_id", None)
         if vid is not None:
-            base_identifiers = {(DOMAIN, f"{self._ucr_id}_vehicle_{vid}")}
+            vehicle_identifiers = {(DOMAIN, f"{self._ucr_id}_vehicle_{vid}")}
             # Use dedicated vehicle display name if available; avoid using entity name
             name = getattr(self, "_vehicle_display_name", None) or f"Vehicle {vid}"
             return DeviceInfo(
-                identifiers=base_identifiers,
+                identifiers=vehicle_identifiers,
                 manufacturer=DIVERA_GMBH,
                 name=name,
                 model=f"Divera Vehicle {cluster_version}",
@@ -136,13 +135,15 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
                 configuration_url=config_url,
                 via_device=(DOMAIN, str(self._ucr_id)),
             )
-            # Prefer cluster name (e.g., "THW OV Halver"); fallback to organization
-            device_display_name = self._cluster_name or org_name
-            return DeviceInfo(
-                identifiers=base_identifiers,
-                manufacturer=DIVERA_GMBH,
-                name=device_display_name,
-                model=f"Divera {cluster_version}",
-                sw_version=__version__,
-                configuration_url=config_url,
-            )
+        
+        # Hub device for user-related entities (calendar, status, etc.)
+        # Prefer cluster name (e.g., "THW OV Halver"); fallback to organization
+        device_display_name = self._cluster_name or org_name or "Divera 24/7"
+        return DeviceInfo(
+            identifiers={(DOMAIN, str(self._ucr_id))},
+            manufacturer=DIVERA_GMBH,
+            name=device_display_name,
+            model=f"Divera {cluster_version}",
+            sw_version=__version__,
+            configuration_url=config_url,
+        )
