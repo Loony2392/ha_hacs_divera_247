@@ -3,12 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "DIVERA 24/7 Einrichtung",
+                "title": "🚀 DIVERA 24/7 Einrichtung",
                 "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Accesskey",
-                    "base_url": "Die Serveradresse von DIVERA 24/7 (in der Regel unverändert lassen)",
-                    "scan_interval": "Update Intervall (Sekunden)"
+                    "accesskey": "🔑 Zugangsschlüssel",
+                    "base_url": "🌐 Serveradresse (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update-Intervall (Sekunden)"
                 }
             },
             "user_cluster_relation": {
@@ -56,11 +56,11 @@
     "options": {
         "step": {
             "init": {
-                "title": "DIVERA 24/7 Optionen",
+                "title": "⚙️ DIVERA 24/7 Optionen",
                 "description": "Das Update-Intervall muss zwischen 10 und 300 Sekunden liegen. Bei zu kurzem Intervall kann es zu Problemen kommen. Die Fahrzeugnamenwahl bestimmt, welches Namensfeld für Fahrzeug-Sensoren verwendet wird.",
                 "data": {
-                    "scan_interval": "Update Intervall (Sekunden)",
-                    "vehicle_name_mode": "Fahrzeug-Namensquelle"
+                    "scan_interval": "⏱️ Update-Intervall (Sekunden)",
+                    "vehicle_name_mode": "🚗 Fahrzeug-Namensquelle"
                 }
             }
         }
@@ -68,15 +68,15 @@
     "selector": {
         "vehicle_name_mode": {
             "options": {
-                "auto": "Auto (Kurzname → Name → Vollname)",
-                "shortname": "Kurzname (z.B. 'FtKW')",
-                "name": "Name (z.B. 'Heros Halver 21/10')",
-                "fullname": "Vollständiger Name (z.B. 'Führungskraftwagen FtKW')"
+                "auto": "🔄 Auto (Kurzname → Name → Vollname)",
+                "shortname": "🏷️ Kurzname (z.B. 'FtKW')",
+                "name": "🧾 Name (z.B. 'Heros Halver 21/10')",
+                "fullname": "🪪 Vollständiger Name (z.B. 'Führungskraftwagen FtKW')"
             },
-            "auto": "Auto (Kurzname → Name → Vollname)",
-            "shortname": "Kurzname (z.B. 'FtKW')",
-            "name": "Name (z.B. 'Heros Halver 21/10')",
-            "fullname": "Vollständiger Name (z.B. 'Führungskraftwagen FtKW')"
+            "auto": "🔄 Auto (Kurzname → Name → Vollname)",
+            "shortname": "🏷️ Kurzname (z.B. 'FtKW')",
+            "name": "🧾 Name (z.B. 'Heros Halver 21/10')",
+            "fullname": "🪪 Vollständiger Name (z.B. 'Führungskraftwagen FtKW')"
         }
     },
     "exceptions": {
