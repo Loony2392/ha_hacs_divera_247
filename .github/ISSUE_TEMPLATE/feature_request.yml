@@ -26,7 +26,7 @@ body:
           required: true
         - label: "Dies enthält nur eine Feature-Anfrage. (Wenn du mehrere Anfragen hast, öffne bitte für jede eine eigene Anfrage.) / This contains only 1 feature request. (If you have multiple feature requests, open one feature request for each.)"
           required: true
-        - label: "Diese Anfrage ist kein Duplikat einer [vorherigen Feature-Anfrage](https://github.com/ludeeus/integration_blueprint/issues?q=is%3Aissue+label%3A%22Feature+Request%22+). / This feature request is not a duplicate of [previous feature requests](https://github.com/ludeeus/integration_blueprint/issues?q=is%3Aissue+label%3A%22Feature+Request%22+)."
+        - label: "Diese Anfrage ist kein Duplikat einer [vorherigen Feature-Anfrage](https://github.com/Loony2392/ha_hacs_divera_247/issues?q=is%3Aissue+label%3A%22Feature+Request%22+). / This feature request is not a duplicate of [previous feature requests](https://github.com/Loony2392/ha_hacs_divera_247/issues?q=is%3Aissue+label%3A%22Feature+Request%22+)."
           required: true
 
   - type: textarea

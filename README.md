@@ -14,8 +14,8 @@ Diese Integration bindet DIVERA 24/7 in Home Assistant ein: Alarme, Fahrzeugdate
 - 🚗 Fahrzeuge: Status, Standort (Diagnose, optional), Rufname (OPTA), ISSI, Nummer; Fahrzeuge erscheinen auf der HA-Karte.  
    Vehicles: status, location (diagnostic, optional), call sign (OPTA), ISSI, number; vehicles appear on the HA map.
 
-- 🧑‍🤝‍🧑 Benutzerdaten: aktueller Benutzerstatus, Statusübersicht (Zählung aktiv/inaktiv/im Dienst).  
-   User data: current user status and overview counters (active/inactive/on duty).
+- 🧑‍🤝‍🧑 Benutzerdaten: aktueller Benutzerstatus.  
+   User data: current user status.
 
 - 📅 Kalenderereignisse; letzte News.  
    Calendar events; latest news.
