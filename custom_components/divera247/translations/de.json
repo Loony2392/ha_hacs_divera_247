@@ -1,82 +1,139 @@
 {
-  "title": "DIVERA 24/7",
-  "config": {
-    "step": {
-      "api": {
-        "title": "DIVERA 24/7 Einrichtung",
-        "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
-        "data": {
-          "accesskey": "Accesskey",
-          "base_url": "Die Serveradresse von DIVERA 24/7 (in der Regel unverändert lassen)"
-        }
-      },
-      "user_cluster_relation": {
-        "data": {
-          "clusters": "Aktive Einheiten:"
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "🚀 DIVERA 24/7 Einrichtung",
+                "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "🔑 Zugangsschlüssel",
+                    "base_url": "🌐 Serveradresse (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update-Intervall (Sekunden)",
+                    "vehicle_name_mode": "🚗 Fahrzeug-Namensquelle"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Aktive Einheiten:"
+                },
+                "description": "Ein DIVERA 24/7 Account kann mehrere Einheiten gleichzeitig haben. Standardmäßig wird nur die Stammeinheit geladen."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Aktive Einheiten:"
+                },
+                "description": "Rekonfigurieren Sie den Eintrag für ihren Benutzer."
+            },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Fahrzeugnamenwahl",
+                "description": "Wählen Sie die Namensquelle für Fahrzeug-Sensoren.",
+                "data": {
+                    "vehicle_name_mode": "Fahrzeug-Namensquelle"
+                }
+            },
+            "vehicle_name_selection": {
+                "title": "Fahrzeugnamenwahl",
+                "description": "Wählen Sie aus, welches Namensfeld für Fahrzeug-Sensoren verwendet werden soll. Sie können dies später in den Integrationsoptionen ändern.\n\nBeispiel Fahrzeug:\n• Kurzname: 'FtKW'\n• Name: 'Heros Halver 21/10'\n• Vollname: 'Führungskraftwagen FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Quelle des Fahrzeugnamens"
+                }
+            }
         },
-        "description": "Ein DIVERA 24/7 Account kann mehrere Einheiten gleichzeitig haben. Standardmäßig wird nur die Stammeinheit geladen."
-      },
-      "reconfigure_confirm": {
-        "data": {
-          "clusters": "Aktive Einheiten:"
+        "error": {
+            "cannot_connect": "Fehler bei der Verbindung.",
+            "authentication": "Fehler bei der Authentifizierung.",
+            "invalid_accesskey": "Ungültiges Accesskey-Format.",
+            "range_error": "Wert außerhalb des erlaubten Bereichs.",
+            "invalid_int": "Muss eine Zahl sein.",
+            "unknown": "Unbekannter Fehler"
         },
-        "description": "Rekonfigurieren Sie den Eintrag für ihren Benutzer."
-      }
-    },
-    "error": {
-      "cannot_connect": "Fehler bei der Verbindung.",
-      "authentication": "Fehler bei der Authentifizierung.",
-      "unknown": "Unbekannter Fehler"
-    },
-    "abort": {
-      "already_configured": "Dieser Benutzer ist bereits konfiguriert.",
-      "reconfigure_successful": "Rekonfigurieren erfolgreich.",
-      "only_one_unit": "Dieser Benutzer hat nur eine Einheit.",
-      "not_supported": "Dieser Accesskey wird nicht unterstüzt. Bitte verwende den Accesskey eines Benutzers."
-    }
-  },
-  "options": {
-    "step": {
-      "scan_interval": {
-        "title": "DIVERA 24/7 Optionen",
-        "description": "Das Update Interval muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Interval führt evt. zu Problemen.",
-        "data": {
-          "scan_interval": "Update Interval (Sekunden)"
+        "abort": {
+            "already_configured": "Dieser Benutzer ist bereits konfiguriert.",
+            "reconfigure_successful": "Rekonfiguration erfolgreich.",
+            "only_one_unit": "Dieser Benutzer hat nur eine Einheit.",
+            "not_supported": "Dieser Accesskey wird nicht unterstützt. Bitte verwende den Accesskey eines Benutzers."
         }
-      }
-    }
-  },
-  "exceptions": {
-    "user_state_error": {
-      "message": "Fehler beim Ändern des Benutzer Status von {cluster_name}"
-    }
-  },
-  "entity": {
-    "sensor": {
-      "alarm": {
-        "name": "letzter Alarm"
-      },
-      "news": {
-        "name": "letzte News"
-      },
-      "vehicle": {
-        "name": "Fahrzeug Status {vehicle_name}"
-      }
     },
-    "binary_sensor": {
-      "active_alarm": {
-        "name": "Aktiver Alarm"
-      }
+    "options": {
+        "step": {
+            "init": {
+                "title": "⚙️ DIVERA 24/7 Optionen",
+                "description": "Das Update-Intervall muss zwischen 10 und 300 Sekunden liegen. Bei zu kurzem Intervall kann es zu Problemen kommen. Die Fahrzeugnamenwahl bestimmt, welches Namensfeld für Fahrzeug-Sensoren verwendet wird.",
+                "data": {
+                    "scan_interval": "⏱️ Update-Intervall (Sekunden)",
+                    "vehicle_name_mode": "🚗 Fahrzeug-Namensquelle"
+                }
+            }
+        }
     },
-    "select": {
-      "user_status": {
-        "name": "Benutzer Status"
-      }
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                "auto": "🔄 Auto (Kurzname → Name → Vollname)",
+                "shortname": "🏷️ Kurzname (z.B. 'FtKW')",
+                "name": "🧾 Name (z.B. 'Heros Halver 21/10')",
+                "fullname": "🪪 Vollständiger Name (z.B. 'Führungskraftwagen FtKW')"
+            }
+        }
     },
-    "calendar": {
-      "events": {
-        "name": "Termine"
-      }
+    "exceptions": {
+        "user_state_error": {
+            "message": "Fehler beim Ändern des Benutzer Status von {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "letzter Alarm"
+            },
+            "alarm_address": {
+                "name": "Alarm Adresse"
+            },
+            "news": {
+                "name": "letzte News"
+            },
+            "vehicle": {
+                "name": "Status"
+            },
+            "vehicle_location": {
+                "name": "Standort"
+            },
+            "vehicle_opta": {
+                "name": "Rufname"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Nummer"
+            },
+            "status_overview": {
+                "name": "Helfer Status Übersicht"
+            },
+            "status_active": {
+                "name": "Aktive Helfer"
+            },
+            "status_inactive": {
+                "name": "Inaktive Helfer"
+            },
+            "status_on_duty": {
+                "name": "Helfer im Dienst"
+            }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Aktiver Alarm"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Benutzer Status"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Termine"
+            }
+        }
     }
-  }
 }

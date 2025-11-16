@@ -55,10 +55,20 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         super().__init__(coordinator)
         self.entity_description = description
 
-        self._ucr_id = self.coordinator.data.get_active_ucr()
-        self._cluster_name = self.coordinator.data.get_cluster_name_from_ucr(
-            self._ucr_id
-        )
+        client = self.coordinator.data
+        if client is not None:
+            try:
+                self._ucr_id = client.get_active_ucr()
+            except Exception:
+                self._ucr_id = client.get_ucr_id()
+            try:
+                self._cluster_name = client.get_cluster_name_from_ucr(self._ucr_id)
+            except Exception:
+                self._cluster_name = "unknown"
+        else:
+            # Data not loaded yet; use configured ucr id if possible
+            self._ucr_id = self.coordinator.divera_client.get_ucr_id()
+            self._cluster_name = "unknown"
 
         self._attr_unique_id = "_".join(
             [
@@ -96,17 +106,43 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         Returns:
             DeviceInfo: Device information object.
         """
+        from . import __version__
+        
         config_url = DIVERA_BASE_URL
-        version = self.coordinator.data.get_cluster_version()
-        return DeviceInfo(
-            identifiers={
-                (
-                    DOMAIN,
-                    str(self._ucr_id),
-                )
-            },
-            manufacturer=DIVERA_GMBH,
-            name=self._cluster_name,
-            model=version,
-            configuration_url=config_url,
-        )
+        client = self.coordinator.data
+        cluster_version = client.get_cluster_version() if client else "unknown"
+        # Get organization name (e.g., "THW", "Feuerwehr") if available
+        org_name = ""
+        if client:
+            try:
+                raw_org = client.get_organization_name() or ""
+                org_name = f" - {raw_org}" if raw_org else ""
+            except Exception:
+                org_name = ""
+        
+        base_identifiers = {(DOMAIN, str(self._ucr_id))}
+        # Vehicle sensors get their own device grouping (override in subclass via attribute)
+        vid = getattr(self, "_vehicle_id", None)
+        if vid is not None:
+            base_identifiers = {(DOMAIN, f"{self._ucr_id}_vehicle_{vid}")}
+            # Use dedicated vehicle display name if available; avoid using entity name
+            name = getattr(self, "_vehicle_display_name", None) or f"Vehicle {vid}"
+            return DeviceInfo(
+                identifiers=base_identifiers,
+                manufacturer=DIVERA_GMBH,
+                name=name,
+                model=f"Divera Vehicle {cluster_version}",
+                sw_version=__version__,
+                configuration_url=config_url,
+                via_device=(DOMAIN, str(self._ucr_id)),
+            )
+            # Prefer cluster name (e.g., "THW OV Halver"); fallback to organization
+            device_display_name = self._cluster_name or org_name
+            return DeviceInfo(
+                identifiers=base_identifiers,
+                manufacturer=DIVERA_GMBH,
+                name=device_display_name,
+                model=f"Divera {cluster_version}",
+                sw_version=__version__,
+                configuration_url=config_url,
+            )

@@ -1,0 +1,139 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "🚀 Configuration DIVERA 24/7",
+                "description": "Veuillez entrer votre clé d'accès pour vous connecter aux serveurs DIVERA 24/7 et récupérer les données. Vous pouvez trouver la clé d'accès dans votre compte utilisateur sous 'Paramètres' dans la section 'Debug'. Pour plus d'informations, visitez: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "🔑 Clé d'accès",
+                    "base_url": "🌐 Adresse du serveur (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Intervalle de mise à jour (secondes)",
+                    "vehicle_name_mode": "🚗 Source du nom du véhicule"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Unités actives:"
+                },
+                "description": "Un compte DIVERA 24/7 peut avoir plusieurs unités simultanément. Par défaut, seule l'unité principale est chargée."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Unités actives :"
+                },
+                "description": "Reconfigurer l'entrée pour votre utilisateur."
+            },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Sélection du nom de véhicule",
+                "description": "Choisissez la source du nom pour les capteurs de véhicule.",
+                "data": {
+                    "vehicle_name_mode": "Source du nom du véhicule"
+                }
+            },
+            "vehicle_name_selection": {
+                "title": "Sélection du nom de véhicule",
+                "description": "Choisissez le champ de nom à utiliser pour les capteurs de véhicule. Vous pouvez modifier cela ultérieurement dans les options d'intégration.\n\nExemple de véhicule :\n• Nom court : 'FtKW'\n• Nom : 'Heros Halver 21/10'\n• Nom complet : 'Véhicule de commandement FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Source du nom du véhicule"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Erreur de connexion.",
+            "authentication": "Erreur d'authentification.",
+            "invalid_accesskey": "Format de clé d'accès invalide.",
+            "range_error": "Valeur hors de la plage autorisée.",
+            "invalid_int": "Doit être un nombre.",
+            "unknown": "Erreur inconnue"
+        },
+        "abort": {
+            "already_configured": "Cet utilisateur est déjà configuré.",
+            "reconfigure_successful": "Reconfiguration réussie.",
+            "only_one_unit": "Cet utilisateur n'a qu'une seule unité.",
+            "not_supported": "Cette clé d'accès n'est pas prise en charge. Veuillez utiliser la clé d'accès d'un utilisateur."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "⚙️ Options DIVERA 24/7",
+                "description": "L'intervalle de mise à jour doit être compris entre 10 et 300 secondes. Choisir un intervalle trop court peut causer des problèmes. La sélection du nom de véhicule détermine le champ de nom utilisé pour les capteurs de véhicule.",
+                "data": {
+                    "scan_interval": "⏱️ Intervalle de mise à jour (secondes)",
+                    "vehicle_name_mode": "🚗 Source du nom du véhicule"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                "auto": "🔄 Auto (nom court → nom → nom complet)",
+                "shortname": "🏷️ Nom court (p.ex. 'FtKW')",
+                "name": "🧾 Nom (p.ex. 'Heros Halver 21/10')",
+                "fullname": "🪪 Nom complet (p.ex. 'Véhicule de commandement FtKW')"
+            }
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Erreur lors du changement de statut utilisateur pour {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Dernière alarme"
+            },
+            "alarm_address": {
+                "name": "Adresse de la dernière alarme"
+            },
+            "news": {
+                "name": "Dernières nouvelles"
+            },
+            "vehicle": {
+                "name": "État du véhicule"
+            },
+            "vehicle_location": {
+                "name": "Emplacement"
+            },
+            "vehicle_opta": {
+                "name": "Indicatif"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Numéro"
+            },
+                "status_overview": {
+                    "name": "Aperçu du statut des bénévoles"
+                },
+                "status_active": {
+                    "name": "Bénévoles actifs"
+                },
+                "status_inactive": {
+                    "name": "Bénévoles inactifs"
+                },
+                "status_on_duty": {
+                    "name": "Bénévoles en service"
+                }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Alarme active"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Statut utilisateur"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Événements"
+            }
+        }
+    }
+}

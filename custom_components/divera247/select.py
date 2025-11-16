@@ -114,7 +114,12 @@ class DiveraSelectEntity(DiveraEntity, SelectEntity):
         self._attr_options = options
 
         attributes = self.entity_description.attribute_fn(self.coordinator.data)
-        self._attr_extra_state_attributes = attributes
+        # Add cluster/unit info alongside original attributes
+        self._attr_extra_state_attributes = {
+            **attributes,
+            "cluster_name": self._cluster_name,
+            "ucr_id": self._ucr_id,
+        }
 
     async def async_select_option(self, option: str) -> None:
         """

@@ -1,0 +1,74 @@
+blueprint:
+    name: DIVERA 24/7 24/7 alarm automation
+    description: Trigger some actions when a new DIVERA 24/7 alarm is triggered.
+    domain: automation
+    author: loony2392
+    source_url: https://raw.githubusercontent.com/Loony2392/ha_hacs_divera_247/refs/heads/develop/blueprints/automation/DIVERA%2024/Alarm_Automation_1.yaml
+    homeassistant:
+        min_version: 2025.1.0
+    input:
+        divera247_sensor:
+            name: DIVERA 24/7 sensor
+            description: The sensor which show the current DIVERA 24/7 alarm state
+            selector:
+                entity:
+                    integration: divera247
+                    domain:
+                        - sensor
+                    multiple: true
+        self_addressed:
+            name: Self addressed
+            description: Check if I was addressed myself
+            selector:
+                boolean: {}
+            default: true
+        abort_keyword:
+            name: (optional) Abort keyword
+            description:
+                "(optional) Alarm title/keyword when the action should not be triggered.
+                For example: Probealarm"
+            default: ""
+            selector:
+                text:
+                    multiline: false
+                    multiple: false
+        target_action:
+            name: Action
+            description: What should be done, when a new DIVERA 24/7 alarm is triggered?
+            selector:
+                action: {}
+mode: parallel
+max: 10
+variables:
+    self_addressed: !input self_addressed
+trigger:
+    - platform: state
+      entity_id: !input divera247_sensor
+      attribute: id
+      not_to:
+          - unknown
+condition:
+    condition: and
+    conditions:
+        - condition: not
+          conditions:
+              - condition: state
+                entity_id: !input divera247_sensor
+                state:
+                    - !input abort_keyword
+                    - unknown
+        - condition: or
+          conditions:
+              - condition: template
+                value_template: "{{ not self_addressed }}"
+              - condition: state
+                entity_id: !input divera247_sensor
+                attribute: self_addressed
+                state: true
+        - condition: state
+          entity_id: !input divera247_sensor
+          attribute: closed
+          state: false
+action:
+    - choose:
+      default: !input target_action

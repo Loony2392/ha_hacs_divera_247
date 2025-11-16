@@ -1,0 +1,24 @@
+{
+    "name": "ha_hacs_divera_247",
+    "version": "1.0.0",
+    "description": "DIVERA 24/7 Integration für Home Assistant",
+    "main": "index.js",
+    "devDependencies": {
+        "@semantic-release/changelog": "6.0.3",
+        "@semantic-release/exec": "6.0.3",
+        "@semantic-release/git": "10.0.1",
+        "conventional-changelog-conventionalcommits": "8.0.0",
+        "semantic-release": "24.2.3"
+    },
+    "release": {
+        "branches": [
+            "release",
+            "develop"
+        ],
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/github"
+        ]
+    }
+}

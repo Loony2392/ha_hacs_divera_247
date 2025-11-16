@@ -103,6 +103,10 @@ class DiveraBinarySensorEntity(DiveraEntity, BinarySensorEntity):
         This method is called to update the state of the binary sensor based on the latest data from the coordinator.
         """
         self._attr_is_on = self.entity_description.value_fn(self.coordinator.data)
-        self._attr_extra_state_attributes = self.entity_description.attribute_fn(
-            self.coordinator.data
-        )
+        base_attrs = self.entity_description.attribute_fn(self.coordinator.data)
+        # Add cluster/unit info to attributes for context
+        self._attr_extra_state_attributes = {
+            **base_attrs,
+            "cluster_name": self._cluster_name,
+            "ucr_id": self._ucr_id,
+        }

@@ -1,0 +1,139 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "🚀 DIVERA 24/7 Configuratie",
+                "description": "Voer je toegangssleutel in om verbinding te maken met de DIVERA 24/7-servers en gegevens op te halen. Je vindt de toegangssleutel in je gebruikersaccount onder 'Instellingen' in het gedeelte 'Debug'. Voor meer informatie, bezoek: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "🔑 Toegangssleutel",
+                    "base_url": "🌐 Serveradres (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update-interval (seconden)",
+                    "vehicle_name_mode": "🚗 Bron van voertuignaam"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Actieve eenheden:"
+                },
+                "description": "Een DIVERA 24/7-account kan meerdere eenheden tegelijk hebben. Standaard wordt alleen de hoofdeenheid geladen."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Actieve eenheden:"
+                },
+                "description": "Herconfigureer de invoer voor je gebruiker."
+            },
+            "vehicle_name_selection": {
+                "title": "Voertuignaam selectie",
+                "description": "Kies welk naamveld te gebruiken voor voertuigsensoren. Je kunt dit later wijzigen in de integratie-opties.\n\nVoorbeeld voertuig:\n• Korte naam: 'FtKW'\n• Naam: 'Heros Halver 21/10'\n• Volledige naam: 'Commandovoertuig FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Bron van voertuignaam"
+                }
+            },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Voertuignaam selectie",
+                "description": "Kies de naambron voor voertuigsensoren.",
+                "data": {
+                    "vehicle_name_mode": "Naambron voertuig"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Verbindingsfout.",
+            "authentication": "Authenticatiefout.",
+            "invalid_accesskey": "Ongeldig toegangssleutelformaat.",
+            "range_error": "Waarde buiten het toegestane bereik.",
+            "invalid_int": "Moet een getal zijn.",
+            "unknown": "Onbekende fout"
+        },
+        "abort": {
+            "already_configured": "Deze gebruiker is al geconfigureerd.",
+            "reconfigure_successful": "Herconfiguratie geslaagd.",
+            "only_one_unit": "Deze gebruiker heeft slechts één eenheid.",
+            "not_supported": "Deze toegangssleutel wordt niet ondersteund. Gebruik de toegangssleutel van een gebruiker."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "⚙️ DIVERA 24/7 Opties",
+                "description": "Het update-interval moet tussen 10 en 300 seconden liggen. Een te kort interval kan problemen veroorzaken. De voertuignaam selectie bepaalt welk naamveld wordt gebruikt voor voertuigsensoren.",
+                "data": {
+                    "scan_interval": "⏱️ Update-interval (seconden)",
+                    "vehicle_name_mode": "🚗 Bron van voertuignaam"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                "auto": "🔄 Auto (korte naam → naam → volledige naam)",
+                "shortname": "🏷️ Korte naam (bijv. 'FtKW')",
+                "name": "🧾 Naam (bijv. 'Heros Halver 21/10')",
+                "fullname": "🪪 Volledige naam (bijv. 'Commandovoertuig FtKW')"
+            }
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Fout bij het wijzigen van gebruikersstatus voor {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Laatste alarm"
+            },
+            "alarm_address": {
+                "name": "Adres van laatste alarm"
+            },
+            "news": {
+                "name": "Laatste nieuws"
+            },
+            "vehicle": {
+                "name": "Voertuigstatus"
+            },
+            "vehicle_location": {
+                "name": "Locatie"
+            },
+            "vehicle_opta": {
+                "name": "Roepletters"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Nummer"
+            },
+            "status_overview": {
+                "name": "Overzicht helperstatus"
+            },
+            "status_active": {
+                "name": "Actieve helpers"
+            },
+            "status_inactive": {
+                "name": "Inactieve helpers"
+            },
+            "status_on_duty": {
+                "name": "Helpers in dienst"
+            }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Actief alarm"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Gebruikersstatus"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Evenementen"
+            }
+        }
+    }
+}

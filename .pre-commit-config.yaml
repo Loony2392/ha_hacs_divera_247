@@ -1,13 +1,16 @@
+---
+# yamllint disable rule:line-length
 repos:
-  # 🛠️ Ruff: Linting and formatting for Python
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.3.5
     hooks:
       - id: ruff
         args:
           - --fix
+        exclude: ^(\..*|README.md|\.pre-commit-config\.yaml|\.yamllint)
       - id: ruff-format
         files: ^((custom_components|pylint|script|tests)/.+)?[^/]+\.(py|pyi)$
+        exclude: ^(\..*|README.md|\.pre-commit-config\.yaml|\.yamllint)
 
   # 📝 Codespell: Spell checking for code
   - repo: https://github.com/codespell-project/codespell
@@ -32,19 +35,17 @@ repos:
     rev: v3.0.3
     hooks:
       - id: prettier
+        exclude: ^(\..*|README.md|\.pre-commit-config\.yaml|\.yamllint)
 
   # 🐍 Python Typing Update: Update Python typing syntax
   - repo: https://github.com/cdce8p/python-typing-update
     rev: v0.6.0
     hooks:
-      # Run `python-typing-update` hook manually from time to time
-      # to update python typing syntax.
-      # Will require manual work, before submitting changes!
-      # pre-commit run --hook-stage manual python-typing-update --all-files
       - id: python-typing-update
         stages: [manual]
         args:
-          - --py311-plus
+          - --py312-plus
           - --force
           - --keep-updates
         files: ^(custom_components|tests|script)/.+\.py$
+        exclude: ^(\..*|README.md|\.pre-commit-config\.yaml|\.yamllint)

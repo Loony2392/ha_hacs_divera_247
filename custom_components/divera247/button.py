@@ -6,7 +6,25 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import DiveraConfigEntry, DiveraCoordinator
 from .const import DOMAIN
-from .entity import DiveraEntity
+from dataclasses import dataclass
+from typing import MutableMapping, Any
+
+from .entity import DiveraEntity, DiveraEntityDescription
+from .divera247 import DiveraClient
+
+
+@dataclass(frozen=True, kw_only=True)
+class DiveraButtonEntityDescription(DiveraEntityDescription):
+    """Description for Divera test alarm button."""
+    # No extra fields needed; button has no native value
+
+
+TEST_ALARM_BUTTON_DESCRIPTION = DiveraButtonEntityDescription(
+    key="trigger_test_alarm_button",
+    translation_key="trigger_test_alarm_button",
+    icon="mdi:bell-ring-outline",
+    attribute_fn=lambda divera: {},
+)
 
 
 async def async_setup_entry(
@@ -24,8 +42,7 @@ async def async_setup_entry(
     """
     coordinators = entry.runtime_data.coordinators
     entities = [
-        DiveraTestAlarmButton(coordinator)
-        for coordinator in coordinators.values()
+        DiveraTestAlarmButton(coordinator) for coordinator in coordinators.values()
     ]
     async_add_entities(entities, False)
 
@@ -40,15 +57,14 @@ class DiveraTestAlarmButton(DiveraEntity, ButtonEntity):
     """
 
     def __init__(self, coordinator: DiveraCoordinator) -> None:
-        """
-        Initialize the button.
-
-        Args:
-            coordinator (DiveraCoordinator): The coordinator managing this entity.
-        """
-        super().__init__(coordinator)
+        super().__init__(coordinator, TEST_ALARM_BUTTON_DESCRIPTION)
         self._attr_name = "Trigger Test Alarm"
-        self._attr_unique_id = f"{DOMAIN}_trigger_test_alarm"
+        # Unique id already includes DOMAIN, ucr, description.key from base; keep explicit for clarity
+        self._attr_unique_id = f"{DOMAIN}_{self._ucr_id}_trigger_test_alarm"
+
+    def _divera_update(self) -> None:  # noqa: D401
+        # Button has no meaningful state; ensure no exception
+        self._attr_extra_state_attributes = {}
 
     async def async_press(self) -> None:
         """
@@ -56,4 +72,6 @@ class DiveraTestAlarmButton(DiveraEntity, ButtonEntity):
 
         This method is called when the button is pressed. It triggers a test alarm.
         """
-        await self.coordinator.data.trigger_probe_alarm()
+        client = self.coordinator.data
+        if client is not None:
+            await client.trigger_probe_alarm()

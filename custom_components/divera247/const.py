@@ -62,6 +62,21 @@ CONF_ACCESSKEY: str = "accesskey"
 CONF_SCAN_INTERVAL: str = "scan_interval"
 """Configuration key for the scan interval."""
 
+CONF_VEHICLE_NAME_MODE: str = "vehicle_name_mode"
+"""Configuration key for vehicle name display mode."""
+
+VEHICLE_NAME_MODE_AUTO: str = "auto"
+VEHICLE_NAME_MODE_SHORT: str = "shortname"
+VEHICLE_NAME_MODE_NAME: str = "name"
+VEHICLE_NAME_MODE_FULL: str = "fullname"
+
+VEHICLE_NAME_MODES: list[str] = [
+	VEHICLE_NAME_MODE_AUTO,
+	VEHICLE_NAME_MODE_SHORT,
+	VEHICLE_NAME_MODE_NAME,
+	VEHICLE_NAME_MODE_FULL,
+]
+
 CONF_BASE_URL: str = "base_url"
 """Configuration key for the base URL."""
 
