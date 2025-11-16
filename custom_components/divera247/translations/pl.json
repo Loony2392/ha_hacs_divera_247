@@ -7,7 +7,8 @@
                 "description": "Wprowadź swój klucz dostępu, aby połączyć się z serwerami DIVERA 24/7 i pobrać dane. Klucz dostępu znajdziesz na swoim koncie użytkownika w 'Ustawieniach' w sekcji 'Debug'. Więcej informacji na: https://app.divera247.com/account/einstellungen.html",
                 "data": {
                     "accesskey": "Klucz dostępu",
-                    "base_url": "Adres serwera DIVERA 24/7 (zazwyczaj bez zmian)"
+                    "base_url": "Adres serwera DIVERA 24/7 (zazwyczaj bez zmian)",
+                    "scan_interval": "Interwał aktualizacji (sekundy)"
                 }
             },
             "user_cluster_relation": {

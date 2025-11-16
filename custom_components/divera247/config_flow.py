@@ -55,6 +55,7 @@ class DiveraFlow(FlowHandler):
         self._config_entry: ConfigEntry | None = config_entry
         self._divera_client: DiveraClient | None = None
         self._data: dict[str, Any] = {}
+        self._scan_interval: int = 10
 
     async def _show_clusters_form(self, active_cluster_names, cluster_names, errors):
         """
@@ -95,6 +96,7 @@ class DiveraFlow(FlowHandler):
                 Optional(
                     CONF_BASE_URL, description={"suggested_value": DIVERA_BASE_URL}
                 ): TextSelector(TextSelectorConfig(type=TextSelectorType.URL)),
+                Required(CONF_SCAN_INTERVAL, default="60"): str,
             },
         )
         return self.async_show_form(
@@ -265,6 +267,16 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         if user_input is not None:
             accesskey = user_input.get(CONF_ACCESSKEY)
             base_url = user_input.get(CONF_BASE_URL)
+            # Validate scan interval
+            scan_val = user_input.get(CONF_SCAN_INTERVAL, "60")
+            try:
+                scan_int = int(scan_val)
+                if scan_int < 10 or scan_int > 300:
+                    errors[CONF_SCAN_INTERVAL] = "range_error"
+                else:
+                    self._scan_interval = scan_int
+            except (TypeError, ValueError):
+                errors[CONF_SCAN_INTERVAL] = "invalid_int"
 
             websession = async_get_clientsession(self.hass)
             self._divera_client = DiveraClient(websession, accesskey, base_url)
@@ -337,7 +349,10 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             return self.async_create_entry(
                 title=title, 
                 data=self._data,
-                options={CONF_VEHICLE_NAME_MODE: vehicle_name_mode}
+                options={
+                    CONF_VEHICLE_NAME_MODE: vehicle_name_mode,
+                    CONF_SCAN_INTERVAL: self._scan_interval,
+                }
             )
 
         vehicle_schema = Schema(

@@ -11,9 +11,11 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
+    CONF_SCAN_INTERVAL,
     DATA_ACCESSKEY,
     DATA_BASE_URL,
     DATA_UCRS,
+    DEFAULT_SCAN_INTERVAL,
     DIVERA_BASE_URL,
     DOMAIN,
     LOGGER,
@@ -80,9 +82,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     divera_client = DiveraClient(websession, accesskey, base_url=base_url)
     hass.data[DOMAIN]["divera_client"] = divera_client
 
+    # Determine update interval from options (fallback to default)
+    try:
+        scan_interval = int(entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))
+    except Exception:
+        scan_interval = DEFAULT_SCAN_INTERVAL
+
     for ucr_id in ucr_ids:
         divera_coordinator = DiveraCoordinator(
-            hass, websession, accesskey, base_url=base_url, ucr_id=ucr_id
+            hass, websession, accesskey, base_url=base_url, ucr_id=ucr_id, update_interval=scan_interval
         )
         coordinators[ucr_id] = divera_coordinator
         tasks.append(divera_coordinator.async_config_entry_first_refresh())

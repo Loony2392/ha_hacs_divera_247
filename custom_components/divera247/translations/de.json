@@ -7,7 +7,8 @@
                 "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
                 "data": {
                     "accesskey": "Accesskey",
-                    "base_url": "Die Serveradresse von DIVERA 24/7 (in der Regel unverändert lassen)"
+                    "base_url": "Die Serveradresse von DIVERA 24/7 (in der Regel unverändert lassen)",
+                    "scan_interval": "Update Intervall (Sekunden)"
                 }
             },
             "user_cluster_relation": {

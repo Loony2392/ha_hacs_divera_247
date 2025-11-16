@@ -7,7 +7,8 @@
                 "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: https://app.divera247.com/account/einstellungen.html",
                 "data": {
                     "accesskey": "Access key",
-                    "base_url": "The server address of DIVERA 24/7 (usually left unchanged)"
+                    "base_url": "The server address of DIVERA 24/7 (usually left unchanged)",
+                    "scan_interval": "Update Interval (seconds)"
                 }
             },
             "user_cluster_relation": {
