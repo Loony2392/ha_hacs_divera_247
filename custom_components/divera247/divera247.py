@@ -525,14 +525,26 @@ class DiveraClient:
             fmsstatus_timestamp = datetime.fromtimestamp(
                 vehicle_status.get("fmsstatus_ts"), tz=get_default_time_zone()
             )
+            # Normalize coordinates: API may expose lat/lng or latitude/longitude
+            lat_val = (
+                vehicle_status.get("lat")
+                or vehicle_status.get("latitude")
+                or vehicle_status.get("lat_deg")
+            )
+            lng_val = (
+                vehicle_status.get("lng")
+                or vehicle_status.get("lon")
+                or vehicle_status.get("longitude")
+                or vehicle_status.get("lon_deg")
+            )
             return {
                 "fullname": vehicle_status.get("fullname"),
                 "shortname": vehicle_status.get("shortname"),
                 "name": vehicle_status.get("name"),
                 "fmsstatus_note": vehicle_status.get("fmsstatus_note"),
                 "fmsstatus_ts": fmsstatus_timestamp,
-                "latitude": vehicle_status.get("lat"),
-                "longitude": vehicle_status.get("lng"),
+                "latitude": lat_val,
+                "longitude": lng_val,
                 "opta": vehicle_status.get("opta"),
                 "issi": vehicle_status.get("issi"),
                 "number": vehicle_status.get("number"),

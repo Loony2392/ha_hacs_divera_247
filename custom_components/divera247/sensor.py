@@ -120,9 +120,16 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
             client, self._vehicle_id
         )
         try:
-            self._attr_extra_state_attributes = client.get_vehicle_attributes(
-                self._vehicle_id
-            )
+            # For location entities, keep attributes minimal (latitude/longitude) to
+            # ensure map compatibility; otherwise expose full vehicle attributes.
+            if self.entity_description.translation_key == "vehicle_location":
+                self._attr_extra_state_attributes = self.entity_description.attribute_fn(  # type: ignore[attr-defined]
+                    client
+                )
+            else:
+                self._attr_extra_state_attributes = client.get_vehicle_attributes(
+                    self._vehicle_id
+                )
         except Exception:
             self._attr_extra_state_attributes = {}
 
