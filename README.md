@@ -1,70 +1,37 @@
-# <img src="https://www.divera247.com/images/divera247.svg" alt="DIVERA Logo" width="200"> Integration für Home Assistant 🚨🔔
+# <img src="https://www.divera247.com/images/divera247.svg" alt="DIVERA Logo" width="200"> DIVERA 24/7 Integration für Home Assistant 🚨🔔
 
 [![GitHub Release](https://img.shields.io/github/v/release/loony2392/ha_hacs_divera_247?sort=semver&style=for-the-badge&color=green)](https://github.com/loony2392/ha_hacs_divera_247/releases/)
 ![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/loony2392/ha_hacs_divera_247/latest/total?style=for-the-badge&label=Downloads%20latest%20Release)
 [![Ko-Fi](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge)](https://ko-fi.com/loony_tech)
 
-Die DIVERA 24/7 Integration für Home Assistant ermöglicht es dir, Daten und Ereignisse von der DIVERA 24/7-Plattform in dein Home Assistant System zu integrieren. Mit dieser Integration kannst du Informationen zu Alarmeinsätzen, Fahrzeugstatus, Benutzerstatus und vieles mehr abrufen.
-
-The DIVERA 24/7 integration for Home Assistant allows you to integrate data and events from the DIVERA 24/7 platform into your Home Assistant system. With this integration, you can retrieve information about alarm incidents, vehicle status, user status, and much more.
-
-## Organisationseinheit Auswahl / Organization Unit Selection
-
-Mit der neuen Funktion in der **DIVERA 24/7 Integration** können Benutzer nun die Organisationseinheit auswählen, die sie verwenden möchten. Die Auswahl erfolgt über ein Dropdown-Menü, das bei der Integration konfiguriert wird.
-
-With the new feature in the **DIVERA 24/7 Integration**, users can now select the organization unit they want to use. The selection is made via a dropdown menu configured during the integration.
-
-### Verfügbare Organisationseinheiten mit Fahrzeugbildern / Available Organization Units with Vehicle Images:
-
-### Geplante Organisationseinheiten mit Fahrzeugbildern / Planned Organization Units with Vehicle Images:
-<img src="https://imgs.search.brave.com/JTKWNabfAU_GsdHJEDFwQaZOav4Pi2ik9AZxPATA-7A/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8y/LzIyL1Rody5sb2dv/LnN2Zw" alt="THW Logo" width="50" height="50">
-
-<img src="https://imgs.search.brave.com/i7OXzyBbw52wQ0InMr1Bt_iypcGLktxh39J6d79kJQ4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZmV1ZXJ3ZWhyLW5l/dXNhZXNzLmRlL3dw/LWNvbnRlbnQvdGhl/bWVzL2ZmbjE4L2lt/Zy91ZWJlcnVucy9h/dWZnYWJlbi9GZXVl/cndlaHJfUkxCU19M/b2dvLnN2Zw" alt="Feuerwehr Logo" width="50" height="50">
-
-<img src="https://imgs.search.brave.com/99MOXySJPhLWgLgJ_xzVWDzpxL44A__CMkM3jBxLxCc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvZGUvZC9kMS9E/UkstUnVuZGxvZ28u/cG5n" alt="DRK Logo" width="50" height="50">
-
-### So funktioniert es / How it works:
-
-1. **Konfiguration:** Gehe zu den **Home Assistant**-Einstellungen und suche nach der DIVERA 24/7 Integration.
-   **Configuration:** Go to **Home Assistant** settings and search for the DIVERA 24/7 integration.
-
-2. **Wählen Sie Ihre Organisation:** In der Konfiguration kannst du nun die Organisationseinheit aus einem Dropdown-Menü auswählen, z. B. **THW** oder **Feuerwehr**.
-   **Select your organization:** In the configuration, you can now select the organization unit from a dropdown menu, e.g., **THW** or **Fire Department**.
-
-3. **Bilder und Daten:** Nachdem du die Organisation ausgewählt hast, wird die Integration mit den entsprechenden Bildern und Informationen zu deiner Auswahl aktualisiert.
-   **Images and data:** After selecting the organization, the integration will be updated with the corresponding images and information for your selection.
+Diese Integration bindet DIVERA 24/7 in Home Assistant ein: Alarme, Fahrzeugdaten, Benutzerstatus, Kalender – übersichtlich und automatisierbar.
 
 ## Features ⚡
 
 - 🚨 Abruf von Alarm- und Notrufereignissen.  
   Retrieve alarm and emergency events.
 
-- 🚗 Anzeige von Fahrzeugstatusinformationen.  
-  Display vehicle status information.
+- 🚗 Fahrzeuge: Status, Standort (Diagnose, optional), Rufname (OPTA), ISSI, Nummer; Fahrzeuge erscheinen auf der HA-Karte.
 
-- 🧑‍🤝‍🧑 Integration von Benutzerdaten, einschließlich Status und Aktivitäten.  
-  Integration of user data, including status and activities.
+- 🧑‍🤝‍🧑 Benutzerdaten: aktueller Benutzerstatus, Statusübersicht (Zählung aktiv/inaktiv/im Dienst).
 
-- 📅 Anzeige von Kalenderereignissen und News.  
-  Display calendar events and news.
+- 📅 Kalenderereignisse; letzte News.
 
-- 🛠️ Möglichkeit zur Konfiguration mehrerer Einheiten (Cluster) innerhalb eines Accounts.  
-  Possibility to configure multiple units (clusters) within one account.
+- 🛠️ Mehrere Einheiten (Cluster) auswählbar; Reconfigure änderbar.
 
-## Voraussetzungen 📋 / Requirements 📋
+- 🧰 Services: Probealarm auslösen; Benutzerstatus per Name setzen.
 
-- 💻 **Home Assistant Version 2025.2** oder neuer.  
-  **Home Assistant version 2025.2** or newer.
+## Voraussetzungen 📋
 
-- 📝 Ein aktiver **DIVERA 24/7 Account**.  
-  An active **DIVERA 24/7 account**.
+- 💻 Home Assistant 2025.2 oder neuer.
 
-- 🔑 Dein DIVERA 24/7 Zugangsschlüssel (zu finden in deinen Benutzer-Einstellungen unter Debug).  
-  Your DIVERA 24/7 access key (found in your user settings under Debug).
+- 📝 Aktiver DIVERA 24/7 Account.
+
+- 🔑 Zugangsschlüssel (Benutzer-Einstellungen → Debug).
 
 ## Installation 🔧
 
-### 1. Installation über HACS (Home Assistant Community Store) 📦 / Installation via HACS (Home Assistant Community Store) 📦
+### 1) Installation über HACS 📦
 1. Öffne **Home Assistant** und gehe zu **HACS**.  
    Open **Home Assistant** and go to **HACS**.
 
@@ -79,7 +46,7 @@ With the new feature in the **DIVERA 24/7 Integration**, users can now select th
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=loony2392&repository=ha_hacs_divera_247&category=Integration)
 
-### 2. Manuelle Installation 💻 / Manual Installation 💻
+### 2) Manuelle Installation 💻
 1. Lade das Repository herunter:  
    Download the repository:
 
@@ -87,13 +54,12 @@ With the new feature in the **DIVERA 24/7 Integration**, users can now select th
     git clone https://github.com/Loony2392/ha_hacs_divera_247.git
     ```
 
-2. Kopiere den Ordner `custom_components/divera_247` in das Verzeichnis `config/custom_components/` deines Home Assistant Setups.  
-   Copy the folder `custom_components/divera_247` into the `config/custom_components/` directory of your Home Assistant setup.
+2. Kopiere den Ordner `custom_components/divera247` nach `config/custom_components/` deines Home Assistant Setups.
 
 3. Starte **Home Assistant** neu.  
    Restart **Home Assistant**.
 
-## Konfiguration ⚙️ / Configuration ⚙️
+## Konfiguration ⚙️
 
 1. Gehe zu **Einstellungen > Integrationen** in deinem Home Assistant.  
    Go to **Settings > Integrations** in your Home Assistant.
@@ -101,55 +67,42 @@ With the new feature in the **DIVERA 24/7 Integration**, users can now select th
 2. Klicke auf **"Integration hinzufügen"** und wähle **DIVERA 24/7**.  
    Click **"Add Integration"** and select **DIVERA 24/7**.
 
-3. Gib deinen Zugangsschlüssel (Access Key) und die Server-Adresse ein. Weitere Informationen zum Finden des Zugangsschlüssels findest du [hier](https://app.divera247.com/account/einstellungen.html).  
-   Enter your access key (Access Key) and the server address. For more information on finding the access key, see [here](https://app.divera247.com/account/einstellungen.html).
+3. Gib deinen Zugangsschlüssel (Access Key) und optional die Server-Adresse ein (Standard: https://app.divera247.com). Hinweise zum Zugangsschlüssel: [Account-Einstellungen](https://app.divera247.com/account/einstellungen.html).
 
-4. (Optional) Wähle die Einheit (Cluster), die du überwachen möchtest. Standardmäßig wird die Stammeinheit geladen.  
-   (Optional) Choose the unit (cluster) you want to monitor. The default unit is loaded.
+4. Wähle ggf. die Einheit(en) (Cluster), die du aktivieren möchtest.
 
 5. Speichere die Konfiguration und starte Home Assistant neu, wenn du dazu aufgefordert wirst.  
    Save the configuration and restart Home Assistant when prompted.
 
-## Optionen ⚙️ / Options ⚙️
+## Optionen ⚙️
 
-Nach der ersten Konfiguration kannst du die folgenden Optionen anpassen:
+Nach der ersten Konfiguration kannst du folgende Optionen anpassen:
 
-After the initial configuration, you can adjust the following options:
+- ⏱️ Update-Intervall: 10–300 Sekunden.
+- 🚗 Fahrzeug-Namensquelle: Auto, Kurzname, Name oder Vollständiger Name.
+- 🔁 Reconfigure: Cluster-Auswahl und Fahrzeug-Namensquelle nachträglich ändern.
 
-- ⏱️ **Update Intervall**: Bestimme das Intervall, in dem die Daten von DIVERA 24/7 aktualisiert werden. Das Intervall muss zwischen **10 und 300 Sekunden** liegen.  
-  **Update Interval**: Set the interval at which data from DIVERA 24/7 is updated. The interval must be between **10 and 300 seconds**.
-
-## Verwendung 🛠️ / Usage 🛠️
+## Verwendung 🛠️
 
 Weitere Informationen findest du in der Dokumentation.  
 For more information, see the documentation.
 
-### Verfügbare Entitäten 🔌 / Available Entities 🔌
+### Verfügbare Entitäten 🔌
 
 Die Integration erstellt mehrere Entitäten, die du in deinen Home Assistant Dashboards verwenden kannst:  
 The integration creates several entities that you can use in your Home Assistant dashboards:
 
-- 🕰️ **Sensoren** / **Sensors**:
-  - `sensor.letzter_alarm`: Zeigt den letzten Alarm an.  
-    `sensor.last_alarm`: Shows the last alarm.
+- Sensoren: letzter Alarm, Alarm-Adresse (mit Attributen inkl. Fahrzeuge), News, Helfer-Statusübersicht, Helfer-Zähler (aktiv/inaktiv/im Dienst), je Fahrzeug: Status, Standort (Diagnose), Rufname (OPTA), ISSI, Nummer.
+- Binary Sensor: Aktiver Alarm.
+- Select: Benutzer-Status (ändern per Auswahl oder Service).
+- Kalender: Termine.
+- Geräte-Tracker: Fahrzeuge auf der Karte.
 
-  - `sensor.letzte_news`: Zeigt die letzten News von DIVERA 24/7 an.  
-    `sensor.latest_news`: Shows the latest news from DIVERA 24/7.
+Hinweis: Der Standort-Sensor ist als Diagnose entität standardmäßig deaktiviert (Map-Funktion via `device_tracker`).
 
-  - `sensor.fahrzeug_status_{vehicle_name}`: Zeigt den Status eines Fahrzeugs an.  
-    `sensor.vehicle_status_{vehicle_name}`: Shows the status of a vehicle.
-
-- 🚨 **Binary Sensoren** / **Binary Sensors**:
-  - `binary_sensor.aktiver_alarm`: Zeigt an, ob ein Alarm aktiv ist.  
-    `binary_sensor.active_alarm`: Shows if an alarm is active.
-
-- 🧑‍🤝‍🧑 **Select**:
-  - `select.benutzer_status`: Zeigt den aktuellen Benutzerstatus an.  
-    `select.user_status`: Displays the current user status.
-
-- 📅 **Kalender** / **Calendar**:
-  - `calendar.termine`: Zeigt alle kommenden Termine an.  
-    `calendar.events`: Shows all upcoming events.
+### Services
+- `divera247.trigger_probe_alarm`: Probealarm auslösen.
+- `divera247.set_user_state` mit `state_name`: Benutzerstatus per Namen setzen.
 
 ### Automationen und Benachrichtigungen 🔔 / Automations and Notifications 🔔
 
@@ -167,32 +120,20 @@ automation:
       service: notify.notify
       message: "Es wurde ein aktiver Alarm ausgelöst!"
 ```
-Fehlerbehebung 🛠️  
-🔌 Verbindungsfehler: Überprüfe, ob die angegebene Server-Adresse korrekt ist und dass dein Zugangsschlüssel gültig ist.  
-Connection error: Check if the provided server address is correct and if your access key is valid.
+## Fehlerbehebung 🛠️
+- 🔌 Verbindung: Base-URL prüfen, Access Key gültig?
+- 🔑 Authentifizierung: Access Key aus den Debug-Einstellungen des Accounts nutzen.
+- ♻️ UI-Übersetzungen: Nach Update hart neu laden (Strg+F5) bzw. HA neu starten.
 
-🔑 Authentifizierungsfehler: Stelle sicher, dass du den richtigen Zugangsschlüssel verwendest. Du findest diesen in den Debug-Einstellungen deines DIVERA 24/7 Accounts.  
-Authentication error: Make sure you're using the correct access key. You can find it in the Debug settings of your DIVERA 24/7 account.
+## Beitragen 🤝
+PRs sind willkommen – bitte vorher kurz in den Issues abstimmen, was sinnvoll ist.
 
-⚠️ Allgemeine Fehler: Wenn der Fehler weiterhin besteht, starte Home Assistant neu oder wende dich an die Community auf Home Assistant Community Forum.  
-General errors: If the error persists, restart Home Assistant or contact the community at the Home Assistant Community Forum.
+## Hilfe und Unterstützung 🤗
+Fragen/Bugs/Feature-Wünsche: GitHub Issues.
 
-## Beitragen 🤝  
-Wenn du Verbesserungen oder Fehlerbehebungen für diese Integration einreichen möchtest, öffne einen Pull Request (PR). Sieh dir bitte unsere Contributing Guidelines an, bevor du mit dem Beitrag beginnst.  
-If you'd like to contribute improvements or bug fixes for this integration, open a Pull Request (PR). Please review our Contributing Guidelines before starting your contribution.
-
-## Hilfe und Unterstützung 🤗  
-Besuche das Home Assistant Forum für allgemeine Unterstützung und Diskussionen.  
-Visit the Home Assistant Forum for general support and discussions.
-
-Melde Fehler oder schlage neue Funktionen auf GitHub Issues vor.  
-Report bugs or suggest new features on GitHub Issues.
-
-## Viel Spaß mit der DIVERA 24/7 Integration! 😎  
-Enjoy the DIVERA 24/7 integration! 😎
+## Viel Spaß mit der DIVERA 24/7 Integration! 😎
 
 ---
 
-## Zusätzliche Hinweise 💡  
-✅ Unterstützte Home Assistant Versionen: Die Integration ist mit allen Versionen von Home Assistant kompatibel, die Custom Components unterstützen.  
-Supported Home Assistant Versions: The integration is compatible with all versions of Home Assistant that support custom components.
+## Zusätzliche Hinweise 💡
+Unterstützte Versionen: Getestet mit Home Assistant 2025.2+.
