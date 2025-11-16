@@ -295,7 +295,11 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         vehicle_schema = Schema(
             {
                 Required(CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]): SelectSelector(
-                    SelectSelectorConfig(options=VEHICLE_NAME_MODES, multiple=False)
+                    SelectSelectorConfig(
+                        options=VEHICLE_NAME_MODES,
+                        multiple=False,
+                        translation_key="vehicle_name_mode",
+                    )
                 ),
             }
         )
@@ -357,7 +361,11 @@ class DiveraOptionsFlowHandler(OptionsFlow):
             {
                 Required(CONF_SCAN_INTERVAL, default=current_scan): str,
                 Required(CONF_VEHICLE_NAME_MODE, default=current_mode): SelectSelector(
-                    SelectSelectorConfig(options=VEHICLE_NAME_MODES, multiple=False)
+                    SelectSelectorConfig(
+                        options=VEHICLE_NAME_MODES,
+                        multiple=False,
+                        translation_key="vehicle_name_mode",
+                    )
                 ),
             }
         )
