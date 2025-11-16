@@ -262,7 +262,7 @@ homeassistant==2025.2.1
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
-httpcore==1.0.7
+httpcore==1.0.8
     # via
     #   -r requirements.in
     #   httpx
@@ -330,7 +330,7 @@ multidict==6.1.0
     #   -r requirements.in
     #   aiohttp
     #   yarl
-mypy-extensions==1.0.0
+mypy-extensions==1.1.0
     # via
     #   -r requirements.in
     #   black
@@ -348,7 +348,7 @@ orjson==3.10.12
     #   aiohasupervisor
     #   homeassistant
     #   webrtc-models
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements.in
     #   black
@@ -397,7 +397,7 @@ psutil-home-assistant==0.0.1
     # via
     #   -r requirements.in
     #   homeassistant
-pycares==4.9.0
+pycares==4.10.0
     # via
     #   -r requirements.in
     #   aiodns
@@ -601,7 +601,7 @@ typing-extensions==4.12.2
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
-tzdata==2025.1
+tzdata==2025.2
     # via
     #   -r requirements.in
     #   aiozoneinfo
@@ -628,7 +628,7 @@ uv==0.5.21
     # via
     #   -r requirements.in
     #   homeassistant
-virtualenv==20.29.3
+virtualenv==20.35.3
     # via
     #   -r requirements.in
     #   pre-commit

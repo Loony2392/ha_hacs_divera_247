@@ -7,11 +7,23 @@ from typing import Any
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.entity import EntityCategory
 
 from . import DiveraConfigEntry
 from .coordinator import DiveraCoordinator
 from .divera247 import DiveraClient
+from .const import (
+    CONF_VEHICLE_NAME_MODE,
+    VEHICLE_NAME_MODE_AUTO,
+    VEHICLE_NAME_MODE_SHORT,
+    VEHICLE_NAME_MODE_NAME,
+    VEHICLE_NAME_MODE_FULL,
+    DOMAIN,
+    DIVERA_BASE_URL,
+    DIVERA_GMBH,
+)
 from .entity import DiveraEntity, DiveraEntityDescription
 
 
@@ -33,6 +45,7 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         key="helper_name",
         translation_key="helper_name",
         icon="mdi:account",
+        attribute_fn=lambda divera: {},
         value_fn=lambda divera,
         helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
     ),
@@ -40,9 +53,121 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         key="helper_status",
         translation_key="helper_status",
         icon="mdi:account-check",
+        attribute_fn=lambda divera: {},
         value_fn=lambda divera, helper: helper.get("status", "unknown"),
     ),
 )
+
+@dataclass(frozen=True, kw_only=True)
+class DiveraVehicleEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description of a Divera vehicle sensor entity.
+
+    Attributes:
+        value_fn (Callable[[DiveraClient, str], Any]):
+            Function returning the sensor value for a vehicle id.
+    """
+
+    value_fn: Callable[[DiveraClient, str], Any]
+    name_mode: str | None = None
+
+
+class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
+    """Sensor representing a single vehicle state."""
+
+    entity_description: DiveraVehicleEntityDescription
+
+    def __init__(
+        self,
+        coordinator: DiveraCoordinator,
+        vehicle_id: str,
+        description: DiveraVehicleEntityDescription,
+    ) -> None:
+        # Set vehicle id before calling base __init__ (base triggers _divera_update)
+        self._vehicle_id = vehicle_id
+        self._name_mode = description.name_mode or VEHICLE_NAME_MODE_AUTO
+        # Store a separate display name for the device, not the entity name
+        self._vehicle_display_name: str | None = None
+        # Pre-compute display name if data is already available to avoid 'Vehicle <id>' fallback
+        try:
+            self._vehicle_display_name = self._compute_display_name(coordinator.data)
+        except Exception:
+            self._vehicle_display_name = None
+        super().__init__(coordinator, description)
+        self._update_vehicle_display_name()
+        # Mark location sensor as diagnostic and disabled by default to avoid duplication
+        if description.translation_key == "vehicle_location":
+            self._attr_entity_category = EntityCategory.DIAGNOSTIC
+            self._attr_entity_registry_enabled_default = False
+
+    def _compute_display_name(self, client: DiveraClient | None) -> str | None:
+        mode = self._name_mode
+        name: str | None = None
+        if client is not None:
+            try:
+                attrs = client.get_vehicle_attributes(self._vehicle_id)
+                if mode == VEHICLE_NAME_MODE_SHORT:
+                    name = attrs.get("shortname")
+                elif mode == VEHICLE_NAME_MODE_NAME:
+                    name = attrs.get("name")
+                elif mode == VEHICLE_NAME_MODE_FULL:
+                    name = attrs.get("fullname")
+                else:  # auto
+                    name = attrs.get("shortname") or attrs.get("name") or attrs.get("fullname")
+            except Exception:
+                name = None
+        return name
+
+    def _update_vehicle_display_name(self):
+        client = self.coordinator.data
+        name = self._compute_display_name(client)
+        # Save for device_info usage; fall back to id string if computation failed
+        self._vehicle_display_name = name or self._vehicle_id
+
+    def _divera_update(self) -> None:  # noqa: D401
+        client = self.coordinator.data
+        if client is None:
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
+            return
+        # Update the cached device display name (entity name remains translated label)
+        self._update_vehicle_display_name()
+        self._attr_native_value = self.entity_description.value_fn(
+            client, self._vehicle_id
+        )
+        try:
+            # For location entities, keep attributes minimal (latitude/longitude) to
+            # ensure map compatibility; otherwise expose full vehicle attributes.
+            if self.entity_description.translation_key == "vehicle_location":
+                self._attr_extra_state_attributes = self.entity_description.attribute_fn(  # type: ignore[attr-defined]
+                    client
+                )
+            else:
+                self._attr_extra_state_attributes = client.get_vehicle_attributes(
+                    self._vehicle_id
+                )
+        except Exception:
+            self._attr_extra_state_attributes = {}
+
+    @property
+    def device_info(self) -> DeviceInfo:  # type: ignore[override]
+        # Ensure we have a display name; compute from current data if missing
+        if not self._vehicle_display_name or self._vehicle_display_name == self._vehicle_id:
+            try:
+                self._vehicle_display_name = self._compute_display_name(self.coordinator.data) or self._vehicle_id
+            except Exception:
+                self._vehicle_display_name = self._vehicle_id
+        from . import __version__
+        client = self.coordinator.data
+        cluster_version = client.get_cluster_version() if client else "unknown"
+        return DeviceInfo(
+            identifiers={(DOMAIN, f"{self._ucr_id}_vehicle_{self._vehicle_id}")},
+            manufacturer=DIVERA_GMBH,
+            name=self._vehicle_display_name,
+            model=f"Divera Vehicle {cluster_version}",
+            sw_version=__version__,
+            configuration_url=DIVERA_BASE_URL,
+            via_device=(DOMAIN, str(self._ucr_id)),
+        )
 
 
 class DiveraHelperSensorEntity(DiveraEntity, SensorEntity):
@@ -104,18 +229,21 @@ STATUS_SENSORS: tuple[DiveraStatusCountEntityDescription, ...] = (
         key="status_active",
         translation_key="status_active",
         icon="mdi:check-circle",
+        attribute_fn=lambda divera: {},
         status="active",
     ),
     DiveraStatusCountEntityDescription(
         key="status_inactive",
         translation_key="status_inactive",
         icon="mdi:close-circle",
+        attribute_fn=lambda divera: {},
         status="inactive",
     ),
     DiveraStatusCountEntityDescription(
         key="status_on_duty",
         translation_key="status_on_duty",
         icon="mdi:briefcase",
+        attribute_fn=lambda divera: {},
         status="on_duty",
     ),
 )
@@ -153,9 +281,71 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
 
         This method is called to update the state of the entity based on the latest data from the coordinator.
         """
-        helpers = self.coordinator.data.get("helpers", [])
+        client = self.coordinator.data
+        helpers = client.get_helpers() if client else []
         count = sum(1 for helper in helpers if helper.get("status") == self._status)
         self._attr_native_value = count
+
+
+@dataclass(frozen=True, kw_only=True)
+class DiveraStatusOverviewEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description for aggregated status overview sensor."""
+
+    value_fn: Callable[[DiveraClient], Any]
+
+
+class DiveraStatusOverviewSensorEntity(DiveraEntity, SensorEntity):
+    """Aggregated sensor with helper status counts as attributes."""
+
+    entity_description: DiveraStatusOverviewEntityDescription
+
+    def _divera_update(self) -> None:  # noqa: D401
+        client = self.coordinator.data
+        if client is None:
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
+            return
+        helpers = client.get_helpers()
+        counts: dict[str, int] = {}
+        for helper in helpers:
+            status = helper.get("status", "unknown")
+            counts[status] = counts.get(status, 0) + 1
+        # Native value = total helpers; attributes per status
+        self._attr_native_value = len(helpers)
+        self._attr_extra_state_attributes = counts
+
+
+@dataclass(frozen=True, kw_only=True)
+class DiveraAlarmAddressEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+    """Description for last alarm address sensor."""
+
+    value_fn: Callable[[DiveraClient], Any]
+
+
+class DiveraAlarmAddressSensorEntity(DiveraEntity, SensorEntity):
+    """Sensor exposing the address of the latest alarm."""
+
+    entity_description: DiveraAlarmAddressEntityDescription
+
+    def __init__(
+        self,
+        coordinator: DiveraCoordinator,
+        description: DiveraAlarmAddressEntityDescription,
+    ) -> None:
+        super().__init__(coordinator, description)
+
+    def _divera_update(self) -> None:  # noqa: D401
+        client = self.coordinator.data
+        if client is None:
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
+            return
+        try:
+            self._attr_native_value = self.entity_description.value_fn(client)
+            self._attr_extra_state_attributes = client.get_last_alarm_attributes()
+        except Exception:
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
 
 
 async def async_setup_entry(
@@ -175,19 +365,112 @@ async def async_setup_entry(
     entities: list[SensorEntity] = []
 
     # Create individual sensors for each helper (name and status)
-    for ucr_id in coordinators:
-        coordinator = coordinators[ucr_id]
-        helpers = coordinator.data.get("helpers", [])
+    for ucr_id, coordinator in coordinators.items():
+        client = coordinator.data
+        if client is None:
+            continue
+        helpers = client.get_helpers()
         for helper in helpers:
             for description in HELPER_SENSORS:
                 entities.append(
                     DiveraHelperSensorEntity(coordinator, helper, description)
                 )
 
+        # Vehicle sensors
+        try:
+            vehicle_ids = client.get_vehicle_id_list()
+        except Exception:
+            vehicle_ids = []
+        # Determine name mode once per entry
+        mode = entry.options.get(CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODE_AUTO)
+        for vid in vehicle_ids:
+            # Main vehicle status sensor
+            description = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_state",
+                translation_key="vehicle",  # uses sensor.vehicle translation
+                icon="mdi:truck-outline",
+                attribute_fn=(
+                    lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid)
+                ),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_state(_vid)),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, description))
+            
+            # Additional attribute sensors for each vehicle
+            # Location sensor (for map display)
+            location_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_location",
+                translation_key="vehicle_location",
+                icon="mdi:map-marker",
+                attribute_fn=(
+                    lambda divera, _vid=vid: {
+                        "latitude": divera.get_vehicle_attributes(_vid).get("latitude"),
+                        "longitude": divera.get_vehicle_attributes(_vid).get("longitude"),
+                    }
+                ),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("fmsstatus_note", "Unknown")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, location_desc))
+            
+            # OPTA sensor
+            opta_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_opta",
+                translation_key="vehicle_opta",
+                icon="mdi:radio-tower",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("opta")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, opta_desc))
+            
+            # ISSI sensor
+            issi_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_issi",
+                translation_key="vehicle_issi",
+                icon="mdi:identifier",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("issi")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, issi_desc))
+            
+            # Vehicle number sensor
+            number_desc = DiveraVehicleEntityDescription(
+                key=f"vehicle_{vid}_number",
+                translation_key="vehicle_number",
+                icon="mdi:numeric",
+                attribute_fn=(lambda divera, _vid=vid: {}),
+                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("number")),
+                name_mode=mode,
+            )
+            entities.append(DiveraVehicleSensorEntity(coordinator, vid, number_desc))
+
     # Create sensors that aggregate status (e.g., number of active helpers)
     for ucr_id in coordinators:
         coordinator = coordinators[ucr_id]
         for description in STATUS_SENSORS:
             entities.append(DiveraStatusCountSensorEntity(coordinator, description))
+        # Add single overview sensor
+        overview_desc = DiveraStatusOverviewEntityDescription(
+            key="status_overview",
+            translation_key="status_overview",
+            icon="mdi:clipboard-list",
+            attribute_fn=lambda divera: {},
+            value_fn=lambda divera: len(divera.get_helpers()),
+        )
+        entities.append(DiveraStatusOverviewSensorEntity(coordinator, overview_desc))
+
+    # Add last alarm address sensor per coordinator
+    for ucr_id, coordinator in coordinators.items():
+        description = DiveraAlarmAddressEntityDescription(
+            key="last_alarm_address",
+            translation_key="alarm_address",
+            icon="mdi:map-marker",
+            attribute_fn=lambda divera: divera.get_last_alarm_attributes(),
+            value_fn=lambda divera: divera.get_last_alarm_attributes().get("address"),
+        )
+        entities.append(DiveraAlarmAddressSensorEntity(coordinator, description))
 
     async_add_entities(entities, False)

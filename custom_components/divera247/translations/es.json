@@ -1,0 +1,138 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "🚀 Configuración DIVERA 24/7",
+                "description": "Introduce tu clave de acceso para conectarte a los servidores DIVERA 24/7 y recuperar datos. Puedes encontrar la clave de acceso en tu cuenta de usuario en 'Configuración' en la sección 'Debug'. Para más información, visita: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "🔑 Clave de acceso",
+                    "base_url": "🌐 Dirección del servidor (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Intervalo de actualización (segundos)"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Unidades activas:"
+                },
+                "description": "Una cuenta DIVERA 24/7 puede tener varias unidades simultáneamente. Por defecto, solo se carga la unidad principal."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Unidades activas:"
+                },
+                "description": "Reconfigura la entrada para tu usuario."
+            },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Selección de nombre del vehículo",
+                "description": "Elige la fuente del nombre para los sensores del vehículo.",
+                "data": {
+                    "vehicle_name_mode": "Fuente del nombre del vehículo"
+                }
+            },
+            "vehicle_name_selection": {
+                "title": "Selección de nombre de vehículo",
+                "description": "Elige qué campo de nombre usar para los sensores de vehículos. Puedes cambiarlo más tarde en las opciones de integración.\n\nEjemplo de vehículo:\n• Nombre corto: 'FtKW'\n• Nombre: 'Heros Halver 21/10'\n• Nombre completo: 'Vehículo de comando FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Origen del nombre del vehículo"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Error de conexión.",
+            "authentication": "Error de autenticación.",
+            "invalid_accesskey": "Formato de clave de acceso no válido.",
+            "range_error": "Valor fuera del rango permitido.",
+            "invalid_int": "Debe ser un número.",
+            "unknown": "Error desconocido"
+        },
+        "abort": {
+            "already_configured": "Este usuario ya está configurado.",
+            "reconfigure_successful": "Reconfiguración exitosa.",
+            "only_one_unit": "Este usuario solo tiene una unidad.",
+            "not_supported": "Esta clave de acceso no es compatible. Utiliza la clave de acceso de un usuario."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "⚙️ Opciones DIVERA 24/7",
+                "description": "El intervalo de actualización debe estar entre 10 y 300 segundos. Elegir un intervalo demasiado corto puede causar problemas. La selección del nombre del vehículo determina qué campo de nombre se usa para los sensores de vehículos.",
+                "data": {
+                    "scan_interval": "⏱️ Intervalo de actualización (segundos)",
+                    "vehicle_name_mode": "🚗 Origen del nombre del vehículo"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                "auto": "🔄 Auto (nombre corto → nombre → nombre completo)",
+                "shortname": "🏷️ Nombre corto (ej. 'FtKW')",
+                "name": "🧾 Nombre (ej. 'Heros Halver 21/10')",
+                "fullname": "🪪 Nombre completo (ej. 'Vehículo de comando FtKW')"
+            },
+            "auto": "🔄 Auto (nombre corto → nombre → nombre completo)",
+            "shortname": "🏷️ Nombre corto (p. ej. 'FtKW')",
+            "name": "🧾 Nombre (p. ej. 'Heros Halver 21/10')",
+            "fullname": "🪪 Nombre completo (p. ej. 'Vehículo de mando FtKW')"
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Error al cambiar el estado del usuario para {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Última alarma"
+            },
+            "alarm_address": {
+                "name": "Dirección de la última alarma"
+            },
+                }
+            },
+            "vehicle_location": {
+                "name": "Ubicación"
+            },
+            "vehicle_opta": {
+                "name": "Indicativo"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Número"
+            },
+            "status_overview": {
+                "name": "Resumen del estado de los asistentes"
+            },
+            "status_active": {
+                "name": "Voluntarios activos"
+            },
+            "status_inactive": {
+                "name": "Voluntarios inactivos"
+            },
+            "status_on_duty": {
+                "name": "Voluntarios de servicio"
+            }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Alarma activa"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Estado del usuario"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Eventos"
+            }
+        }
+    }
+}

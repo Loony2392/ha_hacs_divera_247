@@ -3,11 +3,12 @@
     "config": {
         "step": {
             "api": {
-                "title": "DIVERA 24/7 Setup",
+                "title": "🚀 DIVERA 24/7 Setup",
                 "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: https://app.divera247.com/account/einstellungen.html",
                 "data": {
-                    "accesskey": "Access key",
-                    "base_url": "The server address of DIVERA 24/7 (usually left unchanged)"
+                    "accesskey": "🔑 Access key",
+                    "base_url": "🌐 Server address (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Update interval (seconds)"
                 }
             },
             "user_cluster_relation": {
@@ -18,14 +19,31 @@
             },
             "reconfigure_confirm": {
                 "data": {
-                    "clusters": "Active Units:"
+                    "clusters": "Active units:"
                 },
                 "description": "Reconfigure the entry for your user."
+            },
+            "reconfigure_vehicle_name_selection": {
+                "title": "Vehicle Name Selection",
+                "description": "Choose the name source for vehicle sensors.",
+                "data": {
+                    "vehicle_name_mode": "Vehicle name source"
+                }
+            },
+            "vehicle_name_selection": {
+                "title": "Vehicle Name Selection",
+                "description": "Choose which name field to use for vehicle sensors. You can change this later in the integration options.\n\nExample vehicle:\n• Shortname: 'FtKW'\n• Name: 'Heros Halver 21/10'\n• Fullname: 'Command Vehicle FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Vehicle name source"
+                }
             }
         },
         "error": {
             "cannot_connect": "Connection error.",
             "authentication": "Authentication error.",
+            "invalid_accesskey": "Invalid access key format.",
+            "range_error": "Value out of allowed range.",
+            "invalid_int": "Must be a number.",
             "unknown": "Unknown error"
         },
         "abort": {
@@ -37,12 +55,23 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
-                "title": "DIVERA 24/7 Options",
-                "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval may cause issues.",
+            "init": {
+                "title": "⚙️ DIVERA 24/7 Options",
+                "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval can cause problems. The vehicle name selection determines which name field is used for vehicle sensors.",
                 "data": {
-                    "scan_interval": "Update Interval (seconds)"
+                    "scan_interval": "⏱️ Update interval (seconds)",
+                    "vehicle_name_mode": "🚗 Vehicle name source"
                 }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                "auto": "🔄 Auto (shortname → name → fullname)",
+                "shortname": "🏷️ Shortname (e.g. 'FtKW')",
+                "name": "🧾 Name (e.g. 'Heros Halver 21/10')",
+                "fullname": "🪪 Full name (e.g. 'Command Vehicle FtKW')"
             }
         }
     },
@@ -56,11 +85,38 @@
             "alarm": {
                 "name": "Last alarm"
             },
+            "alarm_address": {
+                "name": "Last alarm address"
+            },
             "news": {
                 "name": "Latest news"
             },
             "vehicle": {
-                "name": "Vehicle status {vehicle_name}"
+                "name": "Vehicle status"
+            },
+            "vehicle_location": {
+                "name": "Location"
+            },
+            "vehicle_opta": {
+                "name": "Call sign"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Number"
+            },
+            "status_overview": {
+                "name": "Helper status overview"
+            },
+            "status_active": {
+                "name": "Active helpers"
+            },
+            "status_inactive": {
+                "name": "Inactive helpers"
+            },
+            "status_on_duty": {
+                "name": "Helpers on duty"
             }
         },
         "binary_sensor": {

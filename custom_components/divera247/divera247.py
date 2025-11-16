@@ -47,6 +47,8 @@ class DiveraClient:
         self.__accesskey = accesskey
         self.__base_url = base_url
         self.__ucr_id = ucr_id
+        # Optional cache for /api/v2/alarms payload
+        self.__alarms_v2: dict | None = None
 
     async def pull_data(self):
         """
@@ -72,6 +74,29 @@ class DiveraClient:
             async with self.__session.get(url=url, params=params) as response:
                 response.raise_for_status()
                 self.__data = await response.json()
+                # Debug preview of monitor/statusplan structures
+                if LOGGER.isEnabledFor(10):  # DEBUG level
+                    try:
+                        data_root = self.__data.get("data", {})
+                        monitor = data_root.get("monitor") or data_root.get("localmonitor")
+                        statusplan = data_root.get("statusplan")
+                        LOGGER.debug(
+                            "Divera data top-level keys: %s", list(data_root.keys())
+                        )
+                        if statusplan:
+                            LOGGER.debug(
+                                "statusplan sample: %s",
+                                str(statusplan)[:500],
+                            )
+                        if monitor:
+                            LOGGER.debug(
+                                "monitor sample: %s",
+                                str(monitor)[:500],
+                            )
+                    except Exception as exc:  # pragma: no cover (best effort logging)
+                        LOGGER.debug(
+                            "Failed to log monitor/statusplan preview: %s", exc
+                        )
         except ClientResponseError as exc:
             # TODO Exception Tests
             url = remove_params_from_url(exc.request_info.url)
@@ -80,9 +105,29 @@ class DiveraClient:
                 raise DiveraAuthError from None
             raise DiveraConnectionError from None
         except ClientError as exc:
-            url = remove_params_from_url(exc.request_info.url)
-            LOGGER.error(f"An error occurred while requesting {url!r}.")
+            request_info = getattr(exc, "request_info", None)
+            raw_url = getattr(request_info, "url", None)
+            url = remove_params_from_url(raw_url) if raw_url else "unknown"
+            LOGGER.error(f"An error occurred while requesting {url!r}: {exc}")
             raise DiveraConnectionError from None
+        # Best-effort: also fetch /api/v2/alarms to enrich alarm attributes with vehicles
+        try:
+            await self._fetch_alarms_v2()
+        except Exception as exc:  # pragma: no cover (non-fatal enrichment)
+            LOGGER.debug("Failed to fetch /api/v2/alarms: %s", exc)
+
+    async def _fetch_alarms_v2(self):
+        """Fetch alarms from v2 API to access vehicle lists for alarms.
+
+        Non-fatal helper; failures are ignored. Result cached in self.__alarms_v2.
+        """
+        url = f"{self.__base_url}/api/v2/alarms"
+        params = {PARAM_ACCESSKEY: self.__accesskey}
+        if self.__ucr_id is not None:
+            params[PARAM_UCR] = self.__ucr_id
+        async with self.__session.get(url=url, params=params) as response:
+            response.raise_for_status()
+            self.__alarms_v2 = await response.json()
 
     def get_base_url(self) -> str:
         """
@@ -339,7 +384,7 @@ class DiveraClient:
                     name = f"{cug.get('name', '')} ({cluster_name})"
                     groups.append(name)
 
-        return {
+        attributes = {
             "id": alarm.get("id"),
             "foreign_id": alarm.get("foreign_id"),
             "text": alarm.get("text"),
@@ -356,6 +401,53 @@ class DiveraClient:
             "self_addressed": alarm.get("ucr_self_addressed"),
             "answered": self.get_answered_state(alarm),
         }
+
+        # Enrich with vehicles from /api/v2/alarms if available
+        try:
+            if self.__alarms_v2:
+                items = (
+                    self.__alarms_v2.get("data", {}).get("items")
+                    if isinstance(self.__alarms_v2, dict)
+                    else None
+                )
+                if isinstance(items, dict):
+                    v2_alarm = items.get(str(attributes.get("id")))
+                    if isinstance(v2_alarm, dict):
+                        veh_block = (
+                            v2_alarm.get("vehicle")
+                            or v2_alarm.get("vehicles")
+                            or v2_alarm.get("vehicle_list")
+                        )
+                        vehicles: list[str] = []
+                        if isinstance(veh_block, dict):
+                            for vid, v in veh_block.items():
+                                if isinstance(v, dict):
+                                    name = (
+                                        v.get("shortname")
+                                        or v.get("name")
+                                        or v.get("fullname")
+                                        or str(vid)
+                                    )
+                                    vehicles.append(name)
+                                else:
+                                    vehicles.append(str(v))
+                        elif isinstance(veh_block, list):
+                            for v in veh_block:
+                                if isinstance(v, dict):
+                                    name = (
+                                        v.get("shortname")
+                                        or v.get("name")
+                                        or v.get("fullname")
+                                    )
+                                    vehicles.append(name or "unknown")
+                                else:
+                                    vehicles.append(str(v))
+                        if vehicles:
+                            attributes["vehicles"] = vehicles
+        except Exception:  # pragma: no cover (best-effort enrichment)
+            pass
+
+        return attributes
 
     def get_answered_state(self, alarm):
         """
@@ -500,14 +592,26 @@ class DiveraClient:
             fmsstatus_timestamp = datetime.fromtimestamp(
                 vehicle_status.get("fmsstatus_ts"), tz=get_default_time_zone()
             )
+            # Normalize coordinates: API may expose lat/lng or latitude/longitude
+            lat_val = (
+                vehicle_status.get("lat")
+                or vehicle_status.get("latitude")
+                or vehicle_status.get("lat_deg")
+            )
+            lng_val = (
+                vehicle_status.get("lng")
+                or vehicle_status.get("lon")
+                or vehicle_status.get("longitude")
+                or vehicle_status.get("lon_deg")
+            )
             return {
                 "fullname": vehicle_status.get("fullname"),
                 "shortname": vehicle_status.get("shortname"),
                 "name": vehicle_status.get("name"),
                 "fmsstatus_note": vehicle_status.get("fmsstatus_note"),
                 "fmsstatus_ts": fmsstatus_timestamp,
-                "latitude": vehicle_status.get("lat"),
-                "longitude": vehicle_status.get("lng"),
+                "latitude": lat_val,
+                "longitude": lng_val,
                 "opta": vehicle_status.get("opta"),
                 "issi": vehicle_status.get("issi"),
                 "number": vehicle_status.get("number"),
@@ -517,6 +621,17 @@ class DiveraClient:
                 f"Vehicle with ID {vehicle_id} or one of the required keys not found."
             )
             return {}
+    
+    def get_organization_name(self) -> str | None:
+        """Get organization name from cluster data (e.g., 'THW', 'Feuerwehr').
+        
+        Returns:
+            str | None: Organization name or None if not found.
+        """
+        try:
+            return self.__data["data"]["cluster"].get("organisation")
+        except (KeyError, TypeError):
+            return None
 
     def get_group_name_by_id(self, group_id):
         """
@@ -726,11 +841,15 @@ class DiveraClient:
                 url=url, params=params, json=state
             ) as response:
                 response.raise_for_status()
-        except (ClientError, ClientResponseError) as exc:
-            url = remove_params_from_url(exc.request.url)
-            LOGGER.error(f"An error occurred while requesting {url!r}.")
-            if isinstance(exc, ClientResponseError) and exc.status == UNAUTHORIZED:
+        except ClientResponseError as exc:
+            url_clean = remove_params_from_url(exc.request_info.url)
+            LOGGER.error(f"Error response {exc.status} while requesting {url_clean!r}.")
+            if exc.status == UNAUTHORIZED:
                 raise DiveraAuthError from None
+            raise DiveraConnectionError from None
+        except ClientError as exc:
+            url_clean = remove_params_from_url(exc.request_info.url)
+            LOGGER.error(f"An error occurred while requesting {url_clean!r}.")
             raise DiveraConnectionError from None
 
     def get_cluster_version(self) -> str:
@@ -747,16 +866,70 @@ class DiveraClient:
         Note:
             The version_id is extracted from the 'data' dictionary attribute of the instance.
         """
-        version = self.__data["data"]["cluster"]["version_id"]
-        match version:
-            case 1:
-                return VERSION_FREE
-            case 2:
-                return VERSION_ALARM
-            case 3:
-                return VERSION_PRO
-            case _:
-                return VERSION_UNKNOWN
+        try:
+            version = self.__data["data"]["cluster"]["version_id"]
+            match version:
+                case 1:
+                    return VERSION_FREE
+                case 2:
+                    return VERSION_ALARM
+                case 3:
+                    return VERSION_PRO
+                case _:
+                    return VERSION_UNKNOWN
+        except Exception:
+            return VERSION_UNKNOWN
+
+    def get_ucr_id(self) -> int | None:
+        """Return configured UCR id even if data not loaded yet."""
+        return self.__ucr_id
+
+    def get_helpers(self) -> list[dict]:
+        """Return helper list extracted from raw data if available.
+
+        Falls back to empty list when structure is absent or not yet loaded.
+        """
+        if self.__data is None:
+            return []
+        try:
+            # Attempt common keys that might store helpers
+            data_root = self.__data.get("data", {})
+            helpers = data_root.get("helpers") or data_root.get("helper")
+            if helpers is None:
+                return []
+            if isinstance(helpers, list):
+                return helpers
+            if isinstance(helpers, dict):
+                return list(helpers.values())
+            return []
+        except Exception:
+            return []
+
+    def get_statusplan_raw(self):
+        """Return raw statusplan section (future status / forecast) if present.
+
+        Returns empty dict when not available or data not loaded yet.
+        """
+        if self.__data is None:
+            return {}
+        try:
+            return self.__data.get("data", {}).get("statusplan", {}) or {}
+        except Exception:
+            return {}
+
+    def get_monitor_raw(self):
+        """Return raw monitor/localmonitor section if present.
+
+        Some installations might expose either 'monitor' or 'localmonitor'.
+        Returns empty dict when not available.
+        """
+        if self.__data is None:
+            return {}
+        try:
+            data_root = self.__data.get("data", {})
+            return data_root.get("monitor") or data_root.get("localmonitor") or {}
+        except Exception:
+            return {}
 
     async def set_user_state_by_name(self, option: str):
         """

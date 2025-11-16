@@ -1,0 +1,138 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "🚀 Konfiguracja DIVERA 24/7",
+                "description": "Wprowadź swój klucz dostępu, aby połączyć się z serwerami DIVERA 24/7 i pobrać dane. Klucz dostępu znajdziesz na swoim koncie użytkownika w 'Ustawieniach' w sekcji 'Debug'. Więcej informacji na: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "🔑 Klucz dostępu",
+                    "base_url": "🌐 Adres serwera (DIVERA 24/7)",
+                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Aktywne jednostki:"
+                },
+                "description": "Konto DIVERA 24/7 może mieć wiele jednostek jednocześnie. Domyślnie ładowana jest tylko jednostka główna."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Aktywne jednostki:"
+                },
+                "description": "Ponownie skonfiguruj wpis dla swojego użytkownika."
+            },
+                "reconfigure_vehicle_name_selection": {
+                    "title": "Wybór nazwy pojazdu",
+                    "description": "Wybierz źródło nazwy dla czujników pojazdu.",
+                    "data": {
+                        "vehicle_name_mode": "Źródło nazwy pojazdu"
+                    }
+                },
+            "vehicle_name_selection": {
+                "title": "Wybór nazwy pojazdu",
+                "description": "Wybierz, które pole nazwy ma być używane dla czujników pojazdów. Możesz to zmienić później w opcjach integracji.\n\nPrzykład pojazdu:\n• Krótka nazwa: 'FtKW'\n• Nazwa: 'Heros Halver 21/10'\n• Pełna nazwa: 'Pojazd dowodzenia FtKW'",
+                "data": {
+                    "vehicle_name_mode": "Źródło nazwy pojazdu"
+                }
+            }
+        },
+        "error": {
+            "cannot_connect": "Błąd połączenia.",
+            "authentication": "Błąd uwierzytelniania.",
+            "invalid_accesskey": "Nieprawidłowy format klucza dostępu.",
+            "range_error": "Wartość poza dozwolonym zakresem.",
+            "invalid_int": "Musi być liczbą.",
+            "unknown": "Nieznany błąd"
+        },
+        "abort": {
+            "already_configured": "Ten użytkownik jest już skonfigurowany.",
+            "reconfigure_successful": "Ponowna konfiguracja udana.",
+            "only_one_unit": "Ten użytkownik ma tylko jedną jednostkę.",
+            "not_supported": "Ten klucz dostępu nie jest obsługiwany. Użyj klucza dostępu użytkownika."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "⚙️ Opcje DIVERA 24/7",
+                "description": "Interwał aktualizacji musi wynosić od 10 do 300 sekund. Wybór zbyt krótkiego interwału może powodować problemy. Wybór nazwy pojazdu określa, które pole nazwy jest używane dla czujników pojazdów.",
+                "data": {
+                    "scan_interval": "⏱️ Interwał aktualizacji (sekundy)",
+                    "vehicle_name_mode": "🚗 Źródło nazwy pojazdu"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "options": {
+                  "auto": "🔄 Auto (skrót → nazwa → pełna nazwa)",
+                  "shortname": "🏷️ Skrót (np. 'FtKW')",
+                  "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
+                  "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+            },
+              "auto": "🔄 Auto (skrót → nazwa → pełna nazwa)",
+              "shortname": "🏷️ Skrót (np. 'FtKW')",
+              "name": "🧾 Nazwa (np. 'Heros Halver 21/10')",
+              "fullname": "🪪 Pełna nazwa (np. 'Pojazd dowodzenia FtKW')"
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Błąd podczas zmiany statusu użytkownika dla {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Ostatni alarm"
+            },
+            "alarm_address": {
+                "name": "Adres ostatniego alarmu"
+            },
+                }
+            },
+            "vehicle_location": {
+                "name": "Lokalizacja"
+            },
+            "vehicle_opta": {
+                "name": "Znak wywoławczy"
+            },
+            "vehicle_issi": {
+                "name": "ISSI"
+            },
+            "vehicle_number": {
+                "name": "Numer"
+            },
+                "status_overview": {
+                    "name": "Przegląd statusu wolontariuszy"
+                },
+                "status_active": {
+                    "name": "Aktywni wolontariusze"
+                },
+                "status_inactive": {
+                    "name": "Nieaktywni wolontariusze"
+                },
+                "status_on_duty": {
+                    "name": "Wolontariusze na służbie"
+                }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Aktywny alarm"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Status użytkownika"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Wydarzenia"
+            }
+        }
+    }
+}
