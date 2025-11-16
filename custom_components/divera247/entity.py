@@ -125,7 +125,8 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
         vid = getattr(self, "_vehicle_id", None)
         if vid is not None:
             base_identifiers = {(DOMAIN, f"{self._ucr_id}_vehicle_{vid}")}
-            name = getattr(self, "_attr_name", f"Vehicle {vid}")
+            # Use dedicated vehicle display name if available; avoid using entity name
+            name = getattr(self, "_vehicle_display_name", None) or f"Vehicle {vid}"
             return DeviceInfo(
                 identifiers=base_identifiers,
                 manufacturer=DIVERA_GMBH,

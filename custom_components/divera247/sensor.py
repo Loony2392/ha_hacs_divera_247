@@ -81,13 +81,15 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
         # Set vehicle id before calling base __init__ (base triggers _divera_update)
         self._vehicle_id = vehicle_id
         self._name_mode = description.name_mode or VEHICLE_NAME_MODE_AUTO
+        # Store a separate display name for the device, not the entity name
+        self._vehicle_display_name: str | None = None
         super().__init__(coordinator, description)
-        self._assign_name()
+        self._update_vehicle_display_name()
 
-    def _assign_name(self):
+    def _update_vehicle_display_name(self):
         client = self.coordinator.data
         mode = self._name_mode
-        name = self._vehicle_id
+        name: str = self._vehicle_id
         if client is not None:
             try:
                 attrs = client.get_vehicle_attributes(self._vehicle_id)
@@ -106,7 +108,8 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
                     )
             except Exception:
                 pass
-        self._attr_name = name
+        # Save for device_info usage
+        self._vehicle_display_name = name
 
     def _divera_update(self) -> None:  # noqa: D401
         client = self.coordinator.data
@@ -114,8 +117,8 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
             self._attr_native_value = None
             self._attr_extra_state_attributes = {}
             return
-        # Recalculate name each update to reflect potential mode changes
-        self._assign_name()
+        # Update the cached device display name (entity name remains translated label)
+        self._update_vehicle_display_name()
         self._attr_native_value = self.entity_description.value_fn(
             client, self._vehicle_id
         )

@@ -96,13 +96,13 @@
                 "name": "letzte News"
             },
             "vehicle": {
-                "name": "Fahrzeug Status {vehicle_name}"
+                "name": "Status"
             },
             "vehicle_location": {
-                "name": "Standort {vehicle_name}"
+                "name": "Standort"
             },
             "vehicle_opta": {
-                "name": "OPTA {vehicle_name}"
+                "name": "Rufname"
             },
             "vehicle_issi": {
                 "name": "ISSI {vehicle_name}"
