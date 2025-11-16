@@ -1,0 +1,100 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "Konfiguracja DIVERA 24/7",
+                "description": "Wprowadź swój klucz dostępu, aby połączyć się z serwerami DIVERA 24/7 i pobrać dane. Klucz dostępu znajdziesz na swoim koncie użytkownika w 'Ustawieniach' w sekcji 'Debug'. Więcej informacji na: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "Klucz dostępu",
+                    "base_url": "Adres serwera DIVERA 24/7 (zazwyczaj bez zmian)"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Aktywne jednostki:"
+                },
+                "description": "Konto DIVERA 24/7 może mieć wiele jednostek jednocześnie. Domyślnie ładowana jest tylko jednostka główna."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Aktywne jednostki:"
+                },
+                "description": "Ponownie skonfiguruj wpis dla swojego użytkownika."
+            }
+        },
+        "error": {
+            "cannot_connect": "Błąd połączenia.",
+            "authentication": "Błąd uwierzytelniania.",
+            "invalid_accesskey": "Nieprawidłowy format klucza dostępu.",
+            "range_error": "Wartość poza dozwolonym zakresem.",
+            "invalid_int": "Musi być liczbą.",
+            "unknown": "Nieznany błąd"
+        },
+        "abort": {
+            "already_configured": "Ten użytkownik jest już skonfigurowany.",
+            "reconfigure_successful": "Ponowna konfiguracja udana.",
+            "only_one_unit": "Ten użytkownik ma tylko jedną jednostkę.",
+            "not_supported": "Ten klucz dostępu nie jest obsługiwany. Użyj klucza dostępu użytkownika."
+        }
+    },
+    "options": {
+        "step": {
+            "scan_interval": {
+                "title": "Opcje DIVERA 24/7",
+                "description": "Interwał aktualizacji musi wynosić od 10 do 300 sekund. Wybór zbyt krótkiego interwału może powodować problemy.",
+                "data": {
+                    "scan_interval": "Interwał aktualizacji (sekundy)",
+                    "vehicle_name_mode": "Źródło nazwy pojazdu"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "auto": "Auto (krótka nazwa→nazwa→pełna nazwa)",
+            "shortname": "Krótka nazwa",
+            "name": "Nazwa",
+            "fullname": "Pełna nazwa"
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Błąd podczas zmiany statusu użytkownika dla {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Ostatni alarm"
+            },
+            "alarm_address": {
+                "name": "Adres ostatniego alarmu"
+            },
+            "news": {
+                "name": "Najnowsze wiadomości"
+            },
+            "vehicle": {
+                "name": "Status pojazdu {vehicle_name}"
+            },
+            "status_overview": {
+                "name": "Przegląd statusu asystentów"
+            }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Aktywny alarm"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Status użytkownika"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Wydarzenia"
+            }
+        }
+    }
+}

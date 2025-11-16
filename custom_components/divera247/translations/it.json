@@ -1,0 +1,100 @@
+{
+    "title": "DIVERA 24/7",
+    "config": {
+        "step": {
+            "api": {
+                "title": "Configurazione DIVERA 24/7",
+                "description": "Inserisci la tua chiave di accesso per connetterti ai server DIVERA 24/7 e recuperare i dati. Puoi trovare la chiave di accesso nel tuo account utente sotto 'Impostazioni' nella sezione 'Debug'. Per maggiori informazioni, visita: https://app.divera247.com/account/einstellungen.html",
+                "data": {
+                    "accesskey": "Chiave di accesso",
+                    "base_url": "L'indirizzo del server DIVERA 24/7 (solitamente invariato)"
+                }
+            },
+            "user_cluster_relation": {
+                "data": {
+                    "clusters": "Unità attive:"
+                },
+                "description": "Un account DIVERA 24/7 può avere più unità contemporaneamente. Per impostazione predefinita, viene caricata solo l'unità principale."
+            },
+            "reconfigure_confirm": {
+                "data": {
+                    "clusters": "Unità attive:"
+                },
+                "description": "Riconfigura la voce per il tuo utente."
+            }
+        },
+        "error": {
+            "cannot_connect": "Errore di connessione.",
+            "authentication": "Errore di autenticazione.",
+            "invalid_accesskey": "Formato della chiave di accesso non valido.",
+            "range_error": "Valore fuori dall'intervallo consentito.",
+            "invalid_int": "Deve essere un numero.",
+            "unknown": "Errore sconosciuto"
+        },
+        "abort": {
+            "already_configured": "Questo utente è già configurato.",
+            "reconfigure_successful": "Riconfigurazione riuscita.",
+            "only_one_unit": "Questo utente ha solo un'unità.",
+            "not_supported": "Questa chiave di accesso non è supportata. Utilizza la chiave di accesso di un utente."
+        }
+    },
+    "options": {
+        "step": {
+            "scan_interval": {
+                "title": "Opzioni DIVERA 24/7",
+                "description": "L'intervallo di aggiornamento deve essere compreso tra 10 e 300 secondi. Scegliere un intervallo troppo breve può causare problemi.",
+                "data": {
+                    "scan_interval": "Intervallo di aggiornamento (secondi)",
+                    "vehicle_name_mode": "Origine del nome del veicolo"
+                }
+            }
+        }
+    },
+    "selector": {
+        "vehicle_name_mode": {
+            "auto": "Auto (nome breve→nome→nome completo)",
+            "shortname": "Nome breve",
+            "name": "Nome",
+            "fullname": "Nome completo"
+        }
+    },
+    "exceptions": {
+        "user_state_error": {
+            "message": "Errore durante la modifica dello stato utente per {cluster_name}"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "alarm": {
+                "name": "Ultimo allarme"
+            },
+            "alarm_address": {
+                "name": "Indirizzo dell'ultimo allarme"
+            },
+            "news": {
+                "name": "Ultime notizie"
+            },
+            "vehicle": {
+                "name": "Stato veicolo {vehicle_name}"
+            },
+            "status_overview": {
+                "name": "Panoramica dello stato degli assistenti"
+            }
+        },
+        "binary_sensor": {
+            "active_alarm": {
+                "name": "Allarme attivo"
+            }
+        },
+        "select": {
+            "user_status": {
+                "name": "Stato utente"
+            }
+        },
+        "calendar": {
+            "events": {
+                "name": "Eventi"
+            }
+        }
+    }
+}
