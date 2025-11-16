@@ -72,11 +72,7 @@
                 "shortname": "🏷️ Shortname (e.g. 'FtKW')",
                 "name": "🧾 Name (e.g. 'Heros Halver 21/10')",
                 "fullname": "🪪 Full name (e.g. 'Command Vehicle FtKW')"
-            },
-            "auto": "🔄 Auto (shortname → name → fullname)",
-            "shortname": "🏷️ Shortname (e.g. 'FtKW')",
-            "name": "🧾 Name (e.g. 'Heros Halver 21/10')",
-            "fullname": "🪪 Full name (e.g. 'Command Vehicle FtKW')"
+            }
         }
     },
     "exceptions": {

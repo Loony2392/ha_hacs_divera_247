@@ -92,11 +92,7 @@
             "alarm_address": {
                 "name": "Adres ostatniego alarmu"
             },
-            "news": {
-                "name": "Najnowsze wiadomości"
-            },
-            "vehicle": {
-                "name": "Status pojazdu"
+                }
             },
             "vehicle_location": {
                 "name": "Lokalizacja"

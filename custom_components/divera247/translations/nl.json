@@ -72,11 +72,7 @@
                 "shortname": "🏷️ Korte naam (bijv. 'FtKW')",
                 "name": "🧾 Naam (bijv. 'Heros Halver 21/10')",
                 "fullname": "🪪 Volledige naam (bijv. 'Commandovoertuig FtKW')"
-            },
-            "auto": "🔄 Auto (korte naam → naam → volledige naam)",
-            "shortname": "🏷️ Korte naam (bijv. 'FtKW')",
-            "name": "🧾 Naam (bijv. 'Heros Halver 21/10')",
-            "fullname": "🪪 Volledige naam (bijv. 'Commandovoertuig FtKW')"
+            }
         }
     },
     "exceptions": {

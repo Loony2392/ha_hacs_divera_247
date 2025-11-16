@@ -56,6 +56,7 @@ class DiveraFlow(FlowHandler):
         self._divera_client: DiveraClient | None = None
         self._data: dict[str, Any] = {}
         self._scan_interval: int = 10
+        self._vehicle_name_mode: str | None = None
 
     async def _show_clusters_form(self, active_cluster_names, cluster_names, errors):
         """
@@ -99,6 +100,13 @@ class DiveraFlow(FlowHandler):
                     CONF_BASE_URL, description={"suggested_value": DIVERA_BASE_URL}
                 ): TextSelector(TextSelectorConfig(type=TextSelectorType.URL)),
                 Required(CONF_SCAN_INTERVAL, default="10"): str,
+                Required(CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]): SelectSelector(
+                    SelectSelectorConfig(
+                        options=VEHICLE_NAME_MODES,
+                        multiple=False,
+                        translation_key="vehicle_name_mode",
+                    )
+                ),
             },
         )
         return self.async_show_form(
@@ -269,6 +277,9 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         if user_input is not None:
             accesskey = user_input.get(CONF_ACCESSKEY)
             base_url = user_input.get(CONF_BASE_URL)
+            self._vehicle_name_mode = user_input.get(
+                CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
+            )
             # Validate scan interval
             scan_val = user_input.get(CONF_SCAN_INTERVAL, "60")
             try:
@@ -296,10 +307,34 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
                     return self.async_abort(reason="not_supported")
 
                 if self._divera_client.get_ucr_count() > 1:
+                    # Store for later creation after user picks clusters
+                    self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
+                    self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
                     return await self.async_step_user_cluster_relation()
-                
-                # Single cluster - proceed to vehicle name selection
-                return await self.async_step_vehicle_name_selection()
+
+                # Single cluster: create entry immediately using chosen vehicle name mode
+                ucr_id: int = self._divera_client.get_default_ucr()
+                self._data[DATA_UCRS] = [ucr_id]
+                self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
+                self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
+
+                try:
+                    fullname = self._divera_client.get_full_name()
+                except Exception:
+                    fullname = ""
+                try:
+                    cluster_part = self._divera_client.get_default_cluster_name()
+                except Exception:
+                    cluster_part = ""
+                title = f"{cluster_part} - {fullname}" if cluster_part and fullname else fullname or cluster_part or "DIVERA 24/7"
+                return self.async_create_entry(
+                    title=title,
+                    data=self._data,
+                    options={
+                        CONF_VEHICLE_NAME_MODE: self._vehicle_name_mode,
+                        CONF_SCAN_INTERVAL: self._scan_interval,
+                    },
+                )
 
         return await self._show_api_form(errors)
 
@@ -316,7 +351,28 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             selected_cluster_names = user_input[CONF_CLUSTERS]
             ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
             self._data[DATA_UCRS] = ucr_ids
-            return await self.async_step_vehicle_name_selection()
+            # Ensure base/access set in case user jumped here
+            self._data[DATA_BASE_URL] = self._data.get(DATA_BASE_URL) or self._divera_client.get_base_url()
+            self._data[DATA_ACCESSKEY] = self._data.get(DATA_ACCESSKEY) or self._divera_client.get_accesskey()
+            # Build title
+            try:
+                fullname = self._divera_client.get_full_name()
+            except Exception:
+                fullname = ""
+            try:
+                cluster_names = self._divera_client.get_cluster_names_from_ucrs(ucr_ids)
+                cluster_part = ", ".join(cluster_names) if cluster_names else ""
+            except Exception:
+                cluster_part = ""
+            title = f"{cluster_part} - {fullname}" if cluster_part and fullname else fullname or cluster_part or "DIVERA 24/7"
+            return self.async_create_entry(
+                title=title,
+                data=self._data,
+                options={
+                    CONF_VEHICLE_NAME_MODE: self._vehicle_name_mode or VEHICLE_NAME_MODES[0],
+                    CONF_SCAN_INTERVAL: self._scan_interval,
+                },
+            )
 
         cluster_names = self._divera_client.get_all_cluster_names()
         # Preselect first cluster
