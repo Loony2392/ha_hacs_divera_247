@@ -47,6 +47,8 @@ class DiveraClient:
         self.__accesskey = accesskey
         self.__base_url = base_url
         self.__ucr_id = ucr_id
+        # Optional cache for /api/v2/alarms payload
+        self.__alarms_v2: dict | None = None
 
     async def pull_data(self):
         """
@@ -108,6 +110,24 @@ class DiveraClient:
             url = remove_params_from_url(raw_url) if raw_url else "unknown"
             LOGGER.error(f"An error occurred while requesting {url!r}: {exc}")
             raise DiveraConnectionError from None
+        # Best-effort: also fetch /api/v2/alarms to enrich alarm attributes with vehicles
+        try:
+            await self._fetch_alarms_v2()
+        except Exception as exc:  # pragma: no cover (non-fatal enrichment)
+            LOGGER.debug("Failed to fetch /api/v2/alarms: %s", exc)
+
+    async def _fetch_alarms_v2(self):
+        """Fetch alarms from v2 API to access vehicle lists for alarms.
+
+        Non-fatal helper; failures are ignored. Result cached in self.__alarms_v2.
+        """
+        url = f"{self.__base_url}/api/v2/alarms"
+        params = {PARAM_ACCESSKEY: self.__accesskey}
+        if self.__ucr_id is not None:
+            params[PARAM_UCR] = self.__ucr_id
+        async with self.__session.get(url=url, params=params) as response:
+            response.raise_for_status()
+            self.__alarms_v2 = await response.json()
 
     def get_base_url(self) -> str:
         """
@@ -364,7 +384,7 @@ class DiveraClient:
                     name = f"{cug.get('name', '')} ({cluster_name})"
                     groups.append(name)
 
-        return {
+        attributes = {
             "id": alarm.get("id"),
             "foreign_id": alarm.get("foreign_id"),
             "text": alarm.get("text"),
@@ -381,6 +401,53 @@ class DiveraClient:
             "self_addressed": alarm.get("ucr_self_addressed"),
             "answered": self.get_answered_state(alarm),
         }
+
+        # Enrich with vehicles from /api/v2/alarms if available
+        try:
+            if self.__alarms_v2:
+                items = (
+                    self.__alarms_v2.get("data", {}).get("items")
+                    if isinstance(self.__alarms_v2, dict)
+                    else None
+                )
+                if isinstance(items, dict):
+                    v2_alarm = items.get(str(attributes.get("id")))
+                    if isinstance(v2_alarm, dict):
+                        veh_block = (
+                            v2_alarm.get("vehicle")
+                            or v2_alarm.get("vehicles")
+                            or v2_alarm.get("vehicle_list")
+                        )
+                        vehicles: list[str] = []
+                        if isinstance(veh_block, dict):
+                            for vid, v in veh_block.items():
+                                if isinstance(v, dict):
+                                    name = (
+                                        v.get("shortname")
+                                        or v.get("name")
+                                        or v.get("fullname")
+                                        or str(vid)
+                                    )
+                                    vehicles.append(name)
+                                else:
+                                    vehicles.append(str(v))
+                        elif isinstance(veh_block, list):
+                            for v in veh_block:
+                                if isinstance(v, dict):
+                                    name = (
+                                        v.get("shortname")
+                                        or v.get("name")
+                                        or v.get("fullname")
+                                    )
+                                    vehicles.append(name or "unknown")
+                                else:
+                                    vehicles.append(str(v))
+                        if vehicles:
+                            attributes["vehicles"] = vehicles
+        except Exception:  # pragma: no cover (best-effort enrichment)
+            pass
+
+        return attributes
 
     def get_answered_state(self, alarm):
         """
