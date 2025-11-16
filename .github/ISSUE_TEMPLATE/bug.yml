@@ -27,16 +27,14 @@ body:
       label: "Home Assistant Version / Home Assistant Version"
       description: |
         Z.B. 2024.12.0 / E.g. 2024.12.0
-      validations:
-        required: true
+      placeholder: "2024.12.0"
 
   - type: input
     attributes:
       label: "DIVERA 24/7 Integration Version / DIVERA 24/7 Integration Version"
       description: |
         Du findest die Version unter 'Einstellungen' -> 'Geräte und Dienste' -> 'DIVERA 24/7' -> oben rechts Menü -> 'Details' / Find the version under 'Settings' -> 'Devices & Services' -> 'DIVERA 24/7' -> menu in top right -> 'Details'
-      validations:
-        required: true
+      placeholder: "1.0.0"
 
   - type: textarea
     attributes:
