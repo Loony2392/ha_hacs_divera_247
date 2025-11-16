@@ -21,6 +21,13 @@
                     "clusters": "Aktive Einheiten:"
                 },
                 "description": "Rekonfigurieren Sie den Eintrag für ihren Benutzer."
+            },
+            "vehicle_name_selection": {
+                "title": "Fahrzeugnamenwahl",
+                "description": "Wählen Sie aus, welches Namensfeld für Fahrzeug-Sensoren verwendet werden soll. Sie können dies später in den Integrationsoptionen ändern.",
+                "data": {
+                    "vehicle_name_mode": "Quelle des Fahrzeugnamens"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "DIVERA 24/7 Optionen",
-                "description": "Das Update Intervall muss zwischen 10 und 300 Sekunden liegen. Ein zu klein gewähltes Intervall führt evtl. zu Problemen.",
+                "description": "Das Update-Intervall muss zwischen 10 und 300 Sekunden liegen. Bei zu kurzem Intervall kann es zu Problemen kommen. Die Fahrzeugnamenwahl bestimmt, welches Namensfeld für Fahrzeug-Sensoren verwendet wird.",
                 "data": {
                     "scan_interval": "Update Intervall (Sekunden)",
                     "vehicle_name_mode": "Fahrzeug-Namensquelle"

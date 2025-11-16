@@ -21,6 +21,13 @@
                     "clusters": "Unità attive:"
                 },
                 "description": "Riconfigura la voce per il tuo utente."
+            },
+            "vehicle_name_selection": {
+                "title": "Selezione nome veicolo",
+                "description": "Scegli quale campo nome utilizzare per i sensori dei veicoli. Puoi modificarlo successivamente nelle opzioni di integrazione.",
+                "data": {
+                    "vehicle_name_mode": "Origine del nome del veicolo"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "Opzioni DIVERA 24/7",
-                "description": "L'intervallo di aggiornamento deve essere compreso tra 10 e 300 secondi. Scegliere un intervallo troppo breve può causare problemi.",
+                "description": "L'intervallo di aggiornamento deve essere compreso tra 10 e 300 secondi. Scegliere un intervallo troppo breve può causare problemi. La selezione del nome del veicolo determina quale campo nome viene utilizzato per i sensori dei veicoli.",
                 "data": {
                     "scan_interval": "Intervallo di aggiornamento (secondi)",
                     "vehicle_name_mode": "Origine del nome del veicolo"

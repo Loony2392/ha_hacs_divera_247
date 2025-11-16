@@ -21,6 +21,13 @@
                     "clusters": "Aktywne jednostki:"
                 },
                 "description": "Ponownie skonfiguruj wpis dla swojego użytkownika."
+            },
+            "vehicle_name_selection": {
+                "title": "Wybór nazwy pojazdu",
+                "description": "Wybierz, które pole nazwy ma być używane dla czujników pojazdów. Możesz to zmienić później w opcjach integracji.",
+                "data": {
+                    "vehicle_name_mode": "Źródło nazwy pojazdu"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "Opcje DIVERA 24/7",
-                "description": "Interwał aktualizacji musi wynosić od 10 do 300 sekund. Wybór zbyt krótkiego interwału może powodować problemy.",
+                "description": "Interwał aktualizacji musi wynosić od 10 do 300 sekund. Wybór zbyt krótkiego interwału może powodować problemy. Wybór nazwy pojazdu określa, które pole nazwy jest używane dla czujników pojazdów.",
                 "data": {
                     "scan_interval": "Interwał aktualizacji (sekundy)",
                     "vehicle_name_mode": "Źródło nazwy pojazdu"

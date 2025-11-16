@@ -18,9 +18,16 @@
             },
             "reconfigure_confirm": {
                 "data": {
-                    "clusters": "Unités actives:"
+                    "clusters": "Unités actives :"
                 },
                 "description": "Reconfigurer l'entrée pour votre utilisateur."
+            },
+            "vehicle_name_selection": {
+                "title": "Sélection du nom de véhicule",
+                "description": "Choisissez le champ de nom à utiliser pour les capteurs de véhicule. Vous pouvez modifier cela ultérieurement dans les options d'intégration.",
+                "data": {
+                    "vehicle_name_mode": "Source du nom du véhicule"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "Options DIVERA 24/7",
-                "description": "L'intervalle de mise à jour doit être compris entre 10 et 300 secondes. Choisir un intervalle trop court peut causer des problèmes.",
+                "description": "L'intervalle de mise à jour doit être compris entre 10 et 300 secondes. Choisir un intervalle trop court peut causer des problèmes. La sélection du nom de véhicule détermine le champ de nom utilisé pour les capteurs de véhicule.",
                 "data": {
                     "scan_interval": "Intervalle de mise à jour (secondes)",
                     "vehicle_name_mode": "Source du nom du véhicule"

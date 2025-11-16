@@ -101,23 +101,6 @@ class DiveraFlow(FlowHandler):
             step_id=CONF_FLOW_NAME_API, data_schema=api_schema, errors=errors
         )
 
-    def create_entry(self, ucr_ids: list[int]):
-        """
-        Create a config entry.
-
-        Args:
-            ucr_ids (list[int]): List of UCR IDs.
-
-        Returns:
-            ConfigEntry: The created config entry.
-        """
-        self._data[DATA_UCRS] = ucr_ids
-        self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
-        self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
-
-        title = self._divera_client.get_full_name()
-        return self.async_create_entry(title=title, data=self._data)
-
 
 @HANDLERS.register(DOMAIN)
 class DiveraConfigFlow(DiveraFlow, ConfigFlow):
@@ -252,8 +235,9 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
 
                 if self._divera_client.get_ucr_count() > 1:
                     return await self.async_step_user_cluster_relation()
-                ucr_id: int = self._divera_client.get_default_ucr()
-                return self.create_entry([ucr_id])
+                
+                # Single cluster - proceed to vehicle name selection
+                return await self.async_step_vehicle_name_selection()
 
         return await self._show_api_form(errors)
 
@@ -269,7 +253,8 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         if user_input is not None and not errors:
             selected_cluster_names = user_input[CONF_CLUSTERS]
             ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
-            return self.create_entry(ucr_ids)
+            self._data[DATA_UCRS] = ucr_ids
+            return await self.async_step_vehicle_name_selection()
 
         cluster_names = self._divera_client.get_all_cluster_names()
         # Preselect first cluster
@@ -277,6 +262,47 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
 
         return await self._show_clusters_form(
             active_cluster_names, cluster_names, errors
+        )
+    
+    async def async_step_vehicle_name_selection(
+        self, user_input: dict[str, Any] | None = None
+    ):
+        """Third step in config flow to select vehicle name mode.
+
+        Let the user choose which vehicle name field to use for sensor names.
+        """
+        errors: dict[str, str] = {}
+
+        if user_input is not None and not errors:
+            vehicle_name_mode = user_input.get(CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0])
+            
+            # If DATA_UCRS not yet set (single cluster case), set it now
+            if DATA_UCRS not in self._data:
+                ucr_id: int = self._divera_client.get_default_ucr()
+                self._data[DATA_UCRS] = [ucr_id]
+            
+            self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
+            self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
+            
+            # Store initial vehicle name mode in options
+            title = self._divera_client.get_full_name()
+            return self.async_create_entry(
+                title=title, 
+                data=self._data,
+                options={CONF_VEHICLE_NAME_MODE: vehicle_name_mode}
+            )
+
+        vehicle_schema = Schema(
+            {
+                Required(CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]): SelectSelector(
+                    SelectSelectorConfig(options=VEHICLE_NAME_MODES, multiple=False)
+                ),
+            }
+        )
+        return self.async_show_form(
+            step_id="vehicle_name_selection",
+            data_schema=vehicle_schema,
+            errors=errors,
         )
 
     async def check_unique_id(self):

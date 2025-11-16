@@ -8,8 +8,6 @@ from homeassistant.const import CONF_API_KEY, CONF_NAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-__version__ = "0.0.0"  # Lazy-loaded inside async_setup_entry
-
 from .const import (
     CONF_FLOW_MINOR_VERSION,
     CONF_FLOW_VERSION,
@@ -23,6 +21,8 @@ from .const import (
 from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
+
+__version__ = "0.0.0"  # Lazy-loaded inside async_setup_entry
 
 PLATFORMS = [
     Platform.SELECT,

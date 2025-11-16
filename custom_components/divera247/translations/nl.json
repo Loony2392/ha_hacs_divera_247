@@ -21,6 +21,13 @@
                     "clusters": "Actieve eenheden:"
                 },
                 "description": "Herconfigureer de invoer voor je gebruiker."
+            },
+            "vehicle_name_selection": {
+                "title": "Voertuignaam selectie",
+                "description": "Kies welk naamveld te gebruiken voor voertuigsensoren. Je kunt dit later wijzigen in de integratie-opties.",
+                "data": {
+                    "vehicle_name_mode": "Bron van voertuignaam"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "DIVERA 24/7 Opties",
-                "description": "Het update-interval moet tussen 10 en 300 seconden liggen. Een te kort interval kan problemen veroorzaken.",
+                "description": "Het update-interval moet tussen 10 en 300 seconden liggen. Een te kort interval kan problemen veroorzaken. De voertuignaam selectie bepaalt welk naamveld wordt gebruikt voor voertuigsensoren.",
                 "data": {
                     "scan_interval": "Update-interval (seconden)",
                     "vehicle_name_mode": "Bron van voertuignaam"

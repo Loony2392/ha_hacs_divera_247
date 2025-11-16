@@ -18,9 +18,16 @@
             },
             "reconfigure_confirm": {
                 "data": {
-                    "clusters": "Active Units:"
+                    "clusters": "Active units:"
                 },
                 "description": "Reconfigure the entry for your user."
+            },
+            "vehicle_name_selection": {
+                "title": "Vehicle Name Selection",
+                "description": "Choose which name field to use for vehicle sensors. You can change this later in the integration options.",
+                "data": {
+                    "vehicle_name_mode": "Vehicle name source"
+                }
             }
         },
         "error": {
@@ -40,9 +47,9 @@
     },
     "options": {
         "step": {
-            "scan_interval": {
+            "init": {
                 "title": "DIVERA 24/7 Options",
-                "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval may cause issues.",
+                "description": "The update interval must be between 10 and 300 seconds. Choosing too short an interval can cause problems. The vehicle name selection determines which name field is used for vehicle sensors.",
                 "data": {
                     "scan_interval": "Update Interval (seconds)",
                     "vehicle_name_mode": "Vehicle name source"
