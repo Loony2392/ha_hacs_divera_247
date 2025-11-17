@@ -275,7 +275,7 @@ identify==2.6.8
     # via
     #   -r requirements.in
     #   pre-commit
-idna==3.10
+idna==3.11
     # via
     #   -r requirements.in
     #   anyio
