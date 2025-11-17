@@ -212,7 +212,7 @@ envs==1.4
     # via
     #   -r requirements.in
     #   pycognito
-execnet==2.1.1
+execnet==2.1.2
     # via
     #   -r requirements.in
     #   pytest-xdist
