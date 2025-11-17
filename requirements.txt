@@ -593,7 +593,7 @@ tqdm==4.66.5
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
-typing-extensions==4.12.2
+typing-extensions==4.15.0
     # via
     #   -r requirements.in
     #   homeassistant
