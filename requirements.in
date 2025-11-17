@@ -404,7 +404,7 @@ usb-devices==0.4.5
     #   bluetooth-auto-recovery
 uv==0.5.21
     # via homeassistant
-virtualenv==20.35.3
+virtualenv==20.35.4
     # via pre-commit
 voluptuous==0.15.2
     # via
