@@ -174,7 +174,7 @@ click==8.1.8
     # via
     #   -r requirements.in
     #   black
-colorlog==6.9.0
+colorlog==6.10.1
     # via -r requirements.in
 coverage[toml]==7.6.8
     # via
