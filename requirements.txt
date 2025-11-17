@@ -128,7 +128,7 @@ bluetooth-data-tools==1.23.4
     # via
     #   -r requirements.in
     #   habluetooth
-boolean-py==4.0
+boolean-py==5.0
     # via
     #   -r requirements.in
     #   license-expression
