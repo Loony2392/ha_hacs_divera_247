@@ -372,7 +372,7 @@ pipdeptree==2.23.4
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
-platformdirs==4.3.6
+platformdirs==4.5.0
     # via
     #   -r requirements.in
     #   black
