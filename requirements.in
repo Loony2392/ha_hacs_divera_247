@@ -144,7 +144,7 @@ envs==1.4
     # via pycognito
 execnet==2.1.2
     # via pytest-xdist
-filelock==3.18.0
+filelock==3.20.0
     # via virtualenv
 fnv-hash-fast==1.2.2
     # via homeassistant
