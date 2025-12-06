@@ -433,7 +433,7 @@ pyopenssl==24.3.0
     #   acme
     #   homeassistant
     #   josepy
-pyrfc3339==2.0.1
+pyrfc3339==2.1.0
     # via
     #   -r requirements.in
     #   acme
