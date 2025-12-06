@@ -287,7 +287,7 @@ ifaddr==0.2.0
     #   -r requirements.in
     #   homeassistant
     #   zeroconf
-iniconfig==2.0.0
+iniconfig==2.3.0
     # via
     #   -r requirements.in
     #   pytest
