@@ -515,7 +515,7 @@ python-slugify==8.0.4
     #   homeassistant
 pytokens==0.3.0
     # via black
-pytz==2025.1
+pytz==2025.2
     # via
     #   -r requirements.in
     #   acme
