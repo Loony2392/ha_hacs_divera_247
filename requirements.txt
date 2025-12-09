@@ -145,7 +145,7 @@ btsocket==0.3.0
     # via
     #   -r requirements.in
     #   bluetooth-auto-recovery
-certifi==2025.1.31
+certifi==2025.11.12
     # via
     #   -r requirements.in
     #   homeassistant
