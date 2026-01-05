@@ -405,7 +405,7 @@ pycognito==2024.5.1
     # via
     #   -r requirements.in
     #   hass-nabucasa
-pycparser==2.22
+pycparser==2.23
     # via
     #   -r requirements.in
     #   cffi
