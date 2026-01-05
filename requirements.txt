@@ -583,7 +583,7 @@ syrupy==4.8.0
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
-termcolor==2.5.0
+termcolor==3.2.0
     # via
     #   -r requirements.in
     #   pytest-sugar
