@@ -45,6 +45,9 @@
             "invalid_accesskey": "Invalid access key format.",
             "range_error": "Value out of allowed range.",
             "invalid_int": "Must be a number.",
+            "missing_key": "Access key is required.",
+            "invalid_length": "Access key must be 10-1000 characters long.",
+            "invalid_url": "Invalid or insecure URL. HTTPS is required.",
             "unknown": "Unknown error"
         },
         "abort": {
