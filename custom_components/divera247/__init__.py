@@ -50,18 +50,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
     # Lazy-load version using async file read to avoid blocking I/O
     try:
         import json
+
         manifest_path = Path(__file__).parent / "manifest.json"
-        
+
         def _load_manifest():
             return json.loads(manifest_path.read_text(encoding="utf-8"))
-        
+
         manifest = await hass.async_add_executor_job(_load_manifest)
         globals()["__version__"] = manifest.get("version", "0.0.0")
     except Exception:  # pragma: no cover - non-critical
         globals()["__version__"] = "0.0.0"
 
     LOGGER.info(
-        "Starting Divera 24/7 setup (version=%s, entry_id=%s)", __version__, entry.entry_id
+        "Starting Divera 24/7 setup (version=%s, entry_id=%s)",
+        __version__,
+        entry.entry_id,
     )
 
     accesskey: str | None = entry.data.get(DATA_ACCESSKEY)
@@ -89,13 +92,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     # Determine update interval from options (fallback to default)
     try:
-        scan_interval = int(entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))
+        scan_interval = int(
+            entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
+        )
     except Exception:
         scan_interval = DEFAULT_SCAN_INTERVAL
 
     for ucr_id in ucr_ids:
         divera_coordinator = DiveraCoordinator(
-            hass, websession, accesskey, base_url=base_url, ucr_id=ucr_id, update_interval=scan_interval
+            hass,
+            websession,
+            accesskey,
+            base_url=base_url,
+            ucr_id=ucr_id,
+            update_interval=scan_interval,
         )
         coordinators[ucr_id] = divera_coordinator
         tasks.append(divera_coordinator.async_config_entry_first_refresh())
@@ -111,6 +121,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     # Register hub devices BEFORE loading platforms to ensure via_device references work
     from homeassistant.helpers import device_registry as dr
+
     device_registry = dr.async_get(hass)
     for ucr_id in ucr_ids:
         coordinator = coordinators[ucr_id]
@@ -126,7 +137,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
                 cluster_version = client.get_cluster_version()
             except Exception:
                 pass
-        
+
         device_registry.async_get_or_create(
             config_entry_id=entry.entry_id,
             identifiers={(DOMAIN, str(ucr_id))},
@@ -182,7 +193,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
             return
         match_name = next((s for s in valid if s.lower() == state_name.lower()), None)
         if match_name is None:
-            LOGGER.error("❌ set_user_state: unknown state '%s' (valid: %s)", state_name, valid)
+            LOGGER.error(
+                "❌ set_user_state: unknown state '%s' (valid: %s)", state_name, valid
+            )
             return
         try:
             await divera_client.set_user_state_by_name(match_name)
@@ -191,9 +204,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
             LOGGER.error("❌ Failed changing user state to '%s': %s", match_name, exc)
 
     LOGGER.info("🔔 Registering service divera247.set_user_state")
-    hass.services.async_register(
-        DOMAIN, "set_user_state", set_user_state_service
-    )
+    hass.services.async_register(DOMAIN, "set_user_state", set_user_state_service)
 
     # Forward platform setups (must be awaited to avoid frame warning in HA >=2025.1)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

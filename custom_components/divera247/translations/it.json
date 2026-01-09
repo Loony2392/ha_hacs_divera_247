@@ -109,16 +109,16 @@
             },
             "status_overview": {
                 "name": "Panoramica dello stato degli assistenti"
-                },
-                "status_active": {
-                    "name": "Volontari attivi"
-                },
-                "status_inactive": {
-                    "name": "Volontari inattivi"
-                },
-                "status_on_duty": {
-                    "name": "Volontari in servizio"
-                }
+            },
+            "status_active": {
+                "name": "Volontari attivi"
+            },
+            "status_inactive": {
+                "name": "Volontari inattivi"
+            },
+            "status_on_duty": {
+                "name": "Volontari in servizio"
+            }
         },
         "binary_sensor": {
             "active_alarm": {

@@ -107,18 +107,18 @@
             "vehicle_number": {
                 "name": "Numéro"
             },
-                "status_overview": {
-                    "name": "Aperçu du statut des bénévoles"
-                },
-                "status_active": {
-                    "name": "Bénévoles actifs"
-                },
-                "status_inactive": {
-                    "name": "Bénévoles inactifs"
-                },
-                "status_on_duty": {
-                    "name": "Bénévoles en service"
-                }
+            "status_overview": {
+                "name": "Aperçu du statut des bénévoles"
+            },
+            "status_active": {
+                "name": "Bénévoles actifs"
+            },
+            "status_inactive": {
+                "name": "Bénévoles inactifs"
+            },
+            "status_on_duty": {
+                "name": "Bénévoles en service"
+            }
         },
         "binary_sensor": {
             "active_alarm": {

@@ -74,14 +74,18 @@ class DiveraClient:
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
         try:
-            async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
+            async with self.__session.get(
+                url=url, params=params, timeout=DEFAULT_TIMEOUT
+            ) as response:
                 response.raise_for_status()
                 self.__data = await response.json()
                 # Debug preview of monitor/statusplan structures
                 if LOGGER.isEnabledFor(10):  # DEBUG level
                     try:
                         data_root = self.__data.get("data", {})
-                        monitor = data_root.get("monitor") or data_root.get("localmonitor")
+                        monitor = data_root.get("monitor") or data_root.get(
+                            "localmonitor"
+                        )
                         statusplan = data_root.get("statusplan")
                         LOGGER.debug(
                             "Divera data top-level keys: %s", list(data_root.keys())
@@ -128,7 +132,9 @@ class DiveraClient:
         params = {PARAM_ACCESSKEY: self.__accesskey}
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
-        async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
+        async with self.__session.get(
+            url=url, params=params, timeout=DEFAULT_TIMEOUT
+        ) as response:
             response.raise_for_status()
             self.__alarms_v2 = await response.json()
 
@@ -624,10 +630,10 @@ class DiveraClient:
                 f"Vehicle with ID {vehicle_id} or one of the required keys not found."
             )
             return {}
-    
+
     def get_organization_name(self) -> str | None:
         """Get organization name from cluster data (e.g., 'THW', 'Feuerwehr').
-        
+
         Returns:
             str | None: Organization name or None if not found.
         """
