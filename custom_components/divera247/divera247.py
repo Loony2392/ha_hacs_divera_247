@@ -3,7 +3,7 @@
 from datetime import datetime
 from http.client import UNAUTHORIZED
 
-from aiohttp import ClientError, ClientResponseError, ClientSession
+from aiohttp import ClientError, ClientResponseError, ClientSession, ClientTimeout
 
 from homeassistant.components.calendar import CalendarEvent
 from homeassistant.const import STATE_UNKNOWN
@@ -25,6 +25,9 @@ from .const import (
     VERSION_UNKNOWN,
 )
 from .utils import remove_params_from_url
+
+# Security: Set reasonable timeouts to prevent DoS/hanging requests
+DEFAULT_TIMEOUT = ClientTimeout(total=30, connect=10, sock_connect=10, sock_read=20)
 
 
 class DiveraClient:
@@ -71,7 +74,7 @@ class DiveraClient:
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
         try:
-            async with self.__session.get(url=url, params=params) as response:
+            async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
                 response.raise_for_status()
                 self.__data = await response.json()
                 # Debug preview of monitor/statusplan structures
@@ -125,7 +128,7 @@ class DiveraClient:
         params = {PARAM_ACCESSKEY: self.__accesskey}
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
-        async with self.__session.get(url=url, params=params) as response:
+        async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
             response.raise_for_status()
             self.__alarms_v2 = await response.json()
 
