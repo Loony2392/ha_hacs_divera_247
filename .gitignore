@@ -18,3 +18,9 @@ config/*
 !config/configuration.yaml
 /node_modules
 .haconfig/
+
+
+# Internal documentation & analysis (not for public repo)
+docs/internal/
+*.analysis
+analysis/
