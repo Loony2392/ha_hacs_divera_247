@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
+import html
 
 from homeassistant.components.sensor import SensorEntity, SensorEntityDescription
 from homeassistant.core import HomeAssistant
@@ -27,6 +28,23 @@ from .const import (
 from .entity import DiveraEntity, DiveraEntityDescription
 
 
+def _safe_string(value: Any) -> str:
+    """Safely sanitize string values to prevent XSS.
+    
+    Args:
+        value: Value to sanitize
+        
+    Returns:
+        Sanitized string with HTML entities escaped
+    """
+    if not isinstance(value, str):
+        value = str(value) if value else ""
+    # HTML escape to prevent XSS attacks
+    value = html.escape(value)
+    # Max 500 chars to prevent overflow
+    return value.strip()[:500]
+
+
 @dataclass(frozen=True, kw_only=True)
 class DiveraHelperEntityDescription(DiveraEntityDescription, SensorEntityDescription):
     """
@@ -46,15 +64,14 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         translation_key="helper_name",
         icon="mdi:account",
         attribute_fn=lambda divera: {},
-        value_fn=lambda divera,
-        helper: f"{helper.get('firstname', '')} {helper.get('lastname', '')}",
+        value_fn=lambda divera, helper: f"{_safe_string(helper.get('firstname', ''))} {_safe_string(helper.get('lastname', ''))}".strip(),
     ),
     DiveraHelperEntityDescription(
         key="helper_status",
         translation_key="helper_status",
         icon="mdi:account-check",
         attribute_fn=lambda divera: {},
-        value_fn=lambda divera, helper: helper.get("status", "unknown"),
+        value_fn=lambda divera, helper: _safe_string(helper.get("status", "unknown")),
     ),
 )
 
