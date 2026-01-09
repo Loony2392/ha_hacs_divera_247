@@ -1,8 +1,9 @@
 """Config flow for Divera 24/7 integration."""
 
 from typing import Any
+from urllib.parse import urlparse
 
-from voluptuous import Optional, Required, Schema
+from voluptuous import Optional, Required, Schema, Invalid
 
 from homeassistant.config_entries import HANDLERS, ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.data_entry_flow import FlowHandler
@@ -36,6 +37,42 @@ from .const import (
     VEHICLE_NAME_MODES,
 )
 from .divera247 import DiveraAuthError, DiveraClient, DiveraConnectionError
+
+
+def _validate_base_url(url: str) -> str:
+    """Validate and sanitize base URL.
+    
+    Args:
+        url (str): URL to validate
+        
+    Returns:
+        str: Sanitized URL
+        
+    Raises:
+        Invalid: If URL is invalid or not HTTPS
+    """
+    if not url or not isinstance(url, str):
+        raise Invalid("URL must be a non-empty string")
+    
+    url = url.strip()
+    
+    # Ensure URL has scheme
+    if not url.startswith(("http://", "https://")):
+        url = f"https://{url}"
+    
+    try:
+        parsed = urlparse(url)
+        # HTTPS required for security (with localhost exception for development)
+        if parsed.scheme != "https" and parsed.hostname not in ("localhost", "127.0.0.1"):
+            raise Invalid("Only HTTPS URLs are allowed (except localhost)")
+        # Validate hostname
+        if not parsed.hostname:
+            raise Invalid("URL must contain a valid hostname")
+        return url
+    except Invalid:
+        raise
+    except Exception as exc:
+        raise Invalid(f"Invalid URL format: {str(exc)}") from exc
 
 
 class DiveraFlow(FlowHandler):
@@ -275,11 +312,24 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            accesskey = user_input.get(CONF_ACCESSKEY)
-            base_url = user_input.get(CONF_BASE_URL)
+            accesskey = user_input.get(CONF_ACCESSKEY, "").strip()
+            base_url = user_input.get(CONF_BASE_URL, DIVERA_BASE_URL).strip()
             self._vehicle_name_mode = user_input.get(
                 CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
             )
+            
+            # Validate access key
+            if not accesskey:
+                errors[CONF_ACCESSKEY] = "missing_key"
+            elif len(accesskey) < 10 or len(accesskey) > 1000:
+                errors[CONF_ACCESSKEY] = "invalid_length"
+            
+            # Validate and sanitize base URL
+            try:
+                base_url = _validate_base_url(base_url)
+            except Invalid:
+                errors[CONF_BASE_URL] = "invalid_url"
+            
             # Validate scan interval
             scan_val = user_input.get(CONF_SCAN_INTERVAL, "60")
             try:
