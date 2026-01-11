@@ -2,7 +2,7 @@ name: 📚 Build Sphinx Docs and Deploy to Pages
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
     paths:
       - 'docs/**'
       - 'custom_components/divera247/**'
@@ -23,12 +23,12 @@ jobs:
 
     steps:
       - name: 📥 Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.13'
 
       - name: ⚙️ Configure Pages
         uses: actions/configure-pages@v5
