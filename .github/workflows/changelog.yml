@@ -1,0 +1,41 @@
+name: 📝 Update Changelog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "custom_components/divera247/manifest.json"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  changelog:
+    name: 📝 Generate Changelog
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📖 Generate Changelog
+        uses: orhun/git-cliff-action@v3
+        with:
+          config: cliff.toml
+          args: --output CHANGELOG.md
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: 📤 Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs: update CHANGELOG"
+          title: "docs: update CHANGELOG"
+          body: "Automated changelog update"
+          branch: update-changelog
+          delete-branch: true

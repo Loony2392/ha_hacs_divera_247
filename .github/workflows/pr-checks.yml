@@ -1,0 +1,81 @@
+name: 🔄 PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pr-checks:
+    name: 🔄 PR Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🏷️ Check PR title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            fix
+            feat
+            docs
+            style
+            refactor
+            perf
+            test
+            ci
+            chore
+          requireScope: false
+          subjectPattern: ^(?!.*\.$).+[.!?]?$
+          validateSingleCommit: false
+
+      - name: 📊 Size check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            
+            if (data.additions > 500 || data.deletions > 500) {
+              core.warning('This PR is quite large! Consider breaking it down into smaller PRs.');
+            }
+
+      - name: 🔀 Conflict check
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          if git merge-base --is-ancestor origin/${{ github.base_ref }} HEAD; then
+            echo "✅ No merge conflicts detected"
+          fi
+
+  description-check:
+    name: 📝 Description check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📝 Check PR description
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            
+            if (!data.body || data.body.trim().length < 10) {
+              core.setFailed('❌ Please provide a meaningful PR description');
+            } else {
+              core.notice('✅ PR has a description');
+            }
