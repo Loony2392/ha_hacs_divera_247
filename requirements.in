@@ -84,7 +84,7 @@ bluetooth-auto-recovery==1.5.1
     # via habluetooth
 bluetooth-data-tools==1.23.4
     # via habluetooth
-boolean-py==4.0
+boolean-py==5.0
     # via license-expression
 boto3==1.36.26
     # via pycognito
