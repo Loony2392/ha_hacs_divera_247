@@ -144,7 +144,7 @@ envs==1.4
     # via pycognito
 execnet==2.1.1
     # via pytest-xdist
-filelock==3.20.1
+filelock==3.20.3
     # via virtualenv
 fnv-hash-fast==1.2.2
     # via homeassistant
@@ -178,7 +178,7 @@ httpx==0.28.1
     #   respx
 identify==2.6.8
     # via pre-commit
-idna==3.10
+idna==3.15
     # via
     #   anyio
     #   httpx
