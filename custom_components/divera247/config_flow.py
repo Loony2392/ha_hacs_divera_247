@@ -585,7 +585,9 @@ class DiveraOptionsFlowHandler(OptionsFlow):
 
         schema = Schema(
             {
-                Required(CONF_SCAN_INTERVAL, default=current_scan): str,
+                # default must be a str: the field is validated as `str`, so an
+                # int default (stored scan interval) would raise "expected str".
+                Required(CONF_SCAN_INTERVAL, default=str(current_scan)): str,
                 Required(CONF_VEHICLE_NAME_MODE, default=current_mode): SelectSelector(
                     SelectSelectorConfig(
                         options=VEHICLE_NAME_MODES,
