@@ -41,29 +41,32 @@ from .divera247 import DiveraAuthError, DiveraClient, DiveraConnectionError
 
 def _validate_base_url(url: str) -> str:
     """Validate and sanitize base URL.
-    
+
     Args:
         url (str): URL to validate
-        
+
     Returns:
         str: Sanitized URL
-        
+
     Raises:
         Invalid: If URL is invalid or not HTTPS
     """
     if not url or not isinstance(url, str):
         raise Invalid("URL must be a non-empty string")
-    
+
     url = url.strip()
-    
+
     # Ensure URL has scheme
     if not url.startswith(("http://", "https://")):
         url = f"https://{url}"
-    
+
     try:
         parsed = urlparse(url)
         # HTTPS required for security (with localhost exception for development)
-        if parsed.scheme != "https" and parsed.hostname not in ("localhost", "127.0.0.1"):
+        if parsed.scheme != "https" and parsed.hostname not in (
+            "localhost",
+            "127.0.0.1",
+        ):
             raise Invalid("Only HTTPS URLs are allowed (except localhost)")
         # Validate hostname
         if not parsed.hostname:
@@ -137,7 +140,9 @@ class DiveraFlow(FlowHandler):
                     CONF_BASE_URL, description={"suggested_value": DIVERA_BASE_URL}
                 ): TextSelector(TextSelectorConfig(type=TextSelectorType.URL)),
                 Required(CONF_SCAN_INTERVAL, default="10"): str,
-                Required(CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]): SelectSelector(
+                Required(
+                    CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]
+                ): SelectSelector(
                     SelectSelectorConfig(
                         options=VEHICLE_NAME_MODES,
                         multiple=False,
@@ -147,7 +152,14 @@ class DiveraFlow(FlowHandler):
             },
         )
         return self.async_show_form(
-            step_id=CONF_FLOW_NAME_API, data_schema=api_schema, errors=errors
+            step_id=CONF_FLOW_NAME_API,
+            data_schema=api_schema,
+            errors=errors,
+            # hassfest forbids URLs in translation strings; pass it as a
+            # description placeholder ({url}) instead.
+            description_placeholders={
+                "url": "https://app.divera247.com/account/einstellungen.html"
+            },
         )
 
 
@@ -218,7 +230,10 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         try:
             await self._divera_client.pull_data()
             if self._divera_client.get_ucr_count() == 1:
-                return self.async_abort(reason="only_one_unit")
+                # Single unit: no cluster selection possible, but still allow the
+                # user to adjust the vehicle name source via reconfigure (#123).
+                # The update interval can be changed via the options flow.
+                return await self.async_step_reconfigure_vehicle_name_selection()
         except DiveraAuthError:
             errors["base"] = ERROR_AUTH
         except DiveraConnectionError:
@@ -262,24 +277,23 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         )
 
         if user_input is not None and not errors:
-            vehicle_name_mode = user_input.get(
-                CONF_VEHICLE_NAME_MODE, current_mode
-            )
+            vehicle_name_mode = user_input.get(CONF_VEHICLE_NAME_MODE, current_mode)
             # Apply both data and options updates, then reload and abort
             await self.hass.config_entries.async_update_entry(
                 self._config_entry,
                 data={
                     **self._config_entry.data,
-                    DATA_UCRS: self._data.get(DATA_UCRS, self._config_entry.data.get(DATA_UCRS)),
+                    DATA_UCRS: self._data.get(
+                        DATA_UCRS, self._config_entry.data.get(DATA_UCRS)
+                    ),
                 },
                 options={
                     **self._config_entry.options,
                     CONF_VEHICLE_NAME_MODE: vehicle_name_mode,
                 },
             )
-            self.hass.async_create_task(
-                self.hass.config_entries.async_reload(self._config_entry.entry_id)
-            )
+            # The entry's update listener (async_update_listener) reloads the
+            # integration so the new vehicle name mode takes effect.
             return self.async_abort(reason="reconfigure_successful")
 
         vehicle_schema = Schema(
@@ -317,19 +331,19 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             self._vehicle_name_mode = user_input.get(
                 CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
             )
-            
+
             # Validate access key
             if not accesskey:
                 errors[CONF_ACCESSKEY] = "missing_key"
             elif len(accesskey) < 10 or len(accesskey) > 1000:
                 errors[CONF_ACCESSKEY] = "invalid_length"
-            
+
             # Validate and sanitize base URL
             try:
                 base_url = _validate_base_url(base_url)
             except Invalid:
                 errors[CONF_BASE_URL] = "invalid_url"
-            
+
             # Validate scan interval
             scan_val = user_input.get(CONF_SCAN_INTERVAL, "60")
             try:
@@ -376,7 +390,11 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
                     cluster_part = self._divera_client.get_default_cluster_name()
                 except Exception:
                     cluster_part = ""
-                title = f"{cluster_part} - {fullname}" if cluster_part and fullname else fullname or cluster_part or "DIVERA 24/7"
+                title = (
+                    f"{cluster_part} - {fullname}"
+                    if cluster_part and fullname
+                    else fullname or cluster_part or "DIVERA 24/7"
+                )
                 return self.async_create_entry(
                     title=title,
                     data=self._data,
@@ -402,8 +420,12 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             ucr_ids = self._divera_client.get_ucr_ids(selected_cluster_names)
             self._data[DATA_UCRS] = ucr_ids
             # Ensure base/access set in case user jumped here
-            self._data[DATA_BASE_URL] = self._data.get(DATA_BASE_URL) or self._divera_client.get_base_url()
-            self._data[DATA_ACCESSKEY] = self._data.get(DATA_ACCESSKEY) or self._divera_client.get_accesskey()
+            self._data[DATA_BASE_URL] = (
+                self._data.get(DATA_BASE_URL) or self._divera_client.get_base_url()
+            )
+            self._data[DATA_ACCESSKEY] = (
+                self._data.get(DATA_ACCESSKEY) or self._divera_client.get_accesskey()
+            )
             # Build title
             try:
                 fullname = self._divera_client.get_full_name()
@@ -414,12 +436,17 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
                 cluster_part = ", ".join(cluster_names) if cluster_names else ""
             except Exception:
                 cluster_part = ""
-            title = f"{cluster_part} - {fullname}" if cluster_part and fullname else fullname or cluster_part or "DIVERA 24/7"
+            title = (
+                f"{cluster_part} - {fullname}"
+                if cluster_part and fullname
+                else fullname or cluster_part or "DIVERA 24/7"
+            )
             return self.async_create_entry(
                 title=title,
                 data=self._data,
                 options={
-                    CONF_VEHICLE_NAME_MODE: self._vehicle_name_mode or VEHICLE_NAME_MODES[0],
+                    CONF_VEHICLE_NAME_MODE: self._vehicle_name_mode
+                    or VEHICLE_NAME_MODES[0],
                     CONF_SCAN_INTERVAL: self._scan_interval,
                 },
             )
@@ -431,7 +458,7 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         return await self._show_clusters_form(
             active_cluster_names, cluster_names, errors
         )
-    
+
     async def async_step_vehicle_name_selection(
         self, user_input: dict[str, Any] | None = None
     ):
@@ -442,16 +469,18 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         errors: dict[str, str] = {}
 
         if user_input is not None and not errors:
-            vehicle_name_mode = user_input.get(CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0])
-            
+            vehicle_name_mode = user_input.get(
+                CONF_VEHICLE_NAME_MODE, VEHICLE_NAME_MODES[0]
+            )
+
             # If DATA_UCRS not yet set (single cluster case), set it now
             if DATA_UCRS not in self._data:
                 ucr_id: int = self._divera_client.get_default_ucr()
                 self._data[DATA_UCRS] = [ucr_id]
-            
+
             self._data[DATA_BASE_URL] = self._divera_client.get_base_url()
             self._data[DATA_ACCESSKEY] = self._divera_client.get_accesskey()
-            
+
             # Store initial vehicle name mode in options
             # Build a friendly title: "<cluster name> - <full name>"
             try:
@@ -474,17 +503,19 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             else:
                 title = fullname or cluster_part or "DIVERA 24/7"
             return self.async_create_entry(
-                title=title, 
+                title=title,
                 data=self._data,
                 options={
                     CONF_VEHICLE_NAME_MODE: vehicle_name_mode,
                     CONF_SCAN_INTERVAL: self._scan_interval,
-                }
+                },
             )
 
         vehicle_schema = Schema(
             {
-                Required(CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]): SelectSelector(
+                Required(
+                    CONF_VEHICLE_NAME_MODE, default=VEHICLE_NAME_MODES[0]
+                ): SelectSelector(
                     SelectSelectorConfig(
                         options=VEHICLE_NAME_MODES,
                         multiple=False,
@@ -505,7 +536,15 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         await self.async_set_unique_id(uid)
         self._abort_if_unique_id_configured()
 
-    # NOTE: Options flow handled by separate handler below
+    @staticmethod
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        """Return the options flow handler.
+
+        Registering this on the config flow class is what makes Home Assistant
+        show the "Configure" button so the update interval and vehicle name
+        source can be changed after the initial setup (#123).
+        """
+        return DiveraOptionsFlowHandler(config_entry)
 
 
 class DiveraOptionsFlowHandler(OptionsFlow):
@@ -535,15 +574,12 @@ class DiveraOptionsFlowHandler(OptionsFlow):
                             CONF_VEHICLE_NAME_MODE, current_mode
                         ),
                     }
-                    # Create entry and trigger reload so sensors get recreated with new naming mode
-                    result = self.async_create_entry(
+                    # Persist options. The entry's update listener
+                    # (async_update_listener) reloads the integration so sensors
+                    # are recreated with the new interval and naming mode.
+                    return self.async_create_entry(
                         title="Divera Options", data=new_options
                     )
-                    # Reload integration to apply option changes (add task so flow can finish)
-                    self.hass.async_create_task(
-                        self.hass.config_entries.async_reload(self._entry.entry_id)
-                    )
-                    return result
             except (TypeError, ValueError):
                 errors[CONF_SCAN_INTERVAL] = "invalid_int"
 
@@ -560,7 +596,3 @@ class DiveraOptionsFlowHandler(OptionsFlow):
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema, errors=errors)
-
-
-async def async_get_options_flow(config_entry: ConfigEntry):  # type: ignore[override]
-    return DiveraOptionsFlowHandler(config_entry)

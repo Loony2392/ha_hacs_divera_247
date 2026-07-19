@@ -4,7 +4,7 @@
         "step": {
             "api": {
                 "title": "🚀 Configuration DIVERA 24/7",
-                "description": "Veuillez entrer votre clé d'accès pour vous connecter aux serveurs DIVERA 24/7 et récupérer les données. Vous pouvez trouver la clé d'accès dans votre compte utilisateur sous 'Paramètres' dans la section 'Debug'. Pour plus d'informations, visitez: https://app.divera247.com/account/einstellungen.html",
+                "description": "Veuillez entrer votre clé d'accès pour vous connecter aux serveurs DIVERA 24/7 et récupérer les données. Vous pouvez trouver la clé d'accès dans votre compte utilisateur sous 'Paramètres' dans la section 'Debug'. Pour plus d'informations, visitez: {url}",
                 "data": {
                     "accesskey": "🔑 Clé d'accès",
                     "base_url": "🌐 Adresse du serveur (DIVERA 24/7)",
@@ -107,18 +107,18 @@
             "vehicle_number": {
                 "name": "Numéro"
             },
-                "status_overview": {
-                    "name": "Aperçu du statut des bénévoles"
-                },
-                "status_active": {
-                    "name": "Bénévoles actifs"
-                },
-                "status_inactive": {
-                    "name": "Bénévoles inactifs"
-                },
-                "status_on_duty": {
-                    "name": "Bénévoles en service"
-                }
+            "status_overview": {
+                "name": "Aperçu du statut des bénévoles"
+            },
+            "status_active": {
+                "name": "Bénévoles actifs"
+            },
+            "status_inactive": {
+                "name": "Bénévoles inactifs"
+            },
+            "status_on_duty": {
+                "name": "Bénévoles en service"
+            }
         },
         "binary_sensor": {
             "active_alarm": {

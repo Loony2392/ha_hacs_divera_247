@@ -1,4 +1,5 @@
 """Device tracker platform for Divera 24/7 vehicles."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -25,7 +26,9 @@ class DiveraVehicleTrackerEntity(DiveraEntity, TrackerEntity):
 
     _attr_icon = "mdi:map-marker"
 
-    def __init__(self, coordinator: DiveraCoordinator, vehicle_id: str, name_mode: str) -> None:
+    def __init__(
+        self, coordinator: DiveraCoordinator, vehicle_id: str, name_mode: str
+    ) -> None:
         self._vehicle_id = vehicle_id
         self._name_mode = name_mode or VEHICLE_NAME_MODE_AUTO
         # Pre-compute display name for device grouping before base init creates device
@@ -59,7 +62,11 @@ class DiveraVehicleTrackerEntity(DiveraEntity, TrackerEntity):
                 elif mode == VEHICLE_NAME_MODE_FULL:
                     name = attrs.get("fullname")
                 else:
-                    name = attrs.get("shortname") or attrs.get("name") or attrs.get("fullname")
+                    name = (
+                        attrs.get("shortname")
+                        or attrs.get("name")
+                        or attrs.get("fullname")
+                    )
             except Exception:
                 name = None
         return name

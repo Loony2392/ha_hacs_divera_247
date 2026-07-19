@@ -32,10 +32,10 @@ def print_info(text):
 def test_python_syntax():
     """Test Python syntax of all component files."""
     print_header("1. PYTHON SYNTAX CHECK")
-    
+
     component_dir = Path("custom_components/divera247")
     python_files = list(component_dir.glob("*.py"))
-    
+
     errors = []
     for py_file in python_files:
         try:
@@ -45,10 +45,10 @@ def test_python_syntax():
         except SyntaxError as e:
             errors.append(f"{py_file.name}: {e}")
             print_error(f"{py_file.name}: Line {e.lineno} - {e.msg}")
-    
+
     if errors:
         return False
-    
+
     print_info(f"Alle {len(python_files)} Python-Dateien sind syntaktisch korrekt")
     return True
 
@@ -56,9 +56,9 @@ def test_python_syntax():
 def test_imports():
     """Test if all imports are defined correctly."""
     print_header("2. IMPORT STRUCTURE CHECK")
-    
+
     component_dir = Path("custom_components/divera247")
-    
+
     # Check key files exist
     required_files = [
         "__init__.py",
@@ -69,7 +69,7 @@ def test_imports():
         "data.py",
         "utils.py",
     ]
-    
+
     for file in required_files:
         file_path = component_dir / file
         if file_path.exists():
@@ -77,17 +77,17 @@ def test_imports():
         else:
             print_error(f"{file} missing")
             return False
-    
+
     return True
 
 
 def test_platforms():
     """Test platform implementations."""
     print_header("3. PLATFORM IMPLEMENTATIONS")
-    
+
     component_dir = Path("custom_components/divera247")
     platforms = ["select", "sensor", "calendar", "binary_sensor", "button"]
-    
+
     for platform in platforms:
         file_path = component_dir / f"{platform}.py"
         if file_path.exists():
@@ -101,22 +101,22 @@ def test_platforms():
         else:
             print_error(f"{platform}.py missing")
             return False
-    
+
     return True
 
 
 def test_manifest():
     """Test manifest.json validity."""
     print_header("4. MANIFEST VALIDATION")
-    
+
     manifest_path = Path("custom_components/divera247/manifest.json")
-    
+
     try:
         with open(manifest_path, "r", encoding="utf-8") as f:
             manifest = json.load(f)
-        
+
         print_success("manifest.json is valid JSON")
-        
+
         # Check required fields
         required_fields = [
             "domain",
@@ -127,14 +127,14 @@ def test_manifest():
             "version",
             "config_flow",
         ]
-        
+
         for field in required_fields:
             if field in manifest:
                 print_success(f"Field '{field}' present: {manifest[field]}")
             else:
                 print_error(f"Field '{field}' missing")
                 return False
-        
+
         return True
     except Exception as e:
         print_error(f"manifest.json error: {e}")
@@ -144,15 +144,15 @@ def test_manifest():
 def test_translations():
     """Test translation files."""
     print_header("5. TRANSLATION FILES")
-    
+
     trans_dir = Path("custom_components/divera247/translations")
-    
+
     if not trans_dir.exists():
         print_error("translations directory missing")
         return False
-    
+
     translation_files = list(trans_dir.glob("*.json"))
-    
+
     for trans_file in translation_files:
         try:
             with open(trans_file, "r", encoding="utf-8") as f:
@@ -161,30 +161,30 @@ def test_translations():
         except Exception as e:
             print_error(f"{trans_file.name}: {e}")
             return False
-    
+
     if translation_files:
         print_info(f"{len(translation_files)} translation files validated")
     else:
         print_error("No translation files found")
         return False
-    
+
     return True
 
 
 def test_code_structure():
     """Test code structure and key implementations."""
     print_header("6. CODE STRUCTURE VALIDATION")
-    
+
     # Test DiveraClient class
     divera_file = Path("custom_components/divera247/divera247.py")
     content = divera_file.read_text(encoding="utf-8")
-    
+
     if "class DiveraClient:" in content:
         print_success("DiveraClient class found")
     else:
         print_error("DiveraClient class missing")
         return False
-    
+
     # Test key methods
     key_methods = {
         "pull_data": "async def pull_data",
@@ -194,42 +194,42 @@ def test_code_structure():
         "has_open_alarms": "def has_open_alarms",
         "trigger_probe_alarm": "async def trigger_probe_alarm",
     }
-    
+
     for method_name, method_signature in key_methods.items():
         if method_signature in content:
             print_success(f"Method '{method_name}' implemented")
         else:
             print_error(f"Method '{method_name}' missing")
             return False
-    
+
     return True
 
 
 def test_exception_handling():
     """Test custom exceptions."""
     print_header("7. EXCEPTION HANDLING")
-    
+
     divera_file = Path("custom_components/divera247/divera247.py")
     content = divera_file.read_text(encoding="utf-8")
-    
+
     exceptions = ["DiveraError", "DiveraAuthError", "DiveraConnectionError"]
-    
+
     for exception in exceptions:
         if f"class {exception}" in content:
             print_success(f"{exception} defined")
         else:
             print_error(f"{exception} missing")
             return False
-    
+
     return True
 
 
 def test_services():
     """Test services.yaml."""
     print_header("8. SERVICES CONFIGURATION")
-    
+
     services_file = Path("custom_components/divera247/services.yaml")
-    
+
     if services_file.exists():
         print_success("services.yaml exists")
         content = services_file.read_text(encoding="utf-8")
@@ -246,10 +246,10 @@ def test_services():
 
 def run_all_tests():
     """Run all integration tests."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("  DIVERA 24/7 INTEGRATION TEST SUITE")
-    print("="*60)
-    
+    print("=" * 60)
+
     tests = [
         ("Python Syntax", test_python_syntax),
         ("Import Structure", test_imports),
@@ -260,7 +260,7 @@ def run_all_tests():
         ("Exception Handling", test_exception_handling),
         ("Services Configuration", test_services),
     ]
-    
+
     results = []
     for name, test_func in tests:
         try:
@@ -269,19 +269,19 @@ def run_all_tests():
         except Exception as e:
             print_error(f"Test '{name}' failed with exception: {e}")
             results.append((name, False))
-    
+
     # Print summary
     print_header("TEST SUMMARY")
-    
+
     passed = sum(1 for _, result in results if result)
     total = len(results)
-    
+
     for name, result in results:
         if result:
             print_success(f"{name}")
         else:
             print_error(f"{name}")
-    
+
     print(f"\n{'='*60}")
     if passed == total:
         print(f"  ✓ ALL TESTS PASSED ({passed}/{total})")

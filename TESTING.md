@@ -139,27 +139,27 @@ pip-audit --requirements requirements.txt
 
 ## OWASP Top 10 Mapping
 
-| OWASP Issue | Mitigation | Status |
-|-------------|-----------|--------|
-| A01:2021 – Injection | Input validation, parameterized queries | ✅ |
-| A03:2021 – Injection | HTTPS enforcement, URL validation | ✅ |
-| A07:2021 – Cross-Site Scripting (XSS) | HTML escaping, output encoding | ✅ |
-| A08:2021 – Software and Data Integrity | Dependency pinning, checksum verification | ✅ |
-| A10:2021 – Server-Side Request Forgery (SSRF) | URL whitelist, hostname validation | ✅ |
+| OWASP Issue                                   | Mitigation                                | Status |
+| --------------------------------------------- | ----------------------------------------- | ------ |
+| A01:2021 – Injection                          | Input validation, parameterized queries   | ✅     |
+| A03:2021 – Injection                          | HTTPS enforcement, URL validation         | ✅     |
+| A07:2021 – Cross-Site Scripting (XSS)         | HTML escaping, output encoding            | ✅     |
+| A08:2021 – Software and Data Integrity        | Dependency pinning, checksum verification | ✅     |
+| A10:2021 – Server-Side Request Forgery (SSRF) | URL whitelist, hostname validation        | ✅     |
 
 ## Security Checklist
 
 Before each release, verify:
 
-- [ ] All input validation tests pass
-- [ ] XSS prevention tests pass
-- [ ] No security warnings in dependency scan
-- [ ] API timeout configuration is correct
-- [ ] Error messages don't expose sensitive data
-- [ ] HTTPS enforcement is enabled
-- [ ] Access keys are not logged
-- [ ] README includes security guidance
-- [ ] SECURITY.md is up to date
+-   [ ] All input validation tests pass
+-   [ ] XSS prevention tests pass
+-   [ ] No security warnings in dependency scan
+-   [ ] API timeout configuration is correct
+-   [ ] Error messages don't expose sensitive data
+-   [ ] HTTPS enforcement is enabled
+-   [ ] Access keys are not logged
+-   [ ] README includes security guidance
+-   [ ] SECURITY.md is up to date
 
 ## Continuous Integration
 
@@ -169,12 +169,12 @@ Security checks are automated in CI/CD:
 # .github/workflows/security.yml
 - name: Security Scan
   run: |
-    safety check -r requirements.txt
-    pip-audit
-    
+      safety check -r requirements.txt
+      pip-audit
+
 - name: SAST with Bandit
   run: |
-    bandit -r custom_components/divera247
+      bandit -r custom_components/divera247
 ```
 
 ## Known Issues & Mitigations
@@ -191,11 +191,12 @@ If GitHub reports vulnerabilities in dependencies:
 ### Code Review
 
 Every PR should include:
-- [ ] Input validation review
-- [ ] Output encoding review
-- [ ] Error handling review
-- [ ] No hardcoded secrets
-- [ ] No command injection risks
+
+-   [ ] Input validation review
+-   [ ] Output encoding review
+-   [ ] Error handling review
+-   [ ] No hardcoded secrets
+-   [ ] No command injection risks
 
 ## Testing Commands
 
@@ -212,9 +213,9 @@ pytest tests/test_security.py -vv --tb=short
 
 ## References
 
-- [OWASP Top 10 - 2021](https://owasp.org/Top10/)
-- [Home Assistant Security Best Practices](https://developers.home-assistant.io/docs/development_testing/)
-- [CWE - Common Weakness Enumeration](https://cwe.mitre.org/)
+-   [OWASP Top 10 - 2021](https://owasp.org/Top10/)
+-   [Home Assistant Security Best Practices](https://developers.home-assistant.io/docs/development_testing/)
+-   [CWE - Common Weakness Enumeration](https://cwe.mitre.org/)
 
 ---
 

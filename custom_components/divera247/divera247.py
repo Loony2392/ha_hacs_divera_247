@@ -74,14 +74,18 @@ class DiveraClient:
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
         try:
-            async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
+            async with self.__session.get(
+                url=url, params=params, timeout=DEFAULT_TIMEOUT
+            ) as response:
                 response.raise_for_status()
                 self.__data = await response.json()
                 # Debug preview of monitor/statusplan structures
                 if LOGGER.isEnabledFor(10):  # DEBUG level
                     try:
                         data_root = self.__data.get("data", {})
-                        monitor = data_root.get("monitor") or data_root.get("localmonitor")
+                        monitor = data_root.get("monitor") or data_root.get(
+                            "localmonitor"
+                        )
                         statusplan = data_root.get("statusplan")
                         LOGGER.debug(
                             "Divera data top-level keys: %s", list(data_root.keys())
@@ -128,7 +132,9 @@ class DiveraClient:
         params = {PARAM_ACCESSKEY: self.__accesskey}
         if self.__ucr_id is not None:
             params[PARAM_UCR] = self.__ucr_id
-        async with self.__session.get(url=url, params=params, timeout=DEFAULT_TIMEOUT) as response:
+        async with self.__session.get(
+            url=url, params=params, timeout=DEFAULT_TIMEOUT
+        ) as response:
             response.raise_for_status()
             self.__alarms_v2 = await response.json()
 
@@ -390,6 +396,7 @@ class DiveraClient:
         attributes = {
             "id": alarm.get("id"),
             "foreign_id": alarm.get("foreign_id"),
+            "title": alarm.get("title"),
             "text": alarm.get("text"),
             "date": datetime.fromtimestamp(
                 alarm.get("date"), tz=get_default_time_zone()
@@ -405,14 +412,14 @@ class DiveraClient:
             "answered": self.get_answered_state(alarm),
         }
 
-        # Enrich with vehicles from /api/v2/alarms if available
+        # Enrich with vehicle names for the alarm. Vehicles may come from the
+        # /api/v2/alarms payload (best-effort) or, as a fallback, from the vehicle
+        # ids on the primary alarm object. In both cases ids are resolved to a
+        # human-readable name via the cluster vehicle data (see issue #121).
         try:
-            if self.__alarms_v2:
-                items = (
-                    self.__alarms_v2.get("data", {}).get("items")
-                    if isinstance(self.__alarms_v2, dict)
-                    else None
-                )
+            veh_block = None
+            if isinstance(self.__alarms_v2, dict):
+                items = self.__alarms_v2.get("data", {}).get("items")
                 if isinstance(items, dict):
                     v2_alarm = items.get(str(attributes.get("id")))
                     if isinstance(v2_alarm, dict):
@@ -421,36 +428,73 @@ class DiveraClient:
                             or v2_alarm.get("vehicles")
                             or v2_alarm.get("vehicle_list")
                         )
-                        vehicles: list[str] = []
-                        if isinstance(veh_block, dict):
-                            for vid, v in veh_block.items():
-                                if isinstance(v, dict):
-                                    name = (
-                                        v.get("shortname")
-                                        or v.get("name")
-                                        or v.get("fullname")
-                                        or str(vid)
-                                    )
-                                    vehicles.append(name)
-                                else:
-                                    vehicles.append(str(v))
-                        elif isinstance(veh_block, list):
-                            for v in veh_block:
-                                if isinstance(v, dict):
-                                    name = (
-                                        v.get("shortname")
-                                        or v.get("name")
-                                        or v.get("fullname")
-                                    )
-                                    vehicles.append(name or "unknown")
-                                else:
-                                    vehicles.append(str(v))
-                        if vehicles:
-                            attributes["vehicles"] = vehicles
+            if veh_block is None:
+                veh_block = alarm.get("vehicle") or alarm.get("vehicles")
+
+            vehicles: list[str] = []
+            if isinstance(veh_block, dict):
+                for vid, v in veh_block.items():
+                    vehicles.append(self._resolve_vehicle_name(vid, v))
+            elif isinstance(veh_block, list):
+                for v in veh_block:
+                    if isinstance(v, dict):
+                        vehicles.append(self._resolve_vehicle_name(v.get("id"), v))
+                    else:
+                        vehicles.append(self._resolve_vehicle_name(v))
+            if vehicles:
+                attributes["vehicles"] = vehicles
         except Exception:  # pragma: no cover (best-effort enrichment)
             pass
 
         return attributes
+
+    def get_vehicle_name_by_id(self, vehicle_id) -> str | None:
+        """
+        Return a human-readable vehicle name for a vehicle id from cluster data.
+
+        Args:
+            vehicle_id: The id of the vehicle (int or str).
+
+        Returns:
+            str | None: The shortname/name/fullname of the vehicle, or None if the
+            vehicle id is not found in the cluster data.
+        """
+        try:
+            vehicle = self.__data["data"]["cluster"]["vehicle"][str(vehicle_id)]
+        except (KeyError, TypeError):
+            return None
+        if not isinstance(vehicle, dict):
+            return None
+        return (
+            vehicle.get("shortname")
+            or vehicle.get("name")
+            or vehicle.get("fullname")
+            or None
+        )
+
+    def _resolve_vehicle_name(self, vehicle_id, vehicle=None) -> str:
+        """
+        Resolve a vehicle id (with optional inline data) to a display name.
+
+        Prefers inline name fields, then falls back to the cluster vehicle data and
+        finally to the raw id so a value is always returned.
+
+        Args:
+            vehicle_id: The id of the vehicle.
+            vehicle: Optional inline vehicle data (dict) from the alarm payload.
+
+        Returns:
+            str: A human-readable vehicle name (or the id as string if unknown).
+        """
+        if isinstance(vehicle, dict):
+            name = (
+                vehicle.get("shortname")
+                or vehicle.get("name")
+                or vehicle.get("fullname")
+            )
+            if name:
+                return name
+        return self.get_vehicle_name_by_id(vehicle_id) or str(vehicle_id)
 
     def get_answered_state(self, alarm):
         """
@@ -624,10 +668,10 @@ class DiveraClient:
                 f"Vehicle with ID {vehicle_id} or one of the required keys not found."
             )
             return {}
-    
+
     def get_organization_name(self) -> str | None:
         """Get organization name from cluster data (e.g., 'THW', 'Feuerwehr').
-        
+
         Returns:
             str | None: Organization name or None if not found.
         """

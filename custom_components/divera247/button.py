@@ -7,15 +7,14 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from . import DiveraConfigEntry, DiveraCoordinator
 from .const import DOMAIN
 from dataclasses import dataclass
-from typing import MutableMapping, Any
 
 from .entity import DiveraEntity, DiveraEntityDescription
-from .divera247 import DiveraClient
 
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraButtonEntityDescription(DiveraEntityDescription):
     """Description for Divera test alarm button."""
+
     # No extra fields needed; button has no native value
 
 

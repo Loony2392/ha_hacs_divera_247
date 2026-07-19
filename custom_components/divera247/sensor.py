@@ -30,10 +30,10 @@ from .entity import DiveraEntity, DiveraEntityDescription
 
 def _safe_string(value: Any) -> str:
     """Safely sanitize string values to prevent XSS.
-    
+
     Args:
         value: Value to sanitize
-        
+
     Returns:
         Sanitized string with HTML entities escaped
     """
@@ -64,7 +64,8 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         translation_key="helper_name",
         icon="mdi:account",
         attribute_fn=lambda divera: {},
-        value_fn=lambda divera, helper: f"{_safe_string(helper.get('firstname', ''))} {_safe_string(helper.get('lastname', ''))}".strip(),
+        value_fn=lambda divera,
+        helper: f"{_safe_string(helper.get('firstname', ''))} {_safe_string(helper.get('lastname', ''))}".strip(),
     ),
     DiveraHelperEntityDescription(
         key="helper_status",
@@ -74,6 +75,7 @@ HELPER_SENSORS: tuple[DiveraHelperEntityDescription, ...] = (
         value_fn=lambda divera, helper: _safe_string(helper.get("status", "unknown")),
     ),
 )
+
 
 @dataclass(frozen=True, kw_only=True)
 class DiveraVehicleEntityDescription(DiveraEntityDescription, SensorEntityDescription):
@@ -131,7 +133,11 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
                 elif mode == VEHICLE_NAME_MODE_FULL:
                     name = attrs.get("fullname")
                 else:  # auto
-                    name = attrs.get("shortname") or attrs.get("name") or attrs.get("fullname")
+                    name = (
+                        attrs.get("shortname")
+                        or attrs.get("name")
+                        or attrs.get("fullname")
+                    )
             except Exception:
                 name = None
         return name
@@ -157,8 +163,10 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
             # For location entities, keep attributes minimal (latitude/longitude) to
             # ensure map compatibility; otherwise expose full vehicle attributes.
             if self.entity_description.translation_key == "vehicle_location":
-                self._attr_extra_state_attributes = self.entity_description.attribute_fn(  # type: ignore[attr-defined]
-                    client
+                self._attr_extra_state_attributes = (
+                    self.entity_description.attribute_fn(  # type: ignore[attr-defined]
+                        client
+                    )
                 )
             else:
                 self._attr_extra_state_attributes = client.get_vehicle_attributes(
@@ -170,12 +178,19 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
     @property
     def device_info(self) -> DeviceInfo:  # type: ignore[override]
         # Ensure we have a display name; compute from current data if missing
-        if not self._vehicle_display_name or self._vehicle_display_name == self._vehicle_id:
+        if (
+            not self._vehicle_display_name
+            or self._vehicle_display_name == self._vehicle_id
+        ):
             try:
-                self._vehicle_display_name = self._compute_display_name(self.coordinator.data) or self._vehicle_id
+                self._vehicle_display_name = (
+                    self._compute_display_name(self.coordinator.data)
+                    or self._vehicle_id
+                )
             except Exception:
                 self._vehicle_display_name = self._vehicle_id
         from . import __version__
+
         client = self.coordinator.data
         cluster_version = client.get_cluster_version() if client else "unknown"
         return DeviceInfo(
@@ -312,7 +327,9 @@ class DiveraStatusCountSensorEntity(DiveraEntity, SensorEntity):
 
 
 @dataclass(frozen=True, kw_only=True)
-class DiveraStatusOverviewEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+class DiveraStatusOverviewEntityDescription(
+    DiveraEntityDescription, SensorEntityDescription
+):
     """Description for aggregated status overview sensor."""
 
     value_fn: Callable[[DiveraClient], Any]
@@ -340,7 +357,9 @@ class DiveraStatusOverviewSensorEntity(DiveraEntity, SensorEntity):
 
 
 @dataclass(frozen=True, kw_only=True)
-class DiveraAlarmAddressEntityDescription(DiveraEntityDescription, SensorEntityDescription):
+class DiveraAlarmAddressEntityDescription(
+    DiveraEntityDescription, SensorEntityDescription
+):
     """Description for last alarm address sensor."""
 
     value_fn: Callable[[DiveraClient], Any]
@@ -426,39 +445,51 @@ async def async_setup_entry(
                 name_mode=mode,
             )
             entities.append(DiveraVehicleSensorEntity(coordinator, vid, description))
-            
+
             # Additional attribute sensors for each vehicle
             # Location sensor removed to avoid duplicate with device_tracker
-            
+
             # OPTA sensor
             opta_desc = DiveraVehicleEntityDescription(
                 key=f"vehicle_{vid}_opta",
                 translation_key="vehicle_opta",
                 icon="mdi:radio-tower",
                 attribute_fn=(lambda divera, _vid=vid: {}),
-                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("opta")),
+                value_fn=(
+                    lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get(
+                        "opta"
+                    )
+                ),
                 name_mode=mode,
             )
             entities.append(DiveraVehicleSensorEntity(coordinator, vid, opta_desc))
-            
+
             # ISSI sensor
             issi_desc = DiveraVehicleEntityDescription(
                 key=f"vehicle_{vid}_issi",
                 translation_key="vehicle_issi",
                 icon="mdi:identifier",
                 attribute_fn=(lambda divera, _vid=vid: {}),
-                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("issi")),
+                value_fn=(
+                    lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get(
+                        "issi"
+                    )
+                ),
                 name_mode=mode,
             )
             entities.append(DiveraVehicleSensorEntity(coordinator, vid, issi_desc))
-            
+
             # Vehicle number sensor
             number_desc = DiveraVehicleEntityDescription(
                 key=f"vehicle_{vid}_number",
                 translation_key="vehicle_number",
                 icon="mdi:train-car-box",
                 attribute_fn=(lambda divera, _vid=vid: {}),
-                value_fn=(lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get("number")),
+                value_fn=(
+                    lambda divera, _vid=vid: divera.get_vehicle_attributes(_vid).get(
+                        "number"
+                    )
+                ),
                 name_mode=mode,
             )
             entities.append(DiveraVehicleSensorEntity(coordinator, vid, number_desc))

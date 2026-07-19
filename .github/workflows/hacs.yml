@@ -1,6 +1,7 @@
+---
 name: ✅ HACS Validation
 
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
   push:
   schedule:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🚀 Run HACS validation
         uses: hacs/action@main

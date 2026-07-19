@@ -107,7 +107,7 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
             DeviceInfo: Device information object.
         """
         from . import __version__
-        
+
         config_url = DIVERA_BASE_URL
         client = self.coordinator.data
         cluster_version = client.get_cluster_version() if client else "unknown"
@@ -119,7 +119,7 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
                 org_name = f" - {raw_org}" if raw_org else ""
             except Exception:
                 org_name = ""
-        
+
         # Vehicle sensors get their own device grouping
         vid = getattr(self, "_vehicle_id", None)
         if vid is not None:
@@ -135,7 +135,7 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
                 configuration_url=config_url,
                 via_device=(DOMAIN, str(self._ucr_id)),
             )
-        
+
         # Hub device for user-related entities (calendar, status, etc.)
         # Prefer cluster name (e.g., "THW OV Halver"); fallback to organization
         device_display_name = self._cluster_name or org_name or "Divera 24/7"
