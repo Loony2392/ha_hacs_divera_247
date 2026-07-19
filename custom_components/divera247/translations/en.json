@@ -4,7 +4,7 @@
         "step": {
             "api": {
                 "title": "🚀 DIVERA 24/7 Setup",
-                "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: https://app.divera247.com/account/einstellungen.html",
+                "description": "Please enter your access key to connect to the DIVERA 24/7 servers and retrieve data. You can find the access key in your user account under 'Settings' in the 'Debug' section. For more information, visit: {url}",
                 "data": {
                     "accesskey": "🔑 Access key",
                     "base_url": "🌐 Server address (DIVERA 24/7)",

@@ -4,7 +4,7 @@
         "step": {
             "api": {
                 "title": "🚀 DIVERA 24/7 Configuratie",
-                "description": "Voer je toegangssleutel in om verbinding te maken met de DIVERA 24/7-servers en gegevens op te halen. Je vindt de toegangssleutel in je gebruikersaccount onder 'Instellingen' in het gedeelte 'Debug'. Voor meer informatie, bezoek: https://app.divera247.com/account/einstellungen.html",
+                "description": "Voer je toegangssleutel in om verbinding te maken met de DIVERA 24/7-servers en gegevens op te halen. Je vindt de toegangssleutel in je gebruikersaccount onder 'Instellingen' in het gedeelte 'Debug'. Voor meer informatie, bezoek: {url}",
                 "data": {
                     "accesskey": "🔑 Toegangssleutel",
                     "base_url": "🌐 Serveradres (DIVERA 24/7)",
