@@ -4,7 +4,7 @@
         "step": {
             "api": {
                 "title": "🚀 Configurazione DIVERA 24/7",
-                "description": "Inserisci la tua chiave di accesso per connetterti ai server DIVERA 24/7 e recuperare i dati. Puoi trovare la chiave di accesso nel tuo account utente sotto 'Impostazioni' nella sezione 'Debug'. Per maggiori informazioni, visita: https://app.divera247.com/account/einstellungen.html",
+                "description": "Inserisci la tua chiave di accesso per connetterti ai server DIVERA 24/7 e recuperare i dati. Puoi trovare la chiave di accesso nel tuo account utente sotto 'Impostazioni' nella sezione 'Debug'. Per maggiori informazioni, visita: {url}",
                 "data": {
                     "accesskey": "🔑 Chiave di accesso",
                     "base_url": "🌐 Indirizzo server (DIVERA 24/7)",

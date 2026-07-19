@@ -4,7 +4,7 @@
         "step": {
             "api": {
                 "title": "🚀 DIVERA 24/7 Einrichtung",
-                "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: https://app.divera247.com/account/einstellungen.html",
+                "description": "Bitte geben Sie Ihren Zugangsschlüssel ein, um die Verbindung zu den DIVERA 24/7-Servern herzustellen und Daten abzurufen. Den Zugangsschlüssel finden Sie in Ihrem Benutzerkonto unter 'Einstellungen' im Abschnitt 'Debug'. Weitere Informationen finden Sie unter: {url}",
                 "data": {
                     "accesskey": "🔑 Zugangsschlüssel",
                     "base_url": "🌐 Serveradresse (DIVERA 24/7)",

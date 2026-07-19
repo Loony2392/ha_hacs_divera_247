@@ -152,7 +152,14 @@ class DiveraFlow(FlowHandler):
             },
         )
         return self.async_show_form(
-            step_id=CONF_FLOW_NAME_API, data_schema=api_schema, errors=errors
+            step_id=CONF_FLOW_NAME_API,
+            data_schema=api_schema,
+            errors=errors,
+            # hassfest forbids URLs in translation strings; pass it as a
+            # description placeholder ({url}) instead.
+            description_placeholders={
+                "url": "https://app.divera247.com/account/einstellungen.html"
+            },
         )
 
 
@@ -223,7 +230,10 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         try:
             await self._divera_client.pull_data()
             if self._divera_client.get_ucr_count() == 1:
-                return self.async_abort(reason="only_one_unit")
+                # Single unit: no cluster selection possible, but still allow the
+                # user to adjust the vehicle name source via reconfigure (#123).
+                # The update interval can be changed via the options flow.
+                return await self.async_step_reconfigure_vehicle_name_selection()
         except DiveraAuthError:
             errors["base"] = ERROR_AUTH
         except DiveraConnectionError:
@@ -282,9 +292,8 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
                     CONF_VEHICLE_NAME_MODE: vehicle_name_mode,
                 },
             )
-            self.hass.async_create_task(
-                self.hass.config_entries.async_reload(self._config_entry.entry_id)
-            )
+            # The entry's update listener (async_update_listener) reloads the
+            # integration so the new vehicle name mode takes effect.
             return self.async_abort(reason="reconfigure_successful")
 
         vehicle_schema = Schema(
@@ -527,7 +536,15 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
         await self.async_set_unique_id(uid)
         self._abort_if_unique_id_configured()
 
-    # NOTE: Options flow handled by separate handler below
+    @staticmethod
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        """Return the options flow handler.
+
+        Registering this on the config flow class is what makes Home Assistant
+        show the "Configure" button so the update interval and vehicle name
+        source can be changed after the initial setup (#123).
+        """
+        return DiveraOptionsFlowHandler(config_entry)
 
 
 class DiveraOptionsFlowHandler(OptionsFlow):
@@ -557,21 +574,20 @@ class DiveraOptionsFlowHandler(OptionsFlow):
                             CONF_VEHICLE_NAME_MODE, current_mode
                         ),
                     }
-                    # Create entry and trigger reload so sensors get recreated with new naming mode
-                    result = self.async_create_entry(
+                    # Persist options. The entry's update listener
+                    # (async_update_listener) reloads the integration so sensors
+                    # are recreated with the new interval and naming mode.
+                    return self.async_create_entry(
                         title="Divera Options", data=new_options
                     )
-                    # Reload integration to apply option changes (add task so flow can finish)
-                    self.hass.async_create_task(
-                        self.hass.config_entries.async_reload(self._entry.entry_id)
-                    )
-                    return result
             except (TypeError, ValueError):
                 errors[CONF_SCAN_INTERVAL] = "invalid_int"
 
         schema = Schema(
             {
-                Required(CONF_SCAN_INTERVAL, default=current_scan): str,
+                # default must be a str: the field is validated as `str`, so an
+                # int default (stored scan interval) would raise "expected str".
+                Required(CONF_SCAN_INTERVAL, default=str(current_scan)): str,
                 Required(CONF_VEHICLE_NAME_MODE, default=current_mode): SelectSelector(
                     SelectSelectorConfig(
                         options=VEHICLE_NAME_MODES,
@@ -582,7 +598,3 @@ class DiveraOptionsFlowHandler(OptionsFlow):
             }
         )
         return self.async_show_form(step_id="init", data_schema=schema, errors=errors)
-
-
-async def async_get_options_flow(config_entry: ConfigEntry):  # type: ignore[override]
-    return DiveraOptionsFlowHandler(config_entry)
