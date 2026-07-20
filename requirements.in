@@ -216,7 +216,7 @@ multidict==6.1.0
     #   yarl
 mypy-extensions==1.1.0
     # via black
-nodeenv==1.9.1
+nodeenv==1.10.0
     # via pre-commit
 numpy==2.2.2
     # via pytest-homeassistant-custom-component
