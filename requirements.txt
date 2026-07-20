@@ -334,7 +334,7 @@ mypy-extensions==1.1.0
     # via
     #   -r requirements.in
     #   black
-nodeenv==1.9.1
+nodeenv==1.10.0
     # via
     #   -r requirements.in
     #   pre-commit
