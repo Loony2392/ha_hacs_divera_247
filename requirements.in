@@ -210,7 +210,7 @@ mashumaro==3.16
     #   webrtc-models
 mock-open==1.4.0
     # via pytest-homeassistant-custom-component
-multidict==6.1.0
+multidict==6.7.1
     # via
     #   aiohttp
     #   yarl
