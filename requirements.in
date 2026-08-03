@@ -192,7 +192,7 @@ iniconfig==2.0.0
     # via pytest
 jinja2==3.1.5
     # via homeassistant
-jmespath==1.0.1
+jmespath==1.1.0
     # via
     #   boto3
     #   botocore
