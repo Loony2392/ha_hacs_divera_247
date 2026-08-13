@@ -47,7 +47,8 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          name: Release ${{ steps.version.outputs.version }}
+          # Title is the bare version, matching v2026.07.0.
+          name: ${{ steps.version.outputs.version }}
           body: |
             ## 🎉 Release ${{ steps.version.outputs.version }}
             
