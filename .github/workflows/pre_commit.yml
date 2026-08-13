@@ -6,6 +6,9 @@ on: # yamllint disable-line rule:truthy
     branches:
       - develop
 
+permissions:
+  contents: read
+
 jobs:
   pre-commit:
     name: 🛠️ Run Pre-Commit Checks
