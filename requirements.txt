@@ -258,7 +258,7 @@ home-assistant-bluetooth==1.13.0
     # via
     #   -r requirements.in
     #   homeassistant
-homeassistant==2025.2.1
+homeassistant==2026.6.0
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
