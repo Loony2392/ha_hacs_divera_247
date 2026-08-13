@@ -355,14 +355,17 @@ class DiveraConfigFlow(DiveraFlow, ConfigFlow):
             except (TypeError, ValueError):
                 errors[CONF_SCAN_INTERVAL] = "invalid_int"
 
-            websession = async_get_clientsession(self.hass)
-            self._divera_client = DiveraClient(websession, accesskey, base_url)
-            try:
-                await self._divera_client.pull_data()
-            except DiveraAuthError:
-                errors["base"] = ERROR_AUTH
-            except DiveraConnectionError:
-                errors["base"] = ERROR_CONNECTION
+            # Only contact the API once the input validated: otherwise the
+            # accesskey would be sent to an unvalidated, user-supplied host.
+            if not errors:
+                websession = async_get_clientsession(self.hass)
+                self._divera_client = DiveraClient(websession, accesskey, base_url)
+                try:
+                    await self._divera_client.pull_data()
+                except DiveraAuthError:
+                    errors["base"] = ERROR_AUTH
+                except DiveraConnectionError:
+                    errors["base"] = ERROR_CONNECTION
 
             if not errors:
                 await self.check_unique_id()

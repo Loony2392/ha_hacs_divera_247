@@ -107,21 +107,23 @@ class DiveraClient:
         except ClientResponseError as exc:
             # TODO Exception Tests
             url = remove_params_from_url(exc.request_info.url)
-            LOGGER.error(f"Error response {exc.status} while requesting {url!r}.")
+            LOGGER.error("Error response %s while requesting %r.", exc.status, url)
             if exc.status == UNAUTHORIZED:
                 raise DiveraAuthError from None
             raise DiveraConnectionError from None
         except ClientError as exc:
             request_info = getattr(exc, "request_info", None)
-            raw_url = getattr(request_info, "url", None)
-            url = remove_params_from_url(raw_url) if raw_url else "unknown"
-            LOGGER.error(f"An error occurred while requesting {url!r}: {exc}")
+            url = remove_params_from_url(getattr(request_info, "url", None))
+            # Never log exc itself: its repr embeds the accesskey-bearing URL.
+            LOGGER.error(
+                "An error occurred while requesting %r: %s", url, type(exc).__name__
+            )
             raise DiveraConnectionError from None
         # Best-effort: also fetch /api/v2/alarms to enrich alarm attributes with vehicles
         try:
             await self._fetch_alarms_v2()
         except Exception as exc:  # pragma: no cover (non-fatal enrichment)
-            LOGGER.debug("Failed to fetch /api/v2/alarms: %s", exc)
+            LOGGER.debug("Failed to fetch /api/v2/alarms: %s", type(exc).__name__)
 
     async def _fetch_alarms_v2(self):
         """Fetch alarms from v2 API to access vehicle lists for alarms.
@@ -885,18 +887,19 @@ class DiveraClient:
 
         try:
             async with self.__session.post(
-                url=url, params=params, json=state
+                url=url, params=params, json=state, timeout=DEFAULT_TIMEOUT
             ) as response:
                 response.raise_for_status()
         except ClientResponseError as exc:
             url_clean = remove_params_from_url(exc.request_info.url)
-            LOGGER.error(f"Error response {exc.status} while requesting {url_clean!r}.")
+            LOGGER.error("Error response %s while requesting %r.", exc.status, url_clean)
             if exc.status == UNAUTHORIZED:
                 raise DiveraAuthError from None
             raise DiveraConnectionError from None
         except ClientError as exc:
-            url_clean = remove_params_from_url(exc.request_info.url)
-            LOGGER.error(f"An error occurred while requesting {url_clean!r}.")
+            request_info = getattr(exc, "request_info", None)
+            url_clean = remove_params_from_url(getattr(request_info, "url", None))
+            LOGGER.error("An error occurred while requesting %r.", url_clean)
             raise DiveraConnectionError from None
 
     def get_cluster_version(self) -> str:
@@ -1013,14 +1016,21 @@ class DiveraClient:
         url = f"{self.__base_url}/api/test-push"
         params = {PARAM_ACCESSKEY: self.__accesskey}
         try:
-            async with self.__session.post(url, params=params) as response:
+            async with self.__session.post(
+                url, params=params, timeout=DEFAULT_TIMEOUT
+            ) as response:
                 response.raise_for_status()
-                LOGGER.info(
-                    "Probealarm successfully triggered: %s", await response.text()
-                )
+                LOGGER.info("Probealarm successfully triggered.")
                 return await response.json()
         except (ClientError, ClientResponseError) as exc:
-            LOGGER.error("Failed to trigger probe alarm: %s", exc)
+            request_info = getattr(exc, "request_info", None)
+            url_clean = remove_params_from_url(getattr(request_info, "url", None))
+            # Never log exc itself: its repr embeds the accesskey-bearing URL.
+            LOGGER.error(
+                "Failed to trigger probe alarm (%s) while requesting %r.",
+                type(exc).__name__,
+                url_clean,
+            )
             raise
 
 
