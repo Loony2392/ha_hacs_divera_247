@@ -42,6 +42,26 @@ jobs:
           zip -r ../divera247-${{ steps.version.outputs.version }}.zip divera247/
           cd ..
           
+      - name: 📝 Extract Changelog Section
+        id: changelog
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          NOTES=$(awk -v v="$VERSION" '
+            $0 ~ "^## \\[" v "\\]" {found=1; next}
+            found && /^## \[/ {exit}
+            found {print}
+          ' CHANGELOG.md)
+          if [ -z "$(echo "$NOTES" | tr -d '[:space:]')" ]; then
+            echo "No CHANGELOG.md section for $VERSION, falling back to the commit list."
+            NOTES="_No changelog entry for this version._"
+          fi
+          {
+            echo "notes<<CHANGELOG_EOF"
+            echo "$NOTES"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: 🚀 Create GitHub Release
         if: steps.tag_check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v3
@@ -49,14 +69,15 @@ jobs:
           tag_name: v${{ steps.version.outputs.version }}
           # Title is the bare version, matching v2026.07.0.
           name: ${{ steps.version.outputs.version }}
+          # GitHub appends its auto-generated "What's Changed" commit list.
+          generate_release_notes: true
           body: |
-            ## 🎉 Release ${{ steps.version.outputs.version }}
-            
             ### Installation
             HACS will automatically detect this update. Click "Update" in HACS to install.
-            
-            ### Changes
-            See commit history for details.
+
+            ## 📋 Changes
+
+            ${{ steps.changelog.outputs.notes }}
           files: |
             divera247-${{ steps.version.outputs.version }}.zip
           draft: false
