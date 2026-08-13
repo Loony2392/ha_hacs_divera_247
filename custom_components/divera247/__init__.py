@@ -1,5 +1,7 @@
 """Divera 24/7 Component."""
 
+from __future__ import annotations
+
 import asyncio
 from pathlib import Path
 

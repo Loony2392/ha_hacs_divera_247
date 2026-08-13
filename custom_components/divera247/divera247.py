@@ -1,5 +1,7 @@
 """Divera Http Client Module for Divera 24/7 Integration."""
 
+from __future__ import annotations
+
 from datetime import datetime
 from http.client import UNAUTHORIZED
 

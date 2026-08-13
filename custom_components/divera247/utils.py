@@ -1,5 +1,7 @@
 """Utils Module for Divera 24/7 Integration."""
 
+from __future__ import annotations
+
 from yarl import URL
 
 
