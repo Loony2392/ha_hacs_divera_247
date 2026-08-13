@@ -1,6 +1,6 @@
 {
     "name": "ha_hacs_divera_247",
-    "version": "2025.11.5",
+    "version": "2026.08.1",
     "description": "DIVERA 24/7 Integration für Home Assistant",
     "main": "index.js",
     "license": "MIT",

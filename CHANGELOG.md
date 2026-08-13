@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026.08.1] - 2026-08-13
+
+### 🔐 Security
+
+-   **Access key no longer leaks into the Home Assistant log**: The Divera access key is sent as a URL query parameter, and aiohttp embeds the full request URL in its exception representation. Several error handlers logged the exception object directly — in `trigger_probe_alarm` at ERROR level — writing the access key to the log in cleartext.
+
+    -   **Impact**: Anyone with access to the HA log (including uploaded diagnostics and support bundles) could read the access key
+    -   **Action**: If you have shared HA logs previously, rotate your Divera access key
+
+-   **Access key is no longer sent to unvalidated hosts**: The config flow collected validation errors but issued the API request regardless, transmitting the access key to a base URL that had just been rejected as invalid.
+
+### 🐛 Fixed
+
+-   **Invalid access keys now report as an authentication error**: `remove_params_from_url()` discarded the result of `URL.with_query()` and raised `ValueError` when called without arguments. The exception handlers therefore failed inside themselves, so an invalid access key surfaced as a generic crash instead of `DiveraAuthError`.
+-   Applied the request timeout to `set_state` and `trigger_probe_alarm`, which previously had none
+-   Guarded `exc.request_info` access, which is absent on a plain `ClientError`
+
+### 🔧 Maintenance
+
+-   Scoped GitHub Actions workflow permissions to least privilege
+-   `npm audit fix` on the semantic-release dependency tree
+
 ## [2026.01.0] - 2026-01-09
 
 ### 🔐 Security
