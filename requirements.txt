@@ -377,7 +377,7 @@ platformdirs==4.10.1
     #   -r requirements.in
     #   black
     #   virtualenv
-pluggy==1.5.0
+pluggy==1.6.0
     # via
     #   -r requirements.in
     #   pytest
