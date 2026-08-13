@@ -364,7 +364,7 @@ pathspec==0.12.1
     # via
     #   -r requirements.in
     #   black
-pillow==11.1.0
+pillow==12.3.0
     # via
     #   -r requirements.in
     #   homeassistant
