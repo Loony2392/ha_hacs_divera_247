@@ -21,7 +21,7 @@ aiohasupervisor==0.3.0
     # via
     #   -r requirements.in
     #   homeassistant
-aiohttp==3.11.12
+aiohttp==3.14.3
     # via
     #   -r requirements.in
     #   aiohasupervisor
