@@ -4,7 +4,7 @@
   </a>
 </p>
 
-DIVERA 24/7 Integration für Home Assistant 🚨🔔
+# DIVERA 24/7 Integration für Home Assistant 🚨🔔
 
 [![GitHub Release](https://img.shields.io/github/v/release/loony2392/ha_hacs_divera_247?sort=semver&style=for-the-badge&color=green)](https://github.com/loony2392/ha_hacs_divera_247/releases/)
 ![GitHub Downloads (all releases total)](https://img.shields.io/github/downloads/loony2392/ha_hacs_divera_247/total?style=for-the-badge&label=Downloads%20Total)
