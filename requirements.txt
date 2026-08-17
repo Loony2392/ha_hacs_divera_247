@@ -619,7 +619,7 @@ urllib3==1.26.20
     #   botocore
     #   homeassistant
     #   requests
-usb-devices==0.4.5
+usb-devices==0.5.1
     # via
     #   -r requirements.in
     #   bluetooth-adapters
