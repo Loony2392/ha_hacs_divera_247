@@ -104,7 +104,7 @@ bcrypt==4.2.0
     #   homeassistant
 black==25.1.0
     # via -r requirements.in
-bleak==0.22.3
+bleak==3.0.2
     # via
     #   -r requirements.in
     #   bleak-retry-connector
