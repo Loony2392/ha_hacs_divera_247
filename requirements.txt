@@ -21,7 +21,7 @@ aiohasupervisor==0.3.0
     # via
     #   -r requirements.in
     #   homeassistant
-aiohttp==3.14.3
+aiohttp==3.11.12
     # via
     #   -r requirements.in
     #   aiohasupervisor
@@ -102,9 +102,9 @@ bcrypt==4.2.0
     # via
     #   -r requirements.in
     #   homeassistant
-black==26.3.1
+black==25.1.0
     # via -r requirements.in
-bleak==0.22.3
+bleak==3.0.2
     # via
     #   -r requirements.in
     #   bleak-retry-connector
@@ -185,7 +185,7 @@ cronsim==2.6
     # via
     #   -r requirements.in
     #   homeassistant
-cryptography==50.0.0
+cryptography==44.0.0
     # via
     #   -r requirements.in
     #   acme
@@ -258,7 +258,7 @@ home-assistant-bluetooth==1.13.0
     # via
     #   -r requirements.in
     #   homeassistant
-homeassistant==2026.6.0
+homeassistant==2025.2.1
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
@@ -364,7 +364,7 @@ pathspec==0.12.1
     # via
     #   -r requirements.in
     #   black
-pillow==12.3.0
+pillow==11.1.0
     # via
     #   -r requirements.in
     #   homeassistant
@@ -417,7 +417,7 @@ pydantic-core==2.27.2
     # via
     #   -r requirements.in
     #   pydantic
-pyjwt[crypto]==2.13.0
+pyjwt[crypto]==2.10.1
     # via
     #   -r requirements.in
     #   hass-nabucasa
