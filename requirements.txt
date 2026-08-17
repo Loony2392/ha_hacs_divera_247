@@ -170,7 +170,7 @@ ciso8601==2.3.2
     #   -r requirements.in
     #   hass-nabucasa
     #   homeassistant
-click==8.1.8
+click==8.4.2
     # via
     #   -r requirements.in
     #   black
