@@ -82,7 +82,7 @@ bluetooth-adapters==1.0.0
     #   habluetooth
 bluetooth-auto-recovery==1.6.4
     # via habluetooth
-bluetooth-data-tools==1.23.4
+bluetooth-data-tools==1.28.4
     # via habluetooth
 boolean-py==5.0
     # via license-expression
