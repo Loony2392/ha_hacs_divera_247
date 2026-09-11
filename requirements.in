@@ -133,7 +133,7 @@ cryptography==44.0.0
     #   pyopenssl
     #   securetar
     #   snitun
-dbus-fast==2.44.1
+dbus-fast==2.46.4
     # via
     #   bleak
     #   bleak-retry-connector
