@@ -124,7 +124,7 @@ bluetooth-auto-recovery==1.6.4
     # via
     #   -r requirements.in
     #   habluetooth
-bluetooth-data-tools==1.23.4
+bluetooth-data-tools==1.28.4
     # via
     #   -r requirements.in
     #   habluetooth
