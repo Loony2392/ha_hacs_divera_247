@@ -56,7 +56,7 @@ aiozoneinfo==0.2.1
     # via
     #   -r requirements.in
     #   homeassistant
-annotated-types==0.7.0
+annotated-types==0.8.0
     # via
     #   -r requirements.in
     #   pydantic
