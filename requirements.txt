@@ -513,7 +513,7 @@ python-slugify==8.0.4
     # via
     #   -r requirements.in
     #   homeassistant
-pytz==2025.1
+pytz==2026.3.post1
     # via
     #   -r requirements.in
     #   acme
