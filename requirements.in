@@ -106,7 +106,7 @@ cffi==2.1.1
     #   pycares
 cfgv==3.5.0
     # via pre-commit
-charset-normalizer==3.4.1
+charset-normalizer==3.5.1
     # via requests
 ciso8601==2.3.2
     # via
