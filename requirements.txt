@@ -389,7 +389,7 @@ propcache==0.2.1
     #   aiohttp
     #   homeassistant
     #   yarl
-psutil==7.0.0
+psutil==7.2.2
     # via
     #   -r requirements.in
     #   psutil-home-assistant
