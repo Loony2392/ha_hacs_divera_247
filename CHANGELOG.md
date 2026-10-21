@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2026.10.2] - 2026-10-21
+
+### 🐛 Fixed
+
+-   **Version bump**: `manifest.json` still reported 2026.08.1 in release v2026.10.1, so HACS/Home Assistant did not offer the update correctly. Includes the dependency updates and local brand assets from v2026.10.1.
+
 ## [2026.08.1] - 2026-08-13
 
 ### 🔐 Security
