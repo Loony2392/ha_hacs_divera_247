@@ -133,7 +133,6 @@ class DiveraEntity(CoordinatorEntity[DiveraCoordinator]):
                 model=f"Divera Vehicle {cluster_version}",
                 sw_version=__version__,
                 configuration_url=config_url,
-                via_device=(DOMAIN, str(self._ucr_id)),
             )
 
         # Hub device for user-related entities (calendar, status, etc.)

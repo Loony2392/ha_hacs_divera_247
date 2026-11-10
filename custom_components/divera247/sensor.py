@@ -200,7 +200,6 @@ class DiveraVehicleSensorEntity(DiveraEntity, SensorEntity):
             model=f"Divera Vehicle {cluster_version}",
             sw_version=__version__,
             configuration_url=DIVERA_BASE_URL,
-            via_device=(DOMAIN, str(self._ucr_id)),
         )
 
 

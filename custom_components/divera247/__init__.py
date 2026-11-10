@@ -27,6 +27,34 @@ from .coordinator import DiveraCoordinator
 from .data import DiveraRuntimeData
 from .divera247 import DiveraClient, DiveraError
 
+
+
+def _link_vehicle_devices(
+    hass: HomeAssistant, entry: ConfigEntry, ucr_ids: list
+) -> None:
+    """Attach vehicle devices to their hub device.
+
+    ``via_device`` in ``DeviceInfo`` is deprecated (removed in HA 2027.8), so the
+    parent link is set explicitly through the device registry instead.
+    """
+    from homeassistant.helpers import device_registry as dr
+
+    device_registry = dr.async_get(hass)
+    for ucr_id in ucr_ids:
+        hub = device_registry.async_get_device(identifiers={(DOMAIN, str(ucr_id))})
+        if hub is None:
+            continue
+        prefix = f"{ucr_id}_vehicle_"
+        for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
+            if device.via_device_id == hub.id:
+                continue
+            if any(
+                domain == DOMAIN and ident.startswith(prefix)
+                for domain, ident in device.identifiers
+            ):
+                device_registry.async_update_device(device.id, via_device_id=hub.id)
+
+
 __version__ = "0.0.0"  # Lazy-loaded inside async_setup_entry
 
 PLATFORMS = [
@@ -121,7 +149,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
         # If any coordinator failed we abort setup to prevent partial broken state
         return False
 
-    # Register hub devices BEFORE loading platforms to ensure via_device references work
+    # Register hub devices BEFORE loading platforms so vehicle devices can be linked to them
     from homeassistant.helpers import device_registry as dr
 
     device_registry = dr.async_get(hass)
@@ -210,6 +238,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: DiveraConfigEntry):
 
     # Forward platform setups (must be awaited to avoid frame warning in HA >=2025.1)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    _link_vehicle_devices(hass, entry, ucr_ids)
     LOGGER.debug("Forwarded setups for platforms: %s", PLATFORMS)
     return True
 
