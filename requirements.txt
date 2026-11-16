@@ -360,7 +360,7 @@ paho-mqtt==1.6.1
     # via
     #   -r requirements.in
     #   pytest-homeassistant-custom-component
-pathspec==0.12.1
+pathspec==1.1.1
     # via
     #   -r requirements.in
     #   black

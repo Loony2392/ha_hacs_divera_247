@@ -234,7 +234,7 @@ packaging==26.3
     #   pytest-sugar
 paho-mqtt==1.6.1
     # via pytest-homeassistant-custom-component
-pathspec==0.12.1
+pathspec==1.1.1
     # via black
 pillow==11.1.0
     # via homeassistant
