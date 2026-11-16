@@ -110,7 +110,7 @@ bleak==3.0.2
     #   bleak-retry-connector
     #   bluetooth-adapters
     #   habluetooth
-bleak-retry-connector==3.10.0
+bleak-retry-connector==4.6.0
     # via
     #   -r requirements.in
     #   habluetooth
