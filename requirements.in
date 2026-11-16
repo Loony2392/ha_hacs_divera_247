@@ -30,7 +30,7 @@ aiohttp-cors==0.7.0
     # via homeassistant
 aiohttp-fast-zlib==0.2.0
     # via homeassistant
-aiooui==0.1.9
+aiooui==0.1.11
     # via bluetooth-adapters
 aiosignal==1.3.2
     # via aiohttp
